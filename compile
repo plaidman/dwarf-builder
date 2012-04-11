@@ -27,8 +27,6 @@ cp -p menu DwarfBuilder.app/Contents/Resources
 
 echo "cleaning up..."
 
-cd DwarfBuilder.app/Contents/Resources/
-
-rm -rf extras/DwarfBuilder.app
+rm -rf DwarfBuilder.app/Contents/Resources/extras/DwarfBuilder.app
 
 echo "finished!"
