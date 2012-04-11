@@ -1,0 +1,31 @@
+#!/bin/sh
+
+SCRIPT_ROOT=`dirname "${0}"`
+COMMAND='"\"'"${SCRIPT_ROOT}"'/../Resources/menu\""'
+
+osascript << EOF
+tell application "Terminal"
+    activate
+    set windowCount to (count of the windows)
+    if windowCount is greater than 0 then
+        repeat with w from 1 to windowCount
+            if window 1 is busy then
+                set frontmost of window 1 to false
+            else
+                do script ${COMMAND} in window 1
+                set frontmost of window 1 to true
+                return
+            end if
+        end repeat
+    end if
+    tell window 1
+    do script ${COMMAND}
+    set frontmost to true
+    end tell
+end tell
+EOF
+
+# tell application "Terminal"
+#     activate
+#     do script ${MENU_SCRIPT} in window 1
+# end tell

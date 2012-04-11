@@ -1,0 +1,603 @@
+#!/bin/sh
+
+# Changes:
+#   Dwarf Therapist support
+#   Tuffy font
+#   Updating About/Version
+#   Added a help screen
+#   Mayday tileset
+
+SCRIPT_ROOT=`dirname "${0}"`
+cd "${SCRIPT_ROOT}"
+
+MENU="main_menu"
+DT_INI_FILE=Contents/MacOS/etc/memory_layouts/osx/v0.34.07.ini
+
+## Visual settings
+WINDOWED="YES"
+INTRO="NO"
+GRAPHICS="YES"
+TILESET="IRONHAND"
+TRUETYPE="NO"
+FONT_FILE="IRONHAND"
+FPS="YES"
+IDLERS="TOP"
+SHOW_FLOW_AMOUNTS="YES"
+
+## App Settings
+SOUND="NO"
+VOLUME="255"
+SOUNDTRACK="DEFAULT"
+KEYBINDS="LAPTOP"
+FPS_CAP="100"
+G_FPS_CAP="50"
+
+## Gameplay Settings
+EMBARK_WARNING_ALWAYS="YES"
+POPULATION_CAP="100"
+BABY_CHILD_CAP_ABS="15"
+BABY_CHILD_CAP_PER="20"
+EMBARK_RECTANGLE_WIDTH="3"
+EMBARK_RECTANGLE_HEIGHT="3"
+TEMPERATURE="YES"
+WEATHER="YES"
+INVADERS="YES"
+GRAZING="NO"
+AQUIFERS="NO"
+RUST="NO"
+CAVEINS="YES"
+
+##Save Settings
+COMPRESSED_SAVES="YES"
+AUTOSAVE="SEASONAL"
+PAUSE_ON_LOAD="YES"
+AUTOSAVE_PAUSE="YES"
+AUTOBACKUP="NO"
+
+if [ ! -d vanilla ]
+then
+    echo "vanilla package required"
+    exit
+fi
+
+main_menu() {
+    echo ""
+    echo "Choose a Category:"
+    echo ""
+    echo "1) Visual Settings"
+    echo "2) Application Settings"
+    echo "3) Gameplay Settings"
+    echo "4) Save Settings"
+    echo "5) Utilities"
+    echo ""
+    echo "c) Compile Dwarf Fortress"
+    echo "t) Install/Update Dwarf Therapist"
+    echo ""
+    echo "a) About & Version & Credits"
+    echo "q) Exit Dwarf Builder"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)  MENU="visual_one";;
+        2)  MENU="application_one";;
+        3)  MENU="gameplay_one";;
+        4)  MENU="save_one";;
+        a)  MENU="about";;
+        c)  MENU="compile";;
+        t)  MENU="therapist";;
+        q)  MENU="exit_screen";;
+        *)  ;;
+    esac
+}
+
+visual_one() {
+    echo ""
+    echo "Visual Options"
+    echo ""
+    echo "1) Window Mode:....... ${WINDOWED}"
+    echo "2) Show Intro:........ ${INTRO}"
+    echo "3) Which Tileset:..... ${TILESET}"
+    echo "4) Creature Graphics:. ${GRAPHICS}"
+    echo "5) Use Font:.......... ${TRUETYPE}"
+    echo "6) Which Font:........ ${FONT_FILE}"
+    echo "7) Show FPS:.......... ${FPS}"
+    echo "8) Show Idlers:....... ${IDLERS}"
+    echo "9) Liquid Depth:...... ${SHOW_FLOW_AMOUNTS}"
+    echo ""
+    echo "b) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)  WINDOWED=`toggle_yn ${WINDOWED}`;;
+        2)  INTRO=`toggle_yn ${INTRO}`;;
+        3)  TILESET=`toggle_tileset ${TILESET}`;;
+        4)  GRAPHICS=`toggle_yn ${GRAPHICS}`;;
+        5)  TRUETYPE=`toggle_yn ${TRUETYPE}`;;
+        6)  FONT_FILE=`toggle_fontfile ${FONT_FILE}`;;
+        7)  FPS=`toggle_yn ${FPS}`;;
+        8)  IDLERS=`toggle_idlers ${IDLERS}`;;
+        9)  SHOW_FLOW_AMOUNTS=`toggle_yn ${SHOW_FLOW_AMOUNTS}`;;
+        b)  MENU="main_menu";;
+        *)  ;;
+    esac
+}
+
+application_one() {
+    echo ""
+    echo "Application Options"
+    echo ""
+    echo "1) Sound:......... ${SOUND}"
+    echo "2) Volume:........ ${VOLUME}"
+    echo "3) Soundtrack:.... ${SOUNDTRACK}"
+    echo "4) Keybindings:... ${KEYBINDS}"
+    echo "5) FPS Cap:....... ${FPS_CAP}"
+    echo "6) Graphical Cap:. ${G_FPS_CAP}"
+    echo ""
+    echo "b) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)  SOUND=`toggle_yn ${SOUND}`;;
+        2)  echo ""; echo ""; echo "Volume (0-255): \c"
+            VOLUME=`input_int ${VOLUME}`;;
+        3)  SOUNDTRACK=`toggle_soundtrack ${SOUNDTRACK}`;;
+        4)  KEYBINDS=`toggle_keybinds ${KEYBINDS}`;;
+        5)  echo ""; echo ""; echo "Processing FPS Cap (try 50-200): \c"
+            FPS_CAP=`input_int ${FPS_CAP}`;;
+        6)  echo ""; echo ""; echo "Graphical FPS Cap (try 30-90): \c"
+            G_FPS_CAP=`input_int ${G_FPS_CAP}`;;
+        b)  MENU="main_menu";;
+        *)  ;;
+    esac
+}
+
+gameplay_one() {
+    echo ""
+    echo "Gameplay Options (page 1)"
+    echo ""
+    echo "1) Embark Warning:. ${EMBARK_WARNING_ALWAYS}"
+    echo "2) Population Cap:. ${POPULATION_CAP}"
+    echo "3) Baby/Child Cap:. ${BABY_CHILD_CAP_ABS}:${BABY_CHILD_CAP_PER}"
+    echo "4) Embark Size:.... ${EMBARK_RECTANGLE_WIDTH}:${EMBARK_RECTANGLE_HEIGHT}"
+    echo "5) Temperature:.... ${TEMPERATURE}"
+    echo "6) Weather:........ ${WEATHER}"
+    echo ""
+    echo "n) Next Page"
+    echo "b) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)  EMBARK_WARNING_ALWAYS=`toggle_yn ${EMBARK_WARNING_ALWAYS}`;;
+        2)  echo ""; echo ""; echo "Population Cap: (try 50-200): \c"
+            POPULATION_CAP=`input_int ${POPULATION_CAP}`;;
+        3)  echo ""; echo ""; echo "Absolute Baby/Child Cap (try 0-20): \c"
+            BABY_CHILD_CAP_ABS=`input_int ${BABY_CHILD_CAP_ABS}`
+            echo "Percentage (of adults) Cap (try 0-50): \c"
+            BABY_CHILD_CAP_PER=`input_int ${BABY_CHILD_CAP_PER}`;;
+        4)  echo ""; echo ""; echo "Embark Rectangle Width (try 2-5): \c"
+            EMBARK_RECTANGLE_WIDTH=`input_int ${EMBARK_RECTANGLE_WIDTH}`
+            echo "Embark Rectangle Height (try 2-5): \c"
+            EMBARK_RECTANGLE_HEIGHT=`input_int ${EMBARK_RECTANGLE_HEIGHT}`;;
+        5)  TEMPERATURE=`toggle_yn ${TEMPERATURE}`;;
+        6)  WEATHER=`toggle_yn ${WEATHER}`;;
+        n)  MENU="gameplay_two";;
+        b)  MENU="main_menu";;
+        *)  ;;
+    esac
+}
+
+gameplay_two() {
+    echo ""
+    echo "Gameplay Options (page 2)"
+    echo ""
+    echo "1) Invaders:........ ${INVADERS}"
+    echo "2) Grazing Animals:. ${GRAZING}"
+    echo "3) Aquifers:........ ${AQUIFERS}"
+    echo "4) Skill Rusting:... ${RUST}"
+    echo "5) Cave-Ins:........ ${CAVEINS}"
+    echo ""
+    echo "p) Previous Page"
+    echo "b) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)  INVADERS=`toggle_yn ${INVADERS}`;;
+        2)  GRAZING=`toggle_yn ${GRAZING}`;;
+        3)  AQUIFERS=`toggle_yn ${AQUIFERS}`;;
+        4)  RUST=`toggle_yn ${RUST}`;;
+        5)  CAVEINS=`toggle_yn ${CAVEINS}`;;
+        p)  MENU="gameplay_one";;
+        b)  MENU="main_menu";;
+        *)  ;;
+    esac
+}
+
+save_one() {
+    echo ""
+    echo "Save Options"
+    echo ""
+    echo "1) Compress Saves:. ${COMPRESSED_SAVES}"
+    echo "2) Autosave:....... ${AUTOSAVE}"
+    echo "3) Pause On Load:.. ${PAUSE_ON_LOAD}"
+    echo "4) Pause On Save:.. ${AUTOSAVE_PAUSE}"
+    echo "5) Backup Saves:... ${AUTOBACKUP}"
+    echo ""
+    echo "b) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)  COMPRESSED_SAVES=`toggle_yn ${COMPRESSED_SAVES}`;;
+        2)  AUTOSAVE=`toggle_autosave ${AUTOSAVE}`;;
+        3)  PAUSE_ON_LOAD=`toggle_yn ${PAUSE_ON_LOAD}`;;
+        4)  AUTOSAVE_PAUSE=`toggle_yn ${AUTOSAVE_PAUSE}`;;
+        5)  AUTOBACKUP=`toggle_yn ${AUTOBACKUP}`;;
+        b)  MENU="main_menu";;
+        *)  ;;
+    esac
+}
+
+about() {
+    echo ""
+    echo "About Dwarf Builder:"
+    echo ""
+    echo "DB will allow you to customize and \"roll your own\" Dwarf Fortress app."
+    echo "No need to deal with copying folders or editing init files. Easy Peasy!"
+    echo ""
+    echo "On each menu screen, you'll see options with a number or letter."
+    echo "Press the number or letter to go into the sub-menu or edit the option."
+    echo "Some options will switch yes/no or other predefined values, and some will"
+    echo "  prompt you for a new value or sometimes two values."
+    echo "When you're comfortable with the settings, press 'b' to go back to the"
+    echo "  main menu then press 'c' to compile your personalized Dwarf Fortress app!"
+    echo "At the main menu, you can also press 't' to install Dwarf Therapist"
+    echo "  or update to the newest version!"
+    echo "DF and DT will both be installed in the same directory as DB."
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    tput clear
+
+    echo ""
+    echo "Versions:"
+    echo ""
+    echo "Dwarf Builder:... v4"
+    echo ""
+    echo "Dwarf Fortress:.. 0.34.07"
+    echo "Dwarf Therapist:. 0.6.12b4"
+    echo ""
+    echo "Phoebus:......... v00"
+    echo "Ironhand:........ 0.68"
+    echo "Jolly Bastion:... v3"
+    echo "Masterwork:...... 1.7.1"
+    echo "Mayday:.......... 07a"
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    tput clear
+
+    echo ""
+    echo "Credits:"
+    echo ""
+    echo "Tilesets:"
+    echo "  Phoebus (Phoebus)"
+    echo "  Ironhand (Ironhand)"
+    echo "  AlexanderOcias (Jolly Bastion)"
+    echo "  Mike Mayday (Mayday)"
+    echo "  Meph (Masterwork Font)"
+    echo "Icons:"
+    echo "  Linkdragon (DF icon)"
+    echo "  <unknown> (DB icon)"
+    echo "Embark Profiles: Phoebus, Mayday, Cap'n Duck, & LNP"
+    echo "Dwarf Therapist: DwarfEngineer"
+    echo "Extended Soundtrack: Meph, Solifuge, Yakoff Oskanoff"
+    echo ""
+    echo "And of course TOADY for this crazy game!"
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+therapist() {
+    echo ""
+
+    if [ -d ../../../DwarfTherapist.app/Contents/MacOS/etc/memory_layouts/osx ]
+    then
+        echo "Updating Dwarf Therapist..."
+        cp -rp "extras/DwarfTherapist.app/${DT_INI_FILE}" "../../../DwarfTherapist.app/${DT_INI_FILE}"
+    else
+        echo "Installing Dwarf Therapist..."
+        cp -rp extras/DwarfTherapist.app ../../../
+    fi
+
+    echo "Finished..."
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+compile() {
+    echo ""
+    echo "Setting up vanilla...."
+
+    cp -rp vanilla build
+    rm -rf build/raw/graphics/example/
+    rm build/raw/graphics/graphics_example.txt
+
+    case ${TILESET} in
+        "PHOEBUS")
+            echo "Installing Phoebus..."
+
+            cp -rp phoebus/data/art/* build/data/art/
+            cp -rp phoebus/data/init/phoebus/* build/data/init/
+            cp -rp phoebus/raw/* build/raw/
+            ;;
+
+        "JOLLY_TALL")
+            echo "Installing Jolly Bastion 9x12..."
+
+            cp -rp jolly/9x12\ \(recommended\)/data/* build/data/
+            cp -rp jolly/9x12\ \(recommended\)/raw/* build/raw/
+            ;;
+
+        "JOLLY_SQUARE")
+            echo "Installing Jolly Bastion 12x12..."
+
+            cp -rp jolly/12x12/data/* build/data/
+            cp -rp jolly/12x12/raw/* build/raw/
+            ;;
+
+        "IRONHAND")
+            echo "Installing Ironhand..."
+
+            cp -rp ironhand/data/* build/data/
+            cp -rp ironhand/raw/* build/raw/
+            ;;
+
+        "MAYDAY")
+            echo "Installing Mayday..."
+
+            cp -rp mayday/data/* build/data/
+            cp -rp mayday/raw/* build/raw/
+            ;;
+
+        *)
+            ;;
+    esac
+
+    echo "Tweaking init files..."
+
+    #make it so dwarf fortress runs in a separate thread
+    sed -e "s/dwarfort.exe/dwarfort.exe\& > stdout.txt 2> stderr.txt/g;" \
+        -i".bak" build/df
+    rm build/df.bak
+
+    sed -e "s/\[AUTOSAVE:.*\]/\[AUTOSAVE:${AUTOSAVE}\]/g;
+        s/\[PAUSE_ON_LOAD:.*\]/\[PAUSE_ON_LOAD:${PAUSE_ON_LOAD}\]/g;
+        s/\[AUTOSAVE_PAUSE:.*\]/\[AUTOSAVE_PAUSE:${AUTOSAVE_PAUSE}\]/g;
+        s/\[AUTOBACKUP:.*\]/\[AUTOBACKUP:${AUTOBACKUP}\]/g;
+        s/\[EMBARK_WARNING_ALWAYS:.*\]/\[EMBARK_WARNING_ALWAYS:${EMBARK_WARNING_ALWAYS}\]/g;
+        s/\[SHOW_FLOW_AMOUNTS:.*\]/\[SHOW_FLOW_AMOUNTS:${SHOW_FLOW_AMOUNTS}\]/g;
+        s/\[IDLERS:.*\]/\[IDLERS:${IDLERS}\]/g;
+        s/\[TEMPERATURE:.*\]/\[TEMPERATURE:${TEMPERATURE}\]/g;
+        s/\[CAVEINS:.*\]/\[CAVEINS:${CAVEINS}\]/g;
+        s/\[INVADERS:.*\]/\[INVADERS:${INVADERS}\]/g;
+        s/\[WEATHER:.*\]/\[WEATHER:${WEATHER}\]/g;
+        s/\[POPULATION_CAP:.*\]/\[POPULATION_CAP:${POPULATION_CAP}\]/g;
+        s/\[BABY_CHILD_CAP:.*\]/\[BABY_CHILD_CAP:${BABY_CHILD_CAP_ABS}:${BABY_CHILD_CAP_PER}\]/g;
+        s/\[EMBARK_RECTANGLE:.*\]/\[EMBARK_RECTANGLE:${EMBARK_RECTANGLE_WIDTH}:${EMBARK_RECTANGLE_HEIGHT}\]/g;" \
+        -i".bak" build/data/init/d_init.txt
+    rm build/data/init/d_init.txt.bak
+
+    sed -e "s/\[INTRO:.*\]/\[INTRO:${INTRO}\]/g;
+        s/\[WINDOWED:.*\]/\[WINDOWED:${WINDOWED}\]/g;
+        s/\[SOUND:.*\]/\[SOUND:${SOUND}\]/g;
+        s/\[VOLUME:.*\]/\[VOLUME:${VOLUME}\]/g;
+        s/\[RESIZABLE:.*\]/\[RESIZABLE:YES\]/g;
+        s/\[GRAPHICS:.*\]/\[GRAPHICS:${GRAPHICS}\]/g;
+        s/\[TRUETYPE:.*\]/\[TRUETYPE:${TRUETYPE}\]/g;
+        s/\[FPS:.*\]/\[FPS:${FPS}\]/g;
+        s/\[FPS_CAP:.*\]/\[FPS_CAP:${FPS_CAP}\]/g;
+        s/\[G_FPS_CAP:.*\]/\[G_FPS_CAP:${G_FPS_CAP}\]/g;
+        s/\[COMPRESSED_SAVES:.*\]/\[COMPRESSED_SAVES:${COMPRESSED_SAVES}\]/g;" \
+        -i".bak" build/data/init/init.txt
+    rm build/data/init/init.txt.bak
+    sleep 1
+
+    if [ ${AQUIFERS} == "NO" ]
+    then
+        echo "Removing Aquifers..."
+        sed -e "s/\[AQUIFER\]/(AQUIFER)/g;" \
+            -i".bak" build/raw/objects/*.txt
+        rm build/raw/objects/*.txt.bak
+    fi
+
+    if [ ${GRAZING} == "NO" ]
+    then
+        echo "Disabling Grazing..."
+        sed -e "s/\[GRAZER:\(.*\)\]/(GRAZER:\1)/g;" \
+            -i".bak" build/raw/objects/*.txt
+        rm build/raw/objects/*.txt.bak
+    fi
+    
+    if [ ${KEYBINDS} == "LAPTOP" ]
+    then
+        echo "Changing Keybindings..."
+        sed -e "/\[BIND:SECONDSCROLL_UP:REPEAT_SLOW\]/ {n;s/\[KEY:.*\]/\[KEY:\-\]/g;};
+            /\[BIND:SECONDSCROLL_DOWN:REPEAT_SLOW\]/ {n;s/\[KEY:.*\]/\[KEY:=\]/g;};
+            /\[BIND:SECONDSCROLL_PAGEUP:REPEAT_SLOW\]/ {n;s/\[KEY:.*\]/\[KEY:_\]/g;};
+            /\[BIND:SECONDSCROLL_PAGEDOWN:REPEAT_SLOW\]/ {n;s/\[KEY:.*\]/\[KEY:+\]/g;};
+            /\[BIND:D_MILITARY_SUPPLIES_WATER_DOWN:REPEAT_NOT\]/ {n;s/\[KEY:.*\]/\[KEY:-\]/g;};
+            /\[BIND:D_MILITARY_SUPPLIES_WATER_UP:REPEAT_NOT\]/ {n;s/\[KEY:.*\]/\[KEY:=\]/g;};
+            /\[BIND:D_MILITARY_SUPPLIES_FOOD_DOWN:REPEAT_NOT\]/ {n;s/\[KEY:.*\]/\[KEY:_\]/g;};
+            /\[BIND:D_MILITARY_SUPPLIES_FOOD_UP:REPEAT_NOT\]/ {n;s/\[KEY:.*\]/\[KEY:+\]/g;};
+            /\[BIND:D_MILITARY_AMMUNITION_LOWER_AMOUNT:REPEAT_NOT\]/ {n;s/\[KEY:.*\]/\[KEY:-\]/g;};
+            /\[BIND:D_MILITARY_AMMUNITION_RAISE_AMOUNT:REPEAT_NOT\]/ {n;s/\[KEY:.*\]/\[KEY:=\]/g;};
+            /\[BIND:D_MILITARY_AMMUNITION_LOWER_AMOUNT_LOTS:REPEAT_NOT\]/ {n;s/\[KEY:.*\]/\[KEY:_\]/g;};
+            /\[BIND:D_MILITARY_AMMUNITION_RAISE_AMOUNT_LOTS:REPEAT_NOT\]/ {n;s/\[KEY:.*\]/\[KEY:+\]/g;};" \
+            -i".bak" build/data/init/interface.txt
+        rm build/data/init/interface.txt.bak
+    fi
+
+    if [ ${RUST} == "NO" ]
+    then
+        echo "Disabling Skill Rust..."
+        sed -n "1,/CREATURE:DWARF/ p" \
+            build/raw/objects/creature_standard.txt > build/raw/objects/creature_standard_one.txt
+        sed -n "/CREATURE:DWARF/,\$ {/CREATURE:DWARF/n;p;}" \
+            build/raw/objects/creature_standard.txt > build/raw/objects/creature_standard_two.txt
+
+        rm build/raw/objects/creature_standard.txt
+
+        cat build/raw/objects/creature_standard_one.txt >> build/raw/objects/creature_standard.txt
+        cat extras/rust_proof.txt >> build/raw/objects/creature_standard.txt
+        cat build/raw/objects/creature_standard_two.txt >> build/raw/objects/creature_standard.txt
+
+        rm build/raw/objects/creature_standard_one.txt
+        rm build/raw/objects/creature_standard_two.txt
+    fi
+
+
+    if [ ${SOUNDTRACK} == "EXTENDED" ]
+    then
+        echo "Installing Extended Soundtrack..."
+        cp extras/extended.ogg build/data/sound/song_game.ogg
+    fi
+
+    case ${FONT_FILE} in
+        "PHOEBUS")
+            echo "Installing Phoebus Font..."
+            cp extras/phoebus.ttf build/data/art/font.ttf;;
+        "IRONHAND")
+            echo "Installing Ironhand Font..."
+            cp extras/ironhand.ttf build/data/art/font.ttf;;
+        "MASTERWORK")
+            echo "Installing Masterwork Font..."
+            cp extras/masterwork.ttf build/data/art/font.ttf;;
+        "TUFFY")
+            echo "Installing Tuffy Font..."
+            cp extras/tuffy.ttf build/data/art/font.ttf;;
+        "DEFAULT") 
+            cp extras/default.ttf build/data/art/font.ttf;;
+    esac
+
+    echo "Reticulating Splines..."
+    cp extras/embark_profiles.txt build/data/init/
+
+    echo "Cleaning Up..."
+    cp -rp extras/DwarfFortress.app ../../../DwarfFortress.app
+    mv build ../../../DwarfFortress.app/Contents/Resources
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+exit_screen() {
+    echo ""
+    echo "Thanks for choosing Dwarf Builder!"
+    echo ""
+    echo "You may close this terminal window now."
+    echo ""
+
+    exit
+}
+
+input_int() {
+    read INPUT
+    if [ ${INPUT} -eq ${INPUT} ]
+    then
+        echo ${INPUT}
+    else
+        echo ${1}
+    fi
+}
+
+toggle_yn() {
+    case ${1} in
+        "YES") echo "NO";;
+        *) echo "YES";;
+    esac
+}
+
+toggle_tileset() {
+    case ${1} in
+        "DEFAULT") echo "IRONHAND";;
+        "IRONHAND") echo "PHOEBUS";;
+        "PHOEBUS") echo "JOLLY_SQUARE";;
+        "JOLLY_SQUARE") echo "JOLLY_TALL";;
+        "JOLLY_TALL") echo "MAYDAY";;
+        *) echo "DEFAULT";;
+    esac
+}
+
+toggle_autosave() {
+    case ${1} in
+        "NONE") echo "SEASONAL";;
+        "SEASONAL") echo "YEARLY";;
+        *) echo "NONE";;
+    esac
+}
+
+toggle_keybinds() {
+    case ${1} in
+        "DEFAULT") echo "LAPTOP";;
+        *) echo "DEFAULT";;
+    esac
+}
+
+toggle_soundtrack() {
+    case ${1} in
+        "DEFAULT") echo "EXTENDED";;
+        *) echo "DEFAULT";;
+    esac
+}
+
+toggle_fontfile() {
+    case ${1} in
+        "DEFAULT") echo "IRONHAND";;
+        "IRONHAND") echo "PHOEBUS";;
+        "PHOEBUS") echo "MASTERWORK";;
+        "MASTERWORK") echo "TUFFY";;
+        *) echo "DEFAULT";;
+    esac
+}
+
+toggle_idlers() {
+    case ${1} in
+        "OFF") echo "TOP";;
+        "TOP") echo "BOTTOM";;
+        *) echo "OFF";;
+    esac
+}
+
+while true
+do
+    tput clear
+    ${MENU}
+done

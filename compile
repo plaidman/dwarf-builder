@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# Changes:
+#   Dwarf Therapist support
+#   Tuffy font
+#   Updating About/Version
+#   Added a help screen
+#   Mayday tileset
+
+SCRIPT_ROOT=`dirname "${0}"`
+cd "${SCRIPT_ROOT}"
+
+echo ""
+echo "creating a new Builder"
+
+cp -rp extras/DwarfBuilder.app .
+
+echo "populating materials..."
+
+cp -rp extras DwarfBuilder.app/Contents/Resources
+cp -rp ironhand DwarfBuilder.app/Contents/Resources
+cp -rp jolly DwarfBuilder.app/Contents/Resources
+cp -rp mayday DwarfBuilder.app/Contents/Resources
+cp -rp phoebus DwarfBuilder.app/Contents/Resources
+cp -rp vanilla DwarfBuilder.app/Contents/Resources
+cp -p menu DwarfBuilder.app/Contents/Resources
+
+echo "cleaning up..."
+
+cd DwarfBuilder.app/Contents/Resources/
+
+rm -rf extras/DwarfBuilder.app
+
+echo "finished!"
