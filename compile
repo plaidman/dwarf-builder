@@ -1,12 +1,5 @@
 #!/bin/sh
 
-# Changes:
-#   Dwarf Therapist support
-#   Tuffy font
-#   Updating About/Version
-#   Added a help screen
-#   Mayday tileset
-
 SCRIPT_ROOT=`dirname "${0}"`
 cd "${SCRIPT_ROOT}"
 
