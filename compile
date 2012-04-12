@@ -14,6 +14,7 @@ echo ""
 echo "creating a new Builder"
 
 cp -rp extras/DwarfBuilder.app .
+mkdir DwarfBuilder.app/Contents/Resources
 
 echo "populating materials..."
 

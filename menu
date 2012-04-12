@@ -1,10 +1,20 @@
 #!/bin/sh
 
+# TODO
+#   support for mods (e.g. fortress defense)
+#   stat/attribute/skill growth rate
+#   update savegames
+#   user defined default settings
+#   instruction manual pdf
+#   java or cocoa interface
+#   
+
 SCRIPT_ROOT=`dirname "${0}"`
 cd "${SCRIPT_ROOT}"
 
 MENU="main_menu"
 DT_INI_FILE=Contents/MacOS/etc/memory_layouts/osx/v0.34.07.ini
+INSTALL_DIR=../../..
 
 ## Visual settings
 WINDOWED="YES"
@@ -64,7 +74,7 @@ main_menu() {
     echo ""
     echo "c) Compile Dwarf Fortress"
     echo "t) Install/Update Dwarf Therapist"
-    echo "u) Update Save Raws"
+    echo "s) Update/Backup DF Saves"
     echo ""
     echo "a) About & Version & Credits"
     echo "q) Exit Dwarf Builder"
@@ -81,6 +91,7 @@ main_menu() {
         a)  MENU="about";;
         c)  MENU="compile";;
         t)  MENU="therapist";;
+        s)  MENU="dfsave_one";;
         q)  MENU="exit_screen";;
         *)  ;;
     esac
@@ -224,11 +235,11 @@ save_one() {
     echo ""
     echo "Save Options"
     echo ""
-    echo "1) Compress Saves:. ${COMPRESSED_SAVES}"
-    echo "2) Autosave:....... ${AUTOSAVE}"
-    echo "3) Pause On Load:.. ${PAUSE_ON_LOAD}"
-    echo "4) Pause On Save:.. ${AUTOSAVE_PAUSE}"
-    echo "5) Backup Saves:... ${AUTOBACKUP}"
+    echo "1) Compress Saves:.... ${COMPRESSED_SAVES}"
+    echo "2) Autosave:.......... ${AUTOSAVE}"
+    echo "3) Pause On Load:..... ${PAUSE_ON_LOAD}"
+    echo "4) Pause On Save:..... ${AUTOSAVE_PAUSE}"
+    echo "5) Auto-Backup Saves:. ${AUTOBACKUP}"
     echo ""
     echo "b) Back to Main Menu"
     echo ""
@@ -247,6 +258,88 @@ save_one() {
     esac
 }
 
+dfsave_one() {
+    echo ""
+    echo "DF Save Operations"
+    echo ""
+    echo "b) Backup Files"
+    echo "r) Restore Files"
+    echo "u) Update Save Raws"
+    echo ""
+    echo "b) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        b)  MENU="dfsave_backup";;
+        r)  MENU="dfsave_restore";;
+        u)  MENU="dfsave_update";;
+        b)  MENU="main_menu";;
+        *)  ;;
+    esac
+}
+
+dfsave_backup() {
+    echo ""
+
+    if [ -d "${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save" ]
+    then
+        echo "Backing up game..."
+        rm -rf ${INSTALL_DIR}/backup_save
+        cp -rp ${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save ${INSTALL_DIR}/backup_save
+        echo "Finished..."
+    else
+        echo "Save not found..."
+    fi
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+dfsave_restore() {
+    echo ""
+
+    if [ -d "${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save" ]
+    then
+        echo "Restoring Game..."
+        rm -rf ${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save
+        cp -rp ${INSTALL_DIR}/backup_save ${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save
+        echo "Finished..."
+    else
+        echo "Save not found..."
+    fi
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+dfsave_update() {
+    echo ""
+
+    if [ -d "${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save" ]
+    then
+        echo "Updating Save Raws..."
+        # DO STUFF
+        echo "Finished..."
+    else
+        echo "Save not found..."
+    fi
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
 about() {
     echo ""
     echo "About Dwarf Builder:"
@@ -260,9 +353,8 @@ about() {
     echo "  prompt you for a new value or sometimes two values."
     echo "When you're comfortable with the settings, press 'b' to go back to the"
     echo "  main menu then press 'c' to compile your personalized Dwarf Fortress app!"
-    echo "At the main menu, you can also press 't' to install Dwarf Therapist"
-    echo "  or update to the newest version!"
-    echo "DF and DT will both be installed in the same directory as DB."
+    echo ""
+    echo "More information about each option can be found in the included readme."
     echo ""
     echo "Press any key to continue..."
 
@@ -315,13 +407,13 @@ about() {
 therapist() {
     echo ""
 
-    if [ -d ../../../DwarfTherapist.app/Contents/MacOS/etc/memory_layouts/osx ]
+    if [ -d "${INSTALL_DIR}/DwarfTherapist.app/Contents/MacOS/etc/memory_layouts/osx" ]
     then
         echo "Updating Dwarf Therapist..."
-        cp -rp "extras/DwarfTherapist.app/${DT_INI_FILE}" "../../../DwarfTherapist.app/${DT_INI_FILE}"
+        cp -rp "extras/DwarfTherapist.app/${DT_INI_FILE}" "${INSTALL_DIR}/DwarfTherapist.app/${DT_INI_FILE}"
     else
         echo "Installing Dwarf Therapist..."
-        cp -rp extras/DwarfTherapist.app ../../../
+        cp -rp extras/DwarfTherapist.app "${INSTALL_DIR}/"
     fi
 
     echo "Finished..."
@@ -501,8 +593,8 @@ compile() {
     cp extras/embark_profiles.txt build/data/init/
 
     echo "Cleaning Up..."
-    cp -rp extras/DwarfFortress.app ../../../DwarfFortress.app
-    mv build ../../../DwarfFortress.app/Contents/Resources
+    cp -rp extras/DwarfFortress.app "${INSTALL_DIR}/DwarfFortress.app"
+    mv build "${INSTALL_DIR}/DwarfFortress.app/Contents/Resources"
 
     echo ""
     echo "Press any key to continue..."
