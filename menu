@@ -1,14 +1,5 @@
 #!/bin/sh
 
-# TODO
-#   support for mods (e.g. fortress defense)
-#   stat/attribute/skill growth rate
-#   update savegames
-#   user defined default settings
-#   instruction manual pdf
-#   java or cocoa interface
-#   
-
 SCRIPT_ROOT=`dirname "${0}"`
 cd "${SCRIPT_ROOT}"
 
