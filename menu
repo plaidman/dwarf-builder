@@ -1,12 +1,5 @@
 #!/bin/sh
 
-# Changes:
-#   Dwarf Therapist support
-#   Tuffy font
-#   Updating About/Version
-#   Added a help screen
-#   Mayday tileset
-
 SCRIPT_ROOT=`dirname "${0}"`
 cd "${SCRIPT_ROOT}"
 
@@ -68,10 +61,10 @@ main_menu() {
     echo "2) Application Settings"
     echo "3) Gameplay Settings"
     echo "4) Save Settings"
-    echo "5) Utilities"
     echo ""
     echo "c) Compile Dwarf Fortress"
     echo "t) Install/Update Dwarf Therapist"
+    echo "u) Update Save Raws"
     echo ""
     echo "a) About & Version & Credits"
     echo "q) Exit Dwarf Builder"
@@ -279,7 +272,7 @@ about() {
     echo ""
     echo "Versions:"
     echo ""
-    echo "Dwarf Builder:... v4"
+    echo "Dwarf Builder:... v5"
     echo ""
     echo "Dwarf Fortress:.. 0.34.07"
     echo "Dwarf Therapist:. 0.6.12b4"
