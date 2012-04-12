@@ -11,12 +11,12 @@ SCRIPT_ROOT=`dirname "${0}"`
 cd "${SCRIPT_ROOT}"
 
 echo ""
-echo "creating a new Builder"
+echo "Creating a new Builder"
 
 cp -rp extras/DwarfBuilder.app .
 mkdir DwarfBuilder.app/Contents/Resources
 
-echo "populating materials..."
+echo "Populating materials..."
 
 cp -rp extras DwarfBuilder.app/Contents/Resources
 cp -rp ironhand DwarfBuilder.app/Contents/Resources
@@ -26,8 +26,12 @@ cp -rp phoebus DwarfBuilder.app/Contents/Resources
 cp -rp vanilla DwarfBuilder.app/Contents/Resources
 cp -p menu DwarfBuilder.app/Contents/Resources
 
-echo "cleaning up..."
+echo "Cleaning up..."
 
 rm -rf DwarfBuilder.app/Contents/Resources/extras/DwarfBuilder.app
 
-echo "finished!"
+echo "Finished! Don't forget to follow the checklist:"
+echo "1) Check app and executable icons."
+echo "2) Clean up .DS_Store, .git files."
+echo "3) Update instructions, then convert to PDF."
+echo "4) Zip up the app and the PDF."
