@@ -1,11 +1,17 @@
 #!/bin/sh
 
-SCRIPT_ROOT=`dirname "${0}"`
-cd "${SCRIPT_ROOT}"
+RESOURCES_DIR=`dirname "${0}"`
+cd "${RESOURCES_DIR}"
+
+DF_BUILT_APP=../../../DwarfFortress.app
+DF_SAVE_DIR=Contents/Resources/data/save
+DF_RAW_DIR=Contents/Resources/raw
+
+DT_BUILT_APP=../../../DwarfTherapist.app
+DT_INI_DIR=Contents/MacOS/etc/memory_layouts/osx
+DT_INI_FILE=v0.34.07.ini
 
 MENU="main_menu"
-DT_INI_FILE=Contents/MacOS/etc/memory_layouts/osx/v0.34.07.ini
-INSTALL_DIR=../../..
 
 ## Visual settings
 WINDOWED="YES"
@@ -275,11 +281,11 @@ dfsave_one() {
 dfsave_backup() {
     echo ""
 
-    if [ -d "${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save" ]
+    if [ -d "${DF_BUILT_APP}/${DF_SAVE_DIR}" ]
     then
         echo "Backing up game..."
-        rm -rf ${INSTALL_DIR}/backup_save
-        cp -rp ${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save ${INSTALL_DIR}/backup_save
+        rm -rf backup_save
+        cp -rp "${DF_BUILT_APP}/${DF_SAVE_DIR}" backup_save
         echo "Finished..."
     else
         echo "Save not found..."
@@ -295,11 +301,11 @@ dfsave_backup() {
 dfsave_restore() {
     echo ""
 
-    if [ -d "${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save" ]
+    if [ -d backup_save ]
     then
         echo "Restoring Game..."
-        rm -rf ${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save
-        cp -rp ${INSTALL_DIR}/backup_save ${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save
+        rm -rf "${DF_BUILT_APP}/${DF_SAVE_DIR}"
+        cp -rp backup_save "${DF_BUILT_APP}/${DF_SAVE_DIR}"
         echo "Finished..."
     else
         echo "Save not found..."
@@ -315,10 +321,19 @@ dfsave_restore() {
 dfsave_update() {
     echo ""
 
-    if [ -d "${INSTALL_DIR}/DwarfFortress.app/Contents/Resources/data/save" ]
+    if [ -d "${DF_BUILT_APP}/${DF_SAVE_DIR}" ]
     then
         echo "Updating Save Raws..."
-        # DO STUFF
+
+        for REGION in `ls "${DF_BUILT_APP}/${DF_SAVE_DIR}"`
+        do
+            if [ -d "${DF_BUILT_APP}/${DF_SAVE_DIR}/${REGION}/raw" ]
+            then
+                rm -rf "${DF_BUILT_APP}/${DF_SAVE_DIR}/${REGION}/raw"
+                cp -rp "${DF_BUILT_APP}/${DF_RAW_DIR}" "${DF_BUILT_APP}/${DF_SAVE_DIR}/${REGION}/"
+            fi
+        done
+
         echo "Finished..."
     else
         echo "Save not found..."
@@ -398,13 +413,13 @@ about() {
 therapist() {
     echo ""
 
-    if [ -d "${INSTALL_DIR}/DwarfTherapist.app/Contents/MacOS/etc/memory_layouts/osx" ]
+    if [ -d "${DT_BUILT_APP}/${DT_INI_DIR}" ]
     then
         echo "Updating Dwarf Therapist..."
-        cp -rp "extras/DwarfTherapist.app/${DT_INI_FILE}" "${INSTALL_DIR}/DwarfTherapist.app/${DT_INI_FILE}"
+        cp -rp "extras/DwarfTherapist.app/${DT_INI_DIR}/${DT_INI_FILE}" "${DT_BUILT_APP}/${DT_INI_DIR}/${DT_INI_FILE}"
     else
         echo "Installing Dwarf Therapist..."
-        cp -rp extras/DwarfTherapist.app "${INSTALL_DIR}/"
+        cp -rp extras/DwarfTherapist.app "${DT_BUILT_APP}"
     fi
 
     echo "Finished..."
@@ -584,8 +599,8 @@ compile() {
     cp extras/embark_profiles.txt build/data/init/
 
     echo "Cleaning Up..."
-    cp -rp extras/DwarfFortress.app "${INSTALL_DIR}/DwarfFortress.app"
-    mv build "${INSTALL_DIR}/DwarfFortress.app/Contents/Resources"
+    cp -rp extras/DwarfFortress.app "${DF_BUILT_APP}"
+    mv build "${DF_BUILT_APP}/Contents/Resources"
 
     echo ""
     echo "Press any key to continue..."
