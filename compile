@@ -3,26 +3,35 @@
 SCRIPT_ROOT=`dirname "${0}"`
 cd "${SCRIPT_ROOT}"
 
+RESOURCES_DIR="DwarfBuilder.app/Contents/Resources"
+DT_INI_DIR="Contents/MacOS/etc/memory_layouts/osx"
+
 echo ""
 echo "Creating a new Builder"
 
 cp -rp extras/DwarfBuilder.app .
-mkdir DwarfBuilder.app/Contents/Resources
+mkdir "${RESOURCES_DIR}"
 
 echo "Populating materials..."
+cp -rp extras "${RESOURCES_DIR}"
+cp -p menu "${RESOURCES_DIR}"
+cp -p extras/memory_layouts/* "${RESOURCES_DIR}/extras/DwarfTherapist.app/${DT_INI_DIR}/"
 
-cp -rp extras DwarfBuilder.app/Contents/Resources
-cp -rp ironhand DwarfBuilder.app/Contents/Resources
-cp -rp jolly DwarfBuilder.app/Contents/Resources
-cp -rp mayday DwarfBuilder.app/Contents/Resources
-cp -rp phoebus DwarfBuilder.app/Contents/Resources
-cp -rp vanilla DwarfBuilder.app/Contents/Resources
-cp -p menu DwarfBuilder.app/Contents/Resources
+echo "Adding tilesets..."
+cp -rp ironhand "${RESOURCES_DIR}"
+cp -rp jolly "${RESOURCES_DIR}"
+cp -rp mayday "${RESOURCES_DIR}"
+cp -rp phoebus "${RESOURCES_DIR}"
+
+echo "Reticulating splines"
+cp -rp vanilla "${RESOURCES_DIR}"
 
 echo "Cleaning up..."
 
-rm -rf DwarfBuilder.app/Contents/Resources/extras/DwarfBuilder.app
+rm -rf "${RESOURCES_DIR}/extras/DwarfBuilder.app"
+rm -rf "${RESOURCES_DIR}/extras/memory_layouts"
 
+echo ""
 echo "Finished! Don't forget to follow the checklist:"
 echo "1) Check app and executable icons."
 echo "2) Clean up .DS_Store, .git files."

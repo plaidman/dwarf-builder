@@ -3,13 +3,13 @@
 RESOURCES_DIR=`dirname "${0}"`
 cd "${RESOURCES_DIR}"
 
-DF_BUILT_APP=../../../DwarfFortress.app
-DF_SAVE_DIR=Contents/Resources/data/save
-DF_RAW_DIR=Contents/Resources/raw
+DF_BUILT_APP="../../../DwarfFortress.app"
+DF_SAVE_DIR="Contents/Resources/data/save"
+DF_RAW_DIR="Contents/Resources/raw"
 
-DT_BUILT_APP=../../../DwarfTherapist.app
-DT_INI_DIR=Contents/MacOS/etc/memory_layouts/osx
-DT_INI_FILE=v0.34.07.ini
+DT_BUILT_APP="../../../DwarfTherapist.app"
+DT_INI_DIR="Contents/MacOS/etc/memory_layouts/osx"
+DT_INI_FILE="v0.34.07.ini"
 
 MENU="main_menu"
 
@@ -59,6 +59,70 @@ then
     echo "vanilla package required"
     exit
 fi
+
+about() {
+    echo ""
+    echo "About Dwarf Builder:"
+    echo ""
+    echo "DB will allow you to customize and \"roll your own\" Dwarf Fortress app."
+    echo "No need to deal with copying folders or editing init files. Easy Peasy!"
+    echo ""
+    echo "On each menu screen, you'll see options with a number or letter."
+    echo "Press the number or letter to go into the sub-menu or edit the option."
+    echo "Some options will switch yes/no or other predefined values, and some will"
+    echo "  prompt you for a new value or sometimes two values."
+    echo "When you're comfortable with the settings, press 'b' to go back to the"
+    echo "  main menu then press 'c' to compile your personalized Dwarf Fortress app!"
+    echo ""
+    echo "More information about each option can be found in the included readme."
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    tput clear
+
+    echo ""
+    echo "Versions:"
+    echo ""
+    echo "Dwarf Builder:... v5"
+    echo ""
+    echo "Dwarf Fortress:.. 0.34.07"
+    echo "Dwarf Therapist:. 0.6.12b4"
+    echo ""
+    echo "Phoebus:......... v00"
+    echo "Ironhand:........ 0.68"
+    echo "Jolly Bastion:... v3"
+    echo "Masterwork:...... 1.7.1"
+    echo "Mayday:.......... 07a"
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    tput clear
+
+    echo ""
+    echo "Credits:"
+    echo ""
+    echo "Tilesets:"
+    echo "  Phoebus (Phoebus)"
+    echo "  Ironhand (Ironhand)"
+    echo "  AlexanderOcias (Jolly Bastion)"
+    echo "  Mike Mayday (Mayday)"
+    echo "  Meph (Masterwork Font)"
+    echo "Icons:"
+    echo "  Linkdragon (DF icon)"
+    echo "  <unknown> (DB icon)"
+    echo "Embark Profiles: Phoebus, Mayday, Cap'n Duck, & LNP"
+    echo "Dwarf Therapist: DwarfEngineer"
+    echo "Extended Soundtrack: Meph, Solifuge, Yakoff Oskanoff"
+    echo ""
+    echo "And of course TOADY for this crazy game!"
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
 
 main_menu() {
     echo ""
@@ -346,70 +410,6 @@ dfsave_update() {
     MENU="main_menu"
 }
 
-about() {
-    echo ""
-    echo "About Dwarf Builder:"
-    echo ""
-    echo "DB will allow you to customize and \"roll your own\" Dwarf Fortress app."
-    echo "No need to deal with copying folders or editing init files. Easy Peasy!"
-    echo ""
-    echo "On each menu screen, you'll see options with a number or letter."
-    echo "Press the number or letter to go into the sub-menu or edit the option."
-    echo "Some options will switch yes/no or other predefined values, and some will"
-    echo "  prompt you for a new value or sometimes two values."
-    echo "When you're comfortable with the settings, press 'b' to go back to the"
-    echo "  main menu then press 'c' to compile your personalized Dwarf Fortress app!"
-    echo ""
-    echo "More information about each option can be found in the included readme."
-    echo ""
-    echo "Press any key to continue..."
-
-    read -s -n1
-    tput clear
-
-    echo ""
-    echo "Versions:"
-    echo ""
-    echo "Dwarf Builder:... v5"
-    echo ""
-    echo "Dwarf Fortress:.. 0.34.07"
-    echo "Dwarf Therapist:. 0.6.12b4"
-    echo ""
-    echo "Phoebus:......... v00"
-    echo "Ironhand:........ 0.68"
-    echo "Jolly Bastion:... v3"
-    echo "Masterwork:...... 1.7.1"
-    echo "Mayday:.......... 07a"
-    echo ""
-    echo "Press any key to continue..."
-
-    read -s -n1
-    tput clear
-
-    echo ""
-    echo "Credits:"
-    echo ""
-    echo "Tilesets:"
-    echo "  Phoebus (Phoebus)"
-    echo "  Ironhand (Ironhand)"
-    echo "  AlexanderOcias (Jolly Bastion)"
-    echo "  Mike Mayday (Mayday)"
-    echo "  Meph (Masterwork Font)"
-    echo "Icons:"
-    echo "  Linkdragon (DF icon)"
-    echo "  <unknown> (DB icon)"
-    echo "Embark Profiles: Phoebus, Mayday, Cap'n Duck, & LNP"
-    echo "Dwarf Therapist: DwarfEngineer"
-    echo "Extended Soundtrack: Meph, Solifuge, Yakoff Oskanoff"
-    echo ""
-    echo "And of course TOADY for this crazy game!"
-    echo ""
-    echo "Press any key to continue..."
-
-    read -s -n1
-    MENU="main_menu"
-}
-
 therapist() {
     echo ""
 
@@ -432,7 +432,7 @@ therapist() {
 
 compile() {
     echo ""
-    echo "Setting up vanilla...."
+    echo "Setting up Vanilla...."
 
     cp -rp vanilla build
     rm -rf build/raw/graphics/example/
@@ -595,10 +595,10 @@ compile() {
             cp extras/default.ttf build/data/art/font.ttf;;
     esac
 
-    echo "Reticulating Splines..."
+    echo "Reticulating splines..."
     cp extras/embark_profiles.txt build/data/init/
 
-    echo "Cleaning Up..."
+    echo "Cleaning up..."
     cp -rp extras/DwarfFortress.app "${DF_BUILT_APP}"
     mv build "${DF_BUILT_APP}/Contents/Resources"
 
