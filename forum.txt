@@ -42,6 +42,8 @@ and several other popular options (from packages like LNP and Masterwork)[/spoil
   Ability to update DF save raws.
   Allow saving DB settings.
   Backup and restore of DB settings and backed up DF saved regions.
+  Added an instruction manual.
+  Support for Windowed X/Y (both graphical mode and non-graphical).
 0.34.07v4
   Supports Dwarf Therapist (autodetect install or update).
   Added a new tileset (mayday).

@@ -25,6 +25,9 @@ FONT_FILE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" FONT_FILE`
 FPS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" FPS`
 IDLERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" IDLERS`
 SHOW_FLOW_AMOUNTS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" SHOW_FLOW_AMOUNTS`
+RESIZABLE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" RESIZABLE`
+WINDOWEDX=`defaults read "${RESOURCES_DIR}/DwarfBuilder" WINDOWEDX`
+WINDOWEDY=`defaults read "${RESOURCES_DIR}/DwarfBuilder" WINDOWEDY`
 
 ## App Settings
 SOUND=`defaults read "${RESOURCES_DIR}/DwarfBuilder" SOUND`
@@ -139,8 +142,8 @@ main_menu() {
     echo "t) Install/Update Dwarf Therapist"
     echo "u) DwarfBuilder Utilities"
     echo ""
-    echo "w) Save and Quit Dwarf Builder"
-    echo "q) Quit Without Saving"
+    echo "q) Save and Quit Dwarf Builder"
+    echo "w) Quit Without Saving"
     echo ""
     echo "a) About & Version & Credits"
     echo ""
@@ -157,8 +160,8 @@ main_menu() {
         a|A)  MENU="about";;
         c|C)  MENU="construct";;
         t|T)  MENU="therapist";;
-        w|W)  MENU="save_exit";;
-        q|Q)  MENU="exit_screen";;
+        q|Q)  MENU="save_exit";;
+        w|W)  MENU="exit_screen";;
         *)    ;;
     esac
 }
@@ -176,6 +179,7 @@ visual_one() {
     echo "7) Show FPS:.......... ${FPS}"
     echo "8) Show Idlers:....... ${IDLERS}"
     echo "9) Liquid Depth:...... ${SHOW_FLOW_AMOUNTS}"
+    echo "0) Window Size:....... ${WINDOWEDX}x${WINDOWEDY}"
     echo ""
     echo "m) Back to Main Menu"
     echo ""
@@ -193,6 +197,10 @@ visual_one() {
         7)    FPS=`toggle_yn ${FPS}`;;
         8)    IDLERS=`toggle_idlers ${IDLERS}`;;
         9)    SHOW_FLOW_AMOUNTS=`toggle_yn ${SHOW_FLOW_AMOUNTS}`;;
+        0)    echo ""; echo ""; echo "Window Size X: \c"
+              WINDOWEDX=`input_int ${WINDOWEDX}`
+              echo "Window Size Y: \c"
+              WINDOWEDY=`input_int ${WINDOWEDY}`;;
         m|M)  MENU="main_menu";;
         *)    ;;
     esac
@@ -366,6 +374,9 @@ save_exit() {
     defaults write "${RESOURCES_DIR}/DwarfBuilder" FPS ${FPS}
     defaults write "${RESOURCES_DIR}/DwarfBuilder" IDLERS ${IDLERS}
     defaults write "${RESOURCES_DIR}/DwarfBuilder" SHOW_FLOW_AMOUNTS ${SHOW_FLOW_AMOUNTS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" RESIZABLE ${RESIZABLE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" WINDOWEDX ${WINDOWEDX}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" WINDOWEDY ${WINDOWEDY}
 
     ## App Settings
     defaults write "${RESOURCES_DIR}/DwarfBuilder" SOUND ${SOUND}
@@ -615,7 +626,11 @@ construct() {
         s/\[WINDOWED:.*\]/\[WINDOWED:${WINDOWED}\]/g;
         s/\[SOUND:.*\]/\[SOUND:${SOUND}\]/g;
         s/\[VOLUME:.*\]/\[VOLUME:${VOLUME}\]/g;
-        s/\[RESIZABLE:.*\]/\[RESIZABLE:YES\]/g;
+        s/\[RESIZABLE:.*\]/\[RESIZABLE:${RESIZABLE}\]/g;
+        s/\[WINDOWEDX:.*\]/\[WINDOWEDX:${WINDOWEDX}\]/g;
+        s/\[WINDOWEDY:.*\]/\[WINDOWEDY:${WINDOWEDY}\]/g;
+        s/\[GRAPHICS_WINDOWEDX:.*\]/\[GRAPHICS_WINDOWEDX:${WINDOWEDX}\]/g;
+        s/\[GRAPHICS_WINDOWEDY:.*\]/\[GRAPHICS_WINDOWEDY:${WINDOWEDY}\]/g;
         s/\[GRAPHICS:.*\]/\[GRAPHICS:${GRAPHICS}\]/g;
         s/\[TRUETYPE:.*\]/\[TRUETYPE:${TRUETYPE}\]/g;
         s/\[FPS:.*\]/\[FPS:${FPS}\]/g;
@@ -628,7 +643,19 @@ construct() {
     if [ ${TILESET} == "DEFAULT_SQUARE" ]
     then
         sed -e "s/\[FONT:.*\]/\[FONT:curses_square_16x16.png\]/g;
-            s/\[FULLFONT:.*\]/\[FULLFONT:curses_square_16x16.png\]/g;" \
+            s/\[FULLFONT:.*\]/\[FULLFONT:curses_square_16x16.png\]/g; \
+            s/\[GRAPHICS_FONT:.*\]/\[GRAPHICS_FONT:curses_square_16x16.png\]/g; \
+            s/\[GRAPHICS_FULLFONT:.*\]/\[GRAPHICS_FULLFONT:curses_square_16x16.png\]/g;" \
+            -i".bak" build/data/init/init.txt
+        rm build/data/init/init.txt.bak
+    fi
+
+    if [ ${TILESET} == "DEFAULT_TALL" ]
+    then
+        sed -e "s/\[FONT:.*\]/\[FONT:curses_800x600.png\]/g;
+            s/\[FULLFONT:.*\]/\[FULLFONT:curses_800x600.png\]/g; \
+            s/\[GRAPHICS_FONT:.*\]/\[GRAPHICS_FONT:curses_800x600.png\]/g; \
+            s/\[GRAPHICS_FULLFONT:.*\]/\[GRAPHICS_FULLFONT:curses_800x600.png\]/g;" \
             -i".bak" build/data/init/init.txt
         rm build/data/init/init.txt.bak
     fi
@@ -714,8 +741,25 @@ construct() {
     cp extras/embark_profiles.txt build/data/init/
 
     echo "Cleaning up..."
+
+    if [ -d "${DF_BUILT_APP}" ]
+    then
+        if [ -d "${DF_BUILT_APP}/${DF_SAVE_DIR}" ]
+        then
+            mv "${DF_BUILT_APP}/${DF_SAVE_DIR}" dfcompile_backup
+        fi
+
+        rm -rf "${DF_BUILT_APP}"
+    fi
+
     cp -rp extras/DwarfFortress.app "${DF_BUILT_APP}"
     mv build "${DF_BUILT_APP}/Contents/Resources"
+
+    if [ -d dfcompile_backup ]
+    then
+        mv dfcompile_backup "${DF_BUILT_APP}/${DF_SAVE_DIR}"
+        rm -rf dfcompile_backup
+    fi
 
     echo ""
     echo "Press any key to continue..."

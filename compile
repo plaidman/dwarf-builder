@@ -24,6 +24,9 @@ defaults write "${SCRIPT_ROOT}/DwarfBuilder" FONT_FILE IRONHAND
 defaults write "${SCRIPT_ROOT}/DwarfBuilder" FPS YES
 defaults write "${SCRIPT_ROOT}/DwarfBuilder" IDLERS TOP
 defaults write "${SCRIPT_ROOT}/DwarfBuilder" SHOW_FLOW_AMOUNTS YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" RESIZABLE YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" WINDOWEDX 1280
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" WINDOWEDY 600
 
 ## App Settings
 defaults write "${SCRIPT_ROOT}/DwarfBuilder" SOUND NO
