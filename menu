@@ -3,6 +3,8 @@
 RESOURCES_DIR=`dirname "${0}"`
 cd "${RESOURCES_DIR}"
 
+DB_BACKUP_DIR="../../../DwarfBuilder_backup"
+
 DF_BUILT_APP="../../../DwarfFortress.app"
 DF_SAVE_DIR="Contents/Resources/data/save"
 DF_RAW_DIR="Contents/Resources/raw"
@@ -14,45 +16,45 @@ DT_INI_FILE="v0.34.07.ini"
 MENU="main_menu"
 
 ## Visual settings
-WINDOWED="YES"
-INTRO="NO"
-GRAPHICS="YES"
-TILESET="IRONHAND"
-TRUETYPE="NO"
-FONT_FILE="IRONHAND"
-FPS="YES"
-IDLERS="TOP"
-SHOW_FLOW_AMOUNTS="YES"
+WINDOWED=`defaults read "${RESOURCES_DIR}/DwarfBuilder" WINDOWED`
+INTRO=`defaults read "${RESOURCES_DIR}/DwarfBuilder" INTRO`
+GRAPHICS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" GRAPHICS`
+TILESET=`defaults read "${RESOURCES_DIR}/DwarfBuilder" TILESET`
+TRUETYPE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" TRUETYPE`
+FONT_FILE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" FONT_FILE`
+FPS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" FPS`
+IDLERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" IDLERS`
+SHOW_FLOW_AMOUNTS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" SHOW_FLOW_AMOUNTS`
 
 ## App Settings
-SOUND="NO"
-VOLUME="255"
-SOUNDTRACK="DEFAULT"
-KEYBINDS="LAPTOP"
-FPS_CAP="100"
-G_FPS_CAP="50"
+SOUND=`defaults read "${RESOURCES_DIR}/DwarfBuilder" SOUND`
+VOLUME=`defaults read "${RESOURCES_DIR}/DwarfBuilder" VOLUME`
+SOUNDTRACK=`defaults read "${RESOURCES_DIR}/DwarfBuilder" SOUNDTRACK`
+KEYBINDS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" KEYBINDS`
+FPS_CAP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" FPS_CAP`
+G_FPS_CAP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" G_FPS_CAP`
 
 ## Gameplay Settings
-EMBARK_WARNING_ALWAYS="YES"
-POPULATION_CAP="100"
-BABY_CHILD_CAP_ABS="15"
-BABY_CHILD_CAP_PER="20"
-EMBARK_RECTANGLE_WIDTH="3"
-EMBARK_RECTANGLE_HEIGHT="3"
-TEMPERATURE="YES"
-WEATHER="YES"
-INVADERS="YES"
-GRAZING="NO"
-AQUIFERS="NO"
-RUST="NO"
-CAVEINS="YES"
+EMBARK_WARNING_ALWAYS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" EMBARK_WARNING_ALWAYS`
+POPULATION_CAP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" POPULATION_CAP`
+BABY_CHILD_CAP_ABS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_ABS`
+BABY_CHILD_CAP_PER=`defaults read "${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_PER`
+EMBARK_RECTANGLE_WIDTH=`defaults read "${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_WIDTH`
+EMBARK_RECTANGLE_HEIGHT=`defaults read "${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_HEIGHT`
+TEMPERATURE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" TEMPERATURE`
+WEATHER=`defaults read "${RESOURCES_DIR}/DwarfBuilder" WEATHER`
+INVADERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" INVADERS`
+GRAZING=`defaults read "${RESOURCES_DIR}/DwarfBuilder" GRAZING`
+AQUIFERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AQUIFERS`
+RUST=`defaults read "${RESOURCES_DIR}/DwarfBuilder" RUST`
+CAVEINS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" CAVEINS`
 
 ##Save Settings
-COMPRESSED_SAVES="YES"
-AUTOSAVE="SEASONAL"
-PAUSE_ON_LOAD="YES"
-AUTOSAVE_PAUSE="YES"
-AUTOBACKUP="NO"
+COMPRESSED_SAVES=`defaults read "${RESOURCES_DIR}/DwarfBuilder" COMPRESSED_SAVES`
+AUTOSAVE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE`
+PAUSE_ON_LOAD=`defaults read "${RESOURCES_DIR}/DwarfBuilder" PAUSE_ON_LOAD`
+AUTOSAVE_PAUSE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE_PAUSE`
+AUTOBACKUP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOBACKUP`
 
 if [ ! -d vanilla ]
 then
@@ -71,8 +73,8 @@ about() {
     echo "Press the number or letter to go into the sub-menu or edit the option."
     echo "Some options will switch yes/no or other predefined values, and some will"
     echo "  prompt you for a new value or sometimes two values."
-    echo "When you're comfortable with the settings, press 'b' to go back to the"
-    echo "  main menu then press 'c' to compile your personalized Dwarf Fortress app!"
+    echo "When you're comfortable with the settings, press 'm' to go back to the"
+    echo "  main menu then press 'c' to construct your personalized Dwarf Fortress app!"
     echo ""
     echo "More information about each option can be found in the included readme."
     echo ""
@@ -133,28 +135,31 @@ main_menu() {
     echo "3) Gameplay Settings"
     echo "4) Save Settings"
     echo ""
-    echo "c) Compile Dwarf Fortress"
+    echo "c) Contstruct Dwarf Fortress"
     echo "t) Install/Update Dwarf Therapist"
-    echo "s) Update/Backup DF Saves"
+    echo "u) DwarfBuilder Utilities"
+    echo ""
+    echo "w) Save and Quit Dwarf Builder"
+    echo "q) Quit Without Saving"
     echo ""
     echo "a) About & Version & Credits"
-    echo "q) Exit Dwarf Builder"
     echo ""
     echo "Choice -> \c"
 
     read -s -n1 CHOICE
 
     case ${CHOICE} in
-        1)  MENU="visual_one";;
-        2)  MENU="application_one";;
-        3)  MENU="gameplay_one";;
-        4)  MENU="save_one";;
-        a)  MENU="about";;
-        c)  MENU="compile";;
-        t)  MENU="therapist";;
-        s)  MENU="dfsave_one";;
-        q)  MENU="exit_screen";;
-        *)  ;;
+        1)    MENU="visual_one";;
+        2)    MENU="application_one";;
+        3)    MENU="gameplay_one";;
+        4)    MENU="save_one";;
+        u|U)  MENU="dbutils_one";;
+        a|A)  MENU="about";;
+        c|C)  MENU="construct";;
+        t|T)  MENU="therapist";;
+        w|W)  MENU="save_exit";;
+        q|Q)  MENU="exit_screen";;
+        *)    ;;
     esac
 }
 
@@ -172,24 +177,24 @@ visual_one() {
     echo "8) Show Idlers:....... ${IDLERS}"
     echo "9) Liquid Depth:...... ${SHOW_FLOW_AMOUNTS}"
     echo ""
-    echo "b) Back to Main Menu"
+    echo "m) Back to Main Menu"
     echo ""
     echo "Choice -> \c"
 
     read -s -n1 CHOICE
 
     case ${CHOICE} in
-        1)  WINDOWED=`toggle_yn ${WINDOWED}`;;
-        2)  INTRO=`toggle_yn ${INTRO}`;;
-        3)  TILESET=`toggle_tileset ${TILESET}`;;
-        4)  GRAPHICS=`toggle_yn ${GRAPHICS}`;;
-        5)  TRUETYPE=`toggle_yn ${TRUETYPE}`;;
-        6)  FONT_FILE=`toggle_fontfile ${FONT_FILE}`;;
-        7)  FPS=`toggle_yn ${FPS}`;;
-        8)  IDLERS=`toggle_idlers ${IDLERS}`;;
-        9)  SHOW_FLOW_AMOUNTS=`toggle_yn ${SHOW_FLOW_AMOUNTS}`;;
-        b)  MENU="main_menu";;
-        *)  ;;
+        1)    WINDOWED=`toggle_yn ${WINDOWED}`;;
+        2)    INTRO=`toggle_yn ${INTRO}`;;
+        3)    TILESET=`toggle_tileset ${TILESET}`;;
+        4)    GRAPHICS=`toggle_yn ${GRAPHICS}`;;
+        5)    TRUETYPE=`toggle_yn ${TRUETYPE}`;;
+        6)    FONT_FILE=`toggle_fontfile ${FONT_FILE}`;;
+        7)    FPS=`toggle_yn ${FPS}`;;
+        8)    IDLERS=`toggle_idlers ${IDLERS}`;;
+        9)    SHOW_FLOW_AMOUNTS=`toggle_yn ${SHOW_FLOW_AMOUNTS}`;;
+        m|M)  MENU="main_menu";;
+        *)    ;;
     esac
 }
 
@@ -204,24 +209,24 @@ application_one() {
     echo "5) FPS Cap:....... ${FPS_CAP}"
     echo "6) Graphical Cap:. ${G_FPS_CAP}"
     echo ""
-    echo "b) Back to Main Menu"
+    echo "m) Back to Main Menu"
     echo ""
     echo "Choice -> \c"
 
     read -s -n1 CHOICE
 
     case ${CHOICE} in
-        1)  SOUND=`toggle_yn ${SOUND}`;;
-        2)  echo ""; echo ""; echo "Volume (0-255): \c"
-            VOLUME=`input_int ${VOLUME}`;;
-        3)  SOUNDTRACK=`toggle_soundtrack ${SOUNDTRACK}`;;
-        4)  KEYBINDS=`toggle_keybinds ${KEYBINDS}`;;
-        5)  echo ""; echo ""; echo "Processing FPS Cap (try 50-200): \c"
-            FPS_CAP=`input_int ${FPS_CAP}`;;
-        6)  echo ""; echo ""; echo "Graphical FPS Cap (try 30-90): \c"
-            G_FPS_CAP=`input_int ${G_FPS_CAP}`;;
-        b)  MENU="main_menu";;
-        *)  ;;
+        1)    SOUND=`toggle_yn ${SOUND}`;;
+        2)    echo ""; echo ""; echo "Volume (0-255): \c"
+              VOLUME=`input_int ${VOLUME}`;;
+        3)    SOUNDTRACK=`toggle_soundtrack ${SOUNDTRACK}`;;
+        4)    KEYBINDS=`toggle_keybinds ${KEYBINDS}`;;
+        5)    echo ""; echo ""; echo "Processing FPS Cap (try 50-200): \c"
+              FPS_CAP=`input_int ${FPS_CAP}`;;
+        6)    echo ""; echo ""; echo "Graphical FPS Cap (try 30-90): \c"
+              G_FPS_CAP=`input_int ${G_FPS_CAP}`;;
+        m|M)  MENU="main_menu";;
+        *)    ;;
     esac
 }
 
@@ -237,29 +242,29 @@ gameplay_one() {
     echo "6) Weather:........ ${WEATHER}"
     echo ""
     echo "n) Next Page"
-    echo "b) Back to Main Menu"
+    echo "m) Back to Main Menu"
     echo ""
     echo "Choice -> \c"
 
     read -s -n1 CHOICE
 
     case ${CHOICE} in
-        1)  EMBARK_WARNING_ALWAYS=`toggle_yn ${EMBARK_WARNING_ALWAYS}`;;
-        2)  echo ""; echo ""; echo "Population Cap: (try 50-200): \c"
-            POPULATION_CAP=`input_int ${POPULATION_CAP}`;;
-        3)  echo ""; echo ""; echo "Absolute Baby/Child Cap (try 0-20): \c"
-            BABY_CHILD_CAP_ABS=`input_int ${BABY_CHILD_CAP_ABS}`
-            echo "Percentage (of adults) Cap (try 0-50): \c"
-            BABY_CHILD_CAP_PER=`input_int ${BABY_CHILD_CAP_PER}`;;
-        4)  echo ""; echo ""; echo "Embark Rectangle Width (try 2-5): \c"
-            EMBARK_RECTANGLE_WIDTH=`input_int ${EMBARK_RECTANGLE_WIDTH}`
-            echo "Embark Rectangle Height (try 2-5): \c"
-            EMBARK_RECTANGLE_HEIGHT=`input_int ${EMBARK_RECTANGLE_HEIGHT}`;;
-        5)  TEMPERATURE=`toggle_yn ${TEMPERATURE}`;;
-        6)  WEATHER=`toggle_yn ${WEATHER}`;;
-        n)  MENU="gameplay_two";;
-        b)  MENU="main_menu";;
-        *)  ;;
+        1)    EMBARK_WARNING_ALWAYS=`toggle_yn ${EMBARK_WARNING_ALWAYS}`;;
+        2)    echo ""; echo ""; echo "Population Cap: (try 50-200): \c"
+              POPULATION_CAP=`input_int ${POPULATION_CAP}`;;
+        3)    echo ""; echo ""; echo "Absolute Baby/Child Cap (try 0-20): \c"
+              BABY_CHILD_CAP_ABS=`input_int ${BABY_CHILD_CAP_ABS}`
+              echo "Percentage (of adults) Cap (try 0-50): \c"
+              BABY_CHILD_CAP_PER=`input_int ${BABY_CHILD_CAP_PER}`;;
+        4)    echo ""; echo ""; echo "Embark Rectangle Width (try 2-5): \c"
+              EMBARK_RECTANGLE_WIDTH=`input_int ${EMBARK_RECTANGLE_WIDTH}`
+              echo "Embark Rectangle Height (try 2-5): \c"
+              EMBARK_RECTANGLE_HEIGHT=`input_int ${EMBARK_RECTANGLE_HEIGHT}`;;
+        5)    TEMPERATURE=`toggle_yn ${TEMPERATURE}`;;
+        6)    WEATHER=`toggle_yn ${WEATHER}`;;
+        n|N)  MENU="gameplay_two";;
+        m|M)  MENU="main_menu";;
+        *)    ;;
     esac
 }
 
@@ -274,21 +279,21 @@ gameplay_two() {
     echo "5) Cave-Ins:........ ${CAVEINS}"
     echo ""
     echo "p) Previous Page"
-    echo "b) Back to Main Menu"
+    echo "m) Back to Main Menu"
     echo ""
     echo "Choice -> \c"
 
     read -s -n1 CHOICE
 
     case ${CHOICE} in
-        1)  INVADERS=`toggle_yn ${INVADERS}`;;
-        2)  GRAZING=`toggle_yn ${GRAZING}`;;
-        3)  AQUIFERS=`toggle_yn ${AQUIFERS}`;;
-        4)  RUST=`toggle_yn ${RUST}`;;
-        5)  CAVEINS=`toggle_yn ${CAVEINS}`;;
-        p)  MENU="gameplay_one";;
-        b)  MENU="main_menu";;
-        *)  ;;
+        1)    INVADERS=`toggle_yn ${INVADERS}`;;
+        2)    GRAZING=`toggle_yn ${GRAZING}`;;
+        3)    AQUIFERS=`toggle_yn ${AQUIFERS}`;;
+        4)    RUST=`toggle_yn ${RUST}`;;
+        5)    CAVEINS=`toggle_yn ${CAVEINS}`;;
+        p|P)  MENU="gameplay_one";;
+        m|M)  MENU="main_menu";;
+        *)    ;;
     esac
 }
 
@@ -302,44 +307,143 @@ save_one() {
     echo "4) Pause On Save:..... ${AUTOSAVE_PAUSE}"
     echo "5) Auto-Backup Saves:. ${AUTOBACKUP}"
     echo ""
-    echo "b) Back to Main Menu"
+    echo "m) Back to Main Menu"
     echo ""
     echo "Choice -> \c"
 
     read -s -n1 CHOICE
 
     case ${CHOICE} in
-        1)  COMPRESSED_SAVES=`toggle_yn ${COMPRESSED_SAVES}`;;
-        2)  AUTOSAVE=`toggle_autosave ${AUTOSAVE}`;;
-        3)  PAUSE_ON_LOAD=`toggle_yn ${PAUSE_ON_LOAD}`;;
-        4)  AUTOSAVE_PAUSE=`toggle_yn ${AUTOSAVE_PAUSE}`;;
-        5)  AUTOBACKUP=`toggle_yn ${AUTOBACKUP}`;;
-        b)  MENU="main_menu";;
-        *)  ;;
+        1)    COMPRESSED_SAVES=`toggle_yn ${COMPRESSED_SAVES}`;;
+        2)    AUTOSAVE=`toggle_autosave ${AUTOSAVE}`;;
+        3)    PAUSE_ON_LOAD=`toggle_yn ${PAUSE_ON_LOAD}`;;
+        4)    AUTOSAVE_PAUSE=`toggle_yn ${AUTOSAVE_PAUSE}`;;
+        5)    AUTOBACKUP=`toggle_yn ${AUTOBACKUP}`;;
+        m|M)  MENU="main_menu";;
+        *)    ;;
     esac
 }
 
-dfsave_one() {
+dbutils_one() {
     echo ""
-    echo "DF Save Operations"
+    echo "DB Settings"
     echo ""
-    echo "b) Backup Files"
-    echo "r) Restore Files"
-    echo "u) Update Save Raws"
+    echo "1) Backup DB Files"
+    echo "2) Restore DB Files"
     echo ""
-    echo "b) Back to Main Menu"
+    echo "3) Update Save Raws"
+    echo "4) Backup DF Regions"
+    echo "5) Restore Regions"
+    echo ""
+    echo "m) Back to Main Menu"
     echo ""
     echo "Choice -> \c"
 
     read -s -n1 CHOICE
 
     case ${CHOICE} in
-        b)  MENU="dfsave_backup";;
-        r)  MENU="dfsave_restore";;
-        u)  MENU="dfsave_update";;
-        b)  MENU="main_menu";;
-        *)  ;;
+        1)    MENU="db_backup";;
+        2)    MENU="db_restore";;
+        3)    MENU="dfsave_update";;
+        4)    MENU="dfsave_backup";;
+        5)    MENU="dfsave_restore";;
+        m|M)  MENU="main_menu";;
+        *)    ;;
     esac
+}
+
+save_exit() {
+    echo ""
+    echo "Saving settings..."
+
+    ## Visual settings
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" WINDOWED ${WINDOWED}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" INTRO ${INTRO}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" GRAPHICS ${GRAPHICS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" TILESET ${TILESET}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" TRUETYPE ${TRUETYPE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" FONT_FILE ${FONT_FILE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" FPS ${FPS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" IDLERS ${IDLERS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" SHOW_FLOW_AMOUNTS ${SHOW_FLOW_AMOUNTS}
+
+    ## App Settings
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" SOUND ${SOUND}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" VOLUME ${VOLUME}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" SOUNDTRACK ${SOUNDTRACK}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" KEYBINDS ${KEYBINDS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" FPS_CAP ${FPS_CAP}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" G_FPS_CAP ${G_FPS_CAP}
+
+    ## Gameplay Settings
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" EMBARK_WARNING_ALWAYS ${EMBARK_WARNING_ALWAYS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" POPULATION_CAP ${POPULATION_CAP}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_ABS ${BABY_CHILD_CAP_ABS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_PER ${BABY_CHILD_CAP_PER}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_WIDTH ${EMBARK_RECTANGLE_WIDTH}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_HEIGHT ${EMBARK_RECTANGLE_HEIGHT}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" TEMPERATURE ${TEMPERATURE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" WEATHER ${WEATHER}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" INVADERS ${INVADERS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" GRAZING ${GRAZING}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" AQUIFERS ${AQUIFERS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" RUST ${RUST}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" CAVEINS ${CAVEINS}
+
+    ##Save Settings
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" COMPRESSED_SAVES ${COMPRESSED_SAVES}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE ${AUTOSAVE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" PAUSE_ON_LOAD ${PAUSE_ON_LOAD}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE_PAUSE ${AUTOSAVE_PAUSE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" AUTOBACKUP ${AUTOBACKUP}
+
+    exit_screen
+}
+
+db_backup() {
+    echo ""
+    echo "Backing up DwarfBuilder files..."
+
+    rm -rf "${DB_BACKUP_DIR}"
+    mkdir "${DB_BACKUP_DIR}"
+    cp -p DwarfBuilder.plist "${DB_BACKUP_DIR}/"
+
+    if [ -d dfsave_backup ]
+    then
+        cp -rp dfsave_backup "${DB_BACKUP_DIR}/"
+    fi
+
+    echo "Finished..."
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+db_restore() {
+    echo ""
+
+    if [ -d "${DB_BACKUP_DIR}" ]
+    then
+        echo "Restoring DwarfBuilder files..."
+
+        cp -p "${DB_BACKUP_DIR}/DwarfBuilder.plist" .
+        cp -rp "${DB_BACKUP_DIR}/dfsave_backup" .
+        rm -rf "${DB_BACKUP_DIR}"
+
+        echo "Finished..."
+        echo "Please restart the app to reload settings."
+        exit
+    else
+        echo "Save not found..."
+    fi
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
 }
 
 dfsave_backup() {
@@ -348,8 +452,10 @@ dfsave_backup() {
     if [ -d "${DF_BUILT_APP}/${DF_SAVE_DIR}" ]
     then
         echo "Backing up game..."
-        rm -rf backup_save
-        cp -rp "${DF_BUILT_APP}/${DF_SAVE_DIR}" backup_save
+
+        rm -rf dfsave_backup
+        cp -rp "${DF_BUILT_APP}/${DF_SAVE_DIR}" dfsave_backup
+
         echo "Finished..."
     else
         echo "Save not found..."
@@ -365,11 +471,13 @@ dfsave_backup() {
 dfsave_restore() {
     echo ""
 
-    if [ -d backup_save ]
+    if [ -d dfsave_backup ]
     then
         echo "Restoring Game..."
+
         rm -rf "${DF_BUILT_APP}/${DF_SAVE_DIR}"
-        cp -rp backup_save "${DF_BUILT_APP}/${DF_SAVE_DIR}"
+        cp -rp dfsave_backup "${DF_BUILT_APP}/${DF_SAVE_DIR}"
+
         echo "Finished..."
     else
         echo "Save not found..."
@@ -430,7 +538,7 @@ therapist() {
     MENU="main_menu"
 }
 
-compile() {
+construct() {
     echo ""
     echo "Setting up Vanilla...."
 
@@ -516,7 +624,14 @@ compile() {
         s/\[COMPRESSED_SAVES:.*\]/\[COMPRESSED_SAVES:${COMPRESSED_SAVES}\]/g;" \
         -i".bak" build/data/init/init.txt
     rm build/data/init/init.txt.bak
-    sleep 1
+
+    if [ ${TILESET} == "DEFAULT_SQUARE" ]
+    then
+        sed -e "s/\[FONT:.*\]/\[FONT:curses_square_16x16.png\]/g;
+            s/\[FULLFONT:.*\]/\[FULLFONT:curses_square_16x16.png\]/g;" \
+            -i".bak" build/data/init/init.txt
+        rm build/data/init/init.txt.bak
+    fi
 
     if [ ${AQUIFERS} == "NO" ]
     then
@@ -638,12 +753,13 @@ toggle_yn() {
 
 toggle_tileset() {
     case ${1} in
-        "DEFAULT") echo "IRONHAND";;
+        "DEFAULT_TALL") echo "IRONHAND";;
         "IRONHAND") echo "PHOEBUS";;
         "PHOEBUS") echo "JOLLY_SQUARE";;
         "JOLLY_SQUARE") echo "JOLLY_TALL";;
         "JOLLY_TALL") echo "MAYDAY";;
-        *) echo "DEFAULT";;
+        "MAYDAY") echo "DEFAULT_SQUARE";;
+        *) echo "DEFAULT_TALL";;
     esac
 }
 

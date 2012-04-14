@@ -1,0 +1,80 @@
+[center]
+[size=36pt][b]Dwarf Builder[/b][/size]
+[size=18pt][b]For Mac OSX[/b][/size]
+[b]0.34.07v4[/b]
+[url=https://github.com/downloads/plaidman/dwarf-builder/DwarfBuilder.03407v4.zip]Download Here[/url]
+[/center]
+
+[color=yellow][size=14pt][b]Description[/b][/size][/color]:
+This mac app will guide you through Dwarf Fortress configuration options and allow you to "[i]roll your own[/i]" native mac app for Dwarf Fortress featuring the config options and tileset you chose. No need to deal with copying folders or editing init files. Basically it's an app which creates your very own customized Dwarf Fortress app. Easy Peasy!
+
+[color=yellow][size=14pt][b]How To Use It[/b][/size][/color]:
+This mod will open a terminal window and present a menu for the various config option categories. Press the number or letter corresponding to the options. Some options will toggle between yes/no, some options will prompt for input, and some will cycle through several predefined values. When you're comfortable with the options, go back to the main menu and choose 'construct'. The script will apply the settings and create a shiny new customized DwarfFortress.app in the same directory as the DwarfBuilder.app.
+
+Dwarf Therapist can also be installed and updated from this package (on the main menu).
+
+[color=yellow][size=14pt][b]Featured Options[/b][/size][/color]:
+[spoiler]Native support for Dwarf Therapist (DT is included in this package)
+Tilesets
+  Ironhand
+  Phoebus
+  Jolly Bastion
+  Mayday
+Fonts (can be mixed/matched with tilesets)
+  Ironhand
+  Phoebus
+  Tuffy
+  Masterwork
+Extended Soundtrack
+Laptop Keybindings
+Embark Profiles
+Disable Aquifers
+Disable Grazing
+Disable Skill/Stat Rusting
+Backup and Update DF Savegames 
+Save DB Custom Settings
+
+and several other popular options (from packages like LNP and Masterwork)[/spoiler]
+
+[color=yellow][size=14pt][b]History[/b][/size][/color]:
+[spoiler]0.34.07v5
+  Allow backup and restore of DF saved regions.
+  Ability to update DF save raws.
+  Allow saving DB settings.
+  Backup and restore of DB settings and backed up DF saved regions.
+0.34.07v4
+  Supports Dwarf Therapist (autodetect install or update).
+  Added a new tileset (mayday).
+  Added a new font (tuffy).
+0.34.07v3
+  Terminal window now starts in front.
+0.34.07v2
+  Added a few new gameplay and app settings from the init files.
+  Grouped the settings into better sub-categories.
+  Added an extended soundtrack option.
+  Added an option to select from four different TTF fonts to use.
+0.34.07v1
+  Initial version with several options to configure.[/spoiler]
+
+[color=yellow][size=14pt][b]Upcoming Changes[/b][/size][/color]:
+[spoiler]support for mods (e.g. fortress defense)
+stat/attribute/skill growth rate
+update savegames
+user defined default settings
+java or cocoa interface[/spoiler]
+
+[color=yellow][size=14pt][b]Thanks[/b][/size][/color]:
+[url=http://www.bay12forums.com/smf/index.php?topic=53180.0]Ironhand[/url] (Tileset and Font)
+[url=http://www.bay12forums.com/smf/index.php?topic=57557.0]Phoebus[/url] (Tileset, Embark Profile, and Font)
+[url=http://www.bay12forums.com/smf/index.php?topic=104261.0]AlexanderOcias[/url] (Jolly Bastion)
+[url=http://www.bay12forums.com/smf/index.php?topic=98196.0]Meph[/url] (Masterwork Font, Extended Soundtrack)
+[url=http://www.bay12forums.com/smf/index.php?topic=53649.0]Mike Mayday[/url] (Tileset, Embark Profile)
+
+[url=http://linkdragon.deviantart.com/art/Dwarf-Fortress-Icon-113316213]Linkdragon[/url] (DF Icon)
+<unknown> (DB Icon)
+
+[url=http://www.bay12forums.com/smf/index.php?topic=66525.0]DwarfEngineer[/url] (Dwarf Therapist)
+[url=http://www.youtube.com/user/captnduck]Cap'n Duck[/url] (Embark Profile, Tutorial Videos)
+  
+And of course, Toady for this awesome game!
+
