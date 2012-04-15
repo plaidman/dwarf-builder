@@ -116,7 +116,7 @@ about() {
     echo "  Meph (Masterwork Font)"
     echo "Icons:"
     echo "  Linkdragon (DF icon)"
-    echo "  <unknown> (DB icon)"
+    echo "  MIK (DB icon)"
     echo "Embark Profiles: Phoebus, Mayday, Cap'n Duck, & LNP"
     echo "Dwarf Therapist: DwarfEngineer"
     echo "Extended Soundtrack: Meph, Solifuge, Yakoff Oskanoff"

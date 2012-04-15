@@ -2,7 +2,8 @@
 [size=36pt][b]Dwarf Builder[/b][/size]
 [size=18pt][b]For Mac OSX[/b][/size]
 [b]0.34.07v4[/b]
-[url=https://github.com/downloads/plaidman/dwarf-builder/DwarfBuilder.03407v4.zip]Download Here[/url]
+[url=https://github.com/downloads/plaidman/dwarf-builder/DwarfBuilder.03407v5.zip]Download Here[/url]
+[url=https://github.com/downloads/plaidman/dwarf-builder/manual.pdf]PDF Manual[/url]
 [/center]
 
 [color=yellow][size=14pt][b]Description[/b][/size][/color]:
@@ -38,12 +39,12 @@ and several other popular options (from packages like LNP and Masterwork)[/spoil
 
 [color=yellow][size=14pt][b]History[/b][/size][/color]:
 [spoiler]0.34.07v5
-  Allow backup and restore of DF saved regions.
+  Allow backup and restore of DF saved games.
   Ability to update DF save raws.
-  Allow saving DB settings.
-  Backup and restore of DB settings and backed up DF saved regions.
+  DB now remembers your settings.
   Added an instruction manual.
-  Support for Windowed X/Y (both graphical mode and non-graphical).
+  Support for windowed width and height.
+  Default tileset now comes in "tall" and "square" flavors.
 0.34.07v4
   Supports Dwarf Therapist (autodetect install or update).
   Added a new tileset (mayday).
@@ -59,11 +60,11 @@ and several other popular options (from packages like LNP and Masterwork)[/spoil
   Initial version with several options to configure.[/spoiler]
 
 [color=yellow][size=14pt][b]Upcoming Changes[/b][/size][/color]:
-[spoiler]support for mods (e.g. fortress defense)
-stat/attribute/skill growth rate
-update savegames
-user defined default settings
-java or cocoa interface[/spoiler]
+[spoiler]support for soundsense
+open DF folder from DB
+disable pausing on cavein
+pause on striking warm/wet stone
+attribute growth rate[/spoiler]
 
 [color=yellow][size=14pt][b]Thanks[/b][/size][/color]:
 [url=http://www.bay12forums.com/smf/index.php?topic=53180.0]Ironhand[/url] (Tileset and Font)
@@ -73,10 +74,9 @@ java or cocoa interface[/spoiler]
 [url=http://www.bay12forums.com/smf/index.php?topic=53649.0]Mike Mayday[/url] (Tileset, Embark Profile)
 
 [url=http://linkdragon.deviantart.com/art/Dwarf-Fortress-Icon-113316213]Linkdragon[/url] (DF Icon)
-<unknown> (DB Icon)
+[url=http://miksminis.blogspot.com/2008/03/blog-post.html]MIK[/url] (DB Icon)
 
 [url=http://www.bay12forums.com/smf/index.php?topic=66525.0]DwarfEngineer[/url] (Dwarf Therapist)
 [url=http://www.youtube.com/user/captnduck]Cap'n Duck[/url] (Embark Profile, Tutorial Videos)
   
 And of course, Toady for this awesome game!
-
