@@ -1,258 +1,69 @@
 #!/bin/sh
 
-# Changes:
-#   Dwarf Therapist support
-#   Tuffy font
-#   Updating About/Version
-#   Added a help screen
-#   Mayday tileset
+RESOURCES_DIR=`dirname "${0}"`
+cd "${RESOURCES_DIR}"
 
-SCRIPT_ROOT=`dirname "${0}"`
-cd "${SCRIPT_ROOT}"
+DB_BACKUP_DIR="../../../DwarfBuilder_backup"
+
+DF_BUILT_APP="../../../DwarfFortress.app"
+DF_SAVE_DIR="Contents/Resources/data/save"
+DF_RAW_DIR="Contents/Resources/raw"
+
+DT_BUILT_APP="../../../DwarfTherapist.app"
+DT_INI_DIR="Contents/MacOS/etc/memory_layouts/osx"
+DT_INI_FILE="v0.34.07.ini"
 
 MENU="main_menu"
-DT_INI_FILE=Contents/MacOS/etc/memory_layouts/osx/v0.34.07.ini
 
 ## Visual settings
-WINDOWED="YES"
-INTRO="NO"
-GRAPHICS="YES"
-TILESET="IRONHAND"
-TRUETYPE="NO"
-FONT_FILE="IRONHAND"
-FPS="YES"
-IDLERS="TOP"
-SHOW_FLOW_AMOUNTS="YES"
+WINDOWED=`defaults read "${RESOURCES_DIR}/DwarfBuilder" WINDOWED`
+INTRO=`defaults read "${RESOURCES_DIR}/DwarfBuilder" INTRO`
+GRAPHICS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" GRAPHICS`
+TILESET=`defaults read "${RESOURCES_DIR}/DwarfBuilder" TILESET`
+TRUETYPE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" TRUETYPE`
+FONT_FILE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" FONT_FILE`
+FPS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" FPS`
+IDLERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" IDLERS`
+SHOW_FLOW_AMOUNTS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" SHOW_FLOW_AMOUNTS`
+RESIZABLE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" RESIZABLE`
+WINDOWEDX=`defaults read "${RESOURCES_DIR}/DwarfBuilder" WINDOWEDX`
+WINDOWEDY=`defaults read "${RESOURCES_DIR}/DwarfBuilder" WINDOWEDY`
 
 ## App Settings
-SOUND="NO"
-VOLUME="255"
-SOUNDTRACK="DEFAULT"
-KEYBINDS="LAPTOP"
-FPS_CAP="100"
-G_FPS_CAP="50"
+SOUND=`defaults read "${RESOURCES_DIR}/DwarfBuilder" SOUND`
+VOLUME=`defaults read "${RESOURCES_DIR}/DwarfBuilder" VOLUME`
+SOUNDTRACK=`defaults read "${RESOURCES_DIR}/DwarfBuilder" SOUNDTRACK`
+KEYBINDS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" KEYBINDS`
+FPS_CAP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" FPS_CAP`
+G_FPS_CAP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" G_FPS_CAP`
 
 ## Gameplay Settings
-EMBARK_WARNING_ALWAYS="YES"
-POPULATION_CAP="100"
-BABY_CHILD_CAP_ABS="15"
-BABY_CHILD_CAP_PER="20"
-EMBARK_RECTANGLE_WIDTH="3"
-EMBARK_RECTANGLE_HEIGHT="3"
-TEMPERATURE="YES"
-WEATHER="YES"
-INVADERS="YES"
-GRAZING="NO"
-AQUIFERS="NO"
-RUST="NO"
-CAVEINS="YES"
+EMBARK_WARNING_ALWAYS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" EMBARK_WARNING_ALWAYS`
+POPULATION_CAP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" POPULATION_CAP`
+BABY_CHILD_CAP_ABS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_ABS`
+BABY_CHILD_CAP_PER=`defaults read "${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_PER`
+EMBARK_RECTANGLE_WIDTH=`defaults read "${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_WIDTH`
+EMBARK_RECTANGLE_HEIGHT=`defaults read "${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_HEIGHT`
+TEMPERATURE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" TEMPERATURE`
+WEATHER=`defaults read "${RESOURCES_DIR}/DwarfBuilder" WEATHER`
+INVADERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" INVADERS`
+GRAZING=`defaults read "${RESOURCES_DIR}/DwarfBuilder" GRAZING`
+AQUIFERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AQUIFERS`
+RUST=`defaults read "${RESOURCES_DIR}/DwarfBuilder" RUST`
+CAVEINS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" CAVEINS`
 
 ##Save Settings
-COMPRESSED_SAVES="YES"
-AUTOSAVE="SEASONAL"
-PAUSE_ON_LOAD="YES"
-AUTOSAVE_PAUSE="YES"
-AUTOBACKUP="NO"
+COMPRESSED_SAVES=`defaults read "${RESOURCES_DIR}/DwarfBuilder" COMPRESSED_SAVES`
+AUTOSAVE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE`
+PAUSE_ON_LOAD=`defaults read "${RESOURCES_DIR}/DwarfBuilder" PAUSE_ON_LOAD`
+AUTOSAVE_PAUSE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE_PAUSE`
+AUTOBACKUP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOBACKUP`
 
 if [ ! -d vanilla ]
 then
     echo "vanilla package required"
     exit
 fi
-
-main_menu() {
-    echo ""
-    echo "Choose a Category:"
-    echo ""
-    echo "1) Visual Settings"
-    echo "2) Application Settings"
-    echo "3) Gameplay Settings"
-    echo "4) Save Settings"
-    echo "5) Utilities"
-    echo ""
-    echo "c) Compile Dwarf Fortress"
-    echo "t) Install/Update Dwarf Therapist"
-    echo ""
-    echo "a) About & Version & Credits"
-    echo "q) Exit Dwarf Builder"
-    echo ""
-    echo "Choice -> \c"
-
-    read -s -n1 CHOICE
-
-    case ${CHOICE} in
-        1)  MENU="visual_one";;
-        2)  MENU="application_one";;
-        3)  MENU="gameplay_one";;
-        4)  MENU="save_one";;
-        a)  MENU="about";;
-        c)  MENU="compile";;
-        t)  MENU="therapist";;
-        q)  MENU="exit_screen";;
-        *)  ;;
-    esac
-}
-
-visual_one() {
-    echo ""
-    echo "Visual Options"
-    echo ""
-    echo "1) Window Mode:....... ${WINDOWED}"
-    echo "2) Show Intro:........ ${INTRO}"
-    echo "3) Which Tileset:..... ${TILESET}"
-    echo "4) Creature Graphics:. ${GRAPHICS}"
-    echo "5) Use Font:.......... ${TRUETYPE}"
-    echo "6) Which Font:........ ${FONT_FILE}"
-    echo "7) Show FPS:.......... ${FPS}"
-    echo "8) Show Idlers:....... ${IDLERS}"
-    echo "9) Liquid Depth:...... ${SHOW_FLOW_AMOUNTS}"
-    echo ""
-    echo "b) Back to Main Menu"
-    echo ""
-    echo "Choice -> \c"
-
-    read -s -n1 CHOICE
-
-    case ${CHOICE} in
-        1)  WINDOWED=`toggle_yn ${WINDOWED}`;;
-        2)  INTRO=`toggle_yn ${INTRO}`;;
-        3)  TILESET=`toggle_tileset ${TILESET}`;;
-        4)  GRAPHICS=`toggle_yn ${GRAPHICS}`;;
-        5)  TRUETYPE=`toggle_yn ${TRUETYPE}`;;
-        6)  FONT_FILE=`toggle_fontfile ${FONT_FILE}`;;
-        7)  FPS=`toggle_yn ${FPS}`;;
-        8)  IDLERS=`toggle_idlers ${IDLERS}`;;
-        9)  SHOW_FLOW_AMOUNTS=`toggle_yn ${SHOW_FLOW_AMOUNTS}`;;
-        b)  MENU="main_menu";;
-        *)  ;;
-    esac
-}
-
-application_one() {
-    echo ""
-    echo "Application Options"
-    echo ""
-    echo "1) Sound:......... ${SOUND}"
-    echo "2) Volume:........ ${VOLUME}"
-    echo "3) Soundtrack:.... ${SOUNDTRACK}"
-    echo "4) Keybindings:... ${KEYBINDS}"
-    echo "5) FPS Cap:....... ${FPS_CAP}"
-    echo "6) Graphical Cap:. ${G_FPS_CAP}"
-    echo ""
-    echo "b) Back to Main Menu"
-    echo ""
-    echo "Choice -> \c"
-
-    read -s -n1 CHOICE
-
-    case ${CHOICE} in
-        1)  SOUND=`toggle_yn ${SOUND}`;;
-        2)  echo ""; echo ""; echo "Volume (0-255): \c"
-            VOLUME=`input_int ${VOLUME}`;;
-        3)  SOUNDTRACK=`toggle_soundtrack ${SOUNDTRACK}`;;
-        4)  KEYBINDS=`toggle_keybinds ${KEYBINDS}`;;
-        5)  echo ""; echo ""; echo "Processing FPS Cap (try 50-200): \c"
-            FPS_CAP=`input_int ${FPS_CAP}`;;
-        6)  echo ""; echo ""; echo "Graphical FPS Cap (try 30-90): \c"
-            G_FPS_CAP=`input_int ${G_FPS_CAP}`;;
-        b)  MENU="main_menu";;
-        *)  ;;
-    esac
-}
-
-gameplay_one() {
-    echo ""
-    echo "Gameplay Options (page 1)"
-    echo ""
-    echo "1) Embark Warning:. ${EMBARK_WARNING_ALWAYS}"
-    echo "2) Population Cap:. ${POPULATION_CAP}"
-    echo "3) Baby/Child Cap:. ${BABY_CHILD_CAP_ABS}:${BABY_CHILD_CAP_PER}"
-    echo "4) Embark Size:.... ${EMBARK_RECTANGLE_WIDTH}:${EMBARK_RECTANGLE_HEIGHT}"
-    echo "5) Temperature:.... ${TEMPERATURE}"
-    echo "6) Weather:........ ${WEATHER}"
-    echo ""
-    echo "n) Next Page"
-    echo "b) Back to Main Menu"
-    echo ""
-    echo "Choice -> \c"
-
-    read -s -n1 CHOICE
-
-    case ${CHOICE} in
-        1)  EMBARK_WARNING_ALWAYS=`toggle_yn ${EMBARK_WARNING_ALWAYS}`;;
-        2)  echo ""; echo ""; echo "Population Cap: (try 50-200): \c"
-            POPULATION_CAP=`input_int ${POPULATION_CAP}`;;
-        3)  echo ""; echo ""; echo "Absolute Baby/Child Cap (try 0-20): \c"
-            BABY_CHILD_CAP_ABS=`input_int ${BABY_CHILD_CAP_ABS}`
-            echo "Percentage (of adults) Cap (try 0-50): \c"
-            BABY_CHILD_CAP_PER=`input_int ${BABY_CHILD_CAP_PER}`;;
-        4)  echo ""; echo ""; echo "Embark Rectangle Width (try 2-5): \c"
-            EMBARK_RECTANGLE_WIDTH=`input_int ${EMBARK_RECTANGLE_WIDTH}`
-            echo "Embark Rectangle Height (try 2-5): \c"
-            EMBARK_RECTANGLE_HEIGHT=`input_int ${EMBARK_RECTANGLE_HEIGHT}`;;
-        5)  TEMPERATURE=`toggle_yn ${TEMPERATURE}`;;
-        6)  WEATHER=`toggle_yn ${WEATHER}`;;
-        n)  MENU="gameplay_two";;
-        b)  MENU="main_menu";;
-        *)  ;;
-    esac
-}
-
-gameplay_two() {
-    echo ""
-    echo "Gameplay Options (page 2)"
-    echo ""
-    echo "1) Invaders:........ ${INVADERS}"
-    echo "2) Grazing Animals:. ${GRAZING}"
-    echo "3) Aquifers:........ ${AQUIFERS}"
-    echo "4) Skill Rusting:... ${RUST}"
-    echo "5) Cave-Ins:........ ${CAVEINS}"
-    echo ""
-    echo "p) Previous Page"
-    echo "b) Back to Main Menu"
-    echo ""
-    echo "Choice -> \c"
-
-    read -s -n1 CHOICE
-
-    case ${CHOICE} in
-        1)  INVADERS=`toggle_yn ${INVADERS}`;;
-        2)  GRAZING=`toggle_yn ${GRAZING}`;;
-        3)  AQUIFERS=`toggle_yn ${AQUIFERS}`;;
-        4)  RUST=`toggle_yn ${RUST}`;;
-        5)  CAVEINS=`toggle_yn ${CAVEINS}`;;
-        p)  MENU="gameplay_one";;
-        b)  MENU="main_menu";;
-        *)  ;;
-    esac
-}
-
-save_one() {
-    echo ""
-    echo "Save Options"
-    echo ""
-    echo "1) Compress Saves:. ${COMPRESSED_SAVES}"
-    echo "2) Autosave:....... ${AUTOSAVE}"
-    echo "3) Pause On Load:.. ${PAUSE_ON_LOAD}"
-    echo "4) Pause On Save:.. ${AUTOSAVE_PAUSE}"
-    echo "5) Backup Saves:... ${AUTOBACKUP}"
-    echo ""
-    echo "b) Back to Main Menu"
-    echo ""
-    echo "Choice -> \c"
-
-    read -s -n1 CHOICE
-
-    case ${CHOICE} in
-        1)  COMPRESSED_SAVES=`toggle_yn ${COMPRESSED_SAVES}`;;
-        2)  AUTOSAVE=`toggle_autosave ${AUTOSAVE}`;;
-        3)  PAUSE_ON_LOAD=`toggle_yn ${PAUSE_ON_LOAD}`;;
-        4)  AUTOSAVE_PAUSE=`toggle_yn ${AUTOSAVE_PAUSE}`;;
-        5)  AUTOBACKUP=`toggle_yn ${AUTOBACKUP}`;;
-        b)  MENU="main_menu";;
-        *)  ;;
-    esac
-}
 
 about() {
     echo ""
@@ -265,11 +76,10 @@ about() {
     echo "Press the number or letter to go into the sub-menu or edit the option."
     echo "Some options will switch yes/no or other predefined values, and some will"
     echo "  prompt you for a new value or sometimes two values."
-    echo "When you're comfortable with the settings, press 'b' to go back to the"
-    echo "  main menu then press 'c' to compile your personalized Dwarf Fortress app!"
-    echo "At the main menu, you can also press 't' to install Dwarf Therapist"
-    echo "  or update to the newest version!"
-    echo "DF and DT will both be installed in the same directory as DB."
+    echo "When you're comfortable with the settings, press 'm' to go back to the"
+    echo "  main menu then press 'c' to construct your personalized Dwarf Fortress app!"
+    echo ""
+    echo "More information about each option can be found in the included readme."
     echo ""
     echo "Press any key to continue..."
 
@@ -279,7 +89,7 @@ about() {
     echo ""
     echo "Versions:"
     echo ""
-    echo "Dwarf Builder:... v4"
+    echo "Dwarf Builder:... v5"
     echo ""
     echo "Dwarf Fortress:.. 0.34.07"
     echo "Dwarf Therapist:. 0.6.12b4"
@@ -319,16 +129,299 @@ about() {
     MENU="main_menu"
 }
 
-therapist() {
+main_menu() {
     echo ""
+    echo "Choose a Category:"
+    echo ""
+    echo "1) Visual Settings"
+    echo "2) Application Settings"
+    echo "3) Gameplay Settings"
+    echo "4) Save Settings"
+    echo ""
+    echo "c) Contstruct Dwarf Fortress"
+    echo "t) Install/Update Dwarf Therapist"
+    echo "u) Dwarf Builder Utilities"
+    echo ""
+    echo "q) Save and Quit Dwarf Builder"
+    echo "w) Quit Without Saving"
+    echo ""
+    echo "a) About & Version & Credits"
+    echo ""
+    echo "Choice -> \c"
 
-    if [ -d ../../../DwarfTherapist.app/Contents/MacOS/etc/memory_layouts/osx ]
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)    MENU="visual_one";;
+        2)    MENU="application_one";;
+        3)    MENU="gameplay_one";;
+        4)    MENU="save_one";;
+        u|U)  MENU="dbutils_one";;
+        a|A)  MENU="about";;
+        c|C)  MENU="construct";;
+        t|T)  MENU="therapist";;
+        q|Q)  MENU="save_exit";;
+        w|W)  MENU="exit_screen";;
+        *)    ;;
+    esac
+}
+
+visual_one() {
+    echo ""
+    echo "Visual Settings"
+    echo ""
+    echo "1) Window Mode:....... ${WINDOWED}"
+    echo "2) Show Intro:........ ${INTRO}"
+    echo "3) Which Tileset:..... ${TILESET}"
+    echo "4) Creature Graphics:. ${GRAPHICS}"
+    echo "5) Use Font:.......... ${TRUETYPE}"
+    echo "6) Which Font:........ ${FONT_FILE}"
+    echo "7) Show FPS:.......... ${FPS}"
+    echo "8) Show Idlers:....... ${IDLERS}"
+    echo "9) Liquid Depth:...... ${SHOW_FLOW_AMOUNTS}"
+    echo "0) Window Size:....... ${WINDOWEDX}x${WINDOWEDY}"
+    echo ""
+    echo "m) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)    WINDOWED=`toggle_yn ${WINDOWED}`;;
+        2)    INTRO=`toggle_yn ${INTRO}`;;
+        3)    TILESET=`toggle_tileset ${TILESET}`;;
+        4)    GRAPHICS=`toggle_yn ${GRAPHICS}`;;
+        5)    TRUETYPE=`toggle_yn ${TRUETYPE}`;;
+        6)    FONT_FILE=`toggle_fontfile ${FONT_FILE}`;;
+        7)    FPS=`toggle_yn ${FPS}`;;
+        8)    IDLERS=`toggle_idlers ${IDLERS}`;;
+        9)    SHOW_FLOW_AMOUNTS=`toggle_yn ${SHOW_FLOW_AMOUNTS}`;;
+        0)    echo ""; echo ""; echo "Window Size X: \c"
+              WINDOWEDX=`input_int ${WINDOWEDX}`
+              echo "Window Size Y: \c"
+              WINDOWEDY=`input_int ${WINDOWEDY}`;;
+        m|M)  MENU="main_menu";;
+        *)    ;;
+    esac
+}
+
+application_one() {
+    echo ""
+    echo "Application Settings"
+    echo ""
+    echo "1) Sound:......... ${SOUND}"
+    echo "2) Volume:........ ${VOLUME}"
+    echo "3) Soundtrack:.... ${SOUNDTRACK}"
+    echo "4) Keybindings:... ${KEYBINDS}"
+    echo "5) FPS Cap:....... ${FPS_CAP}"
+    echo "6) Graphical Cap:. ${G_FPS_CAP}"
+    echo ""
+    echo "m) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)    SOUND=`toggle_yn ${SOUND}`;;
+        2)    echo ""; echo ""; echo "Volume (0-255): \c"
+              VOLUME=`input_int ${VOLUME}`;;
+        3)    SOUNDTRACK=`toggle_soundtrack ${SOUNDTRACK}`;;
+        4)    KEYBINDS=`toggle_keybinds ${KEYBINDS}`;;
+        5)    echo ""; echo ""; echo "Processing FPS Cap (try 50-200): \c"
+              FPS_CAP=`input_int ${FPS_CAP}`;;
+        6)    echo ""; echo ""; echo "Graphical FPS Cap (try 30-90): \c"
+              G_FPS_CAP=`input_int ${G_FPS_CAP}`;;
+        m|M)  MENU="main_menu";;
+        *)    ;;
+    esac
+}
+
+gameplay_one() {
+    echo ""
+    echo "Gameplay Settings (page 1)"
+    echo ""
+    echo "1) Embark Warning:. ${EMBARK_WARNING_ALWAYS}"
+    echo "2) Population Cap:. ${POPULATION_CAP}"
+    echo "3) Baby/Child Cap:. ${BABY_CHILD_CAP_ABS}:${BABY_CHILD_CAP_PER}"
+    echo "4) Embark Size:.... ${EMBARK_RECTANGLE_WIDTH}:${EMBARK_RECTANGLE_HEIGHT}"
+    echo "5) Temperature:.... ${TEMPERATURE}"
+    echo "6) Weather:........ ${WEATHER}"
+    echo ""
+    echo "n) Next Page"
+    echo "m) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)    EMBARK_WARNING_ALWAYS=`toggle_yn ${EMBARK_WARNING_ALWAYS}`;;
+        2)    echo ""; echo ""; echo "Population Cap: (try 50-200): \c"
+              POPULATION_CAP=`input_int ${POPULATION_CAP}`;;
+        3)    echo ""; echo ""; echo "Absolute Baby/Child Cap (try 0-20): \c"
+              BABY_CHILD_CAP_ABS=`input_int ${BABY_CHILD_CAP_ABS}`
+              echo "Percentage (of adults) Cap (try 0-50): \c"
+              BABY_CHILD_CAP_PER=`input_int ${BABY_CHILD_CAP_PER}`;;
+        4)    echo ""; echo ""; echo "Embark Rectangle Width (try 2-5): \c"
+              EMBARK_RECTANGLE_WIDTH=`input_int ${EMBARK_RECTANGLE_WIDTH}`
+              echo "Embark Rectangle Height (try 2-5): \c"
+              EMBARK_RECTANGLE_HEIGHT=`input_int ${EMBARK_RECTANGLE_HEIGHT}`;;
+        5)    TEMPERATURE=`toggle_yn ${TEMPERATURE}`;;
+        6)    WEATHER=`toggle_yn ${WEATHER}`;;
+        n|N)  MENU="gameplay_two";;
+        m|M)  MENU="main_menu";;
+        *)    ;;
+    esac
+}
+
+gameplay_two() {
+    echo ""
+    echo "Gameplay Settings (page 2)"
+    echo ""
+    echo "1) Invaders:........ ${INVADERS}"
+    echo "2) Grazing Animals:. ${GRAZING}"
+    echo "3) Aquifers:........ ${AQUIFERS}"
+    echo "4) Skill Rusting:... ${RUST}"
+    echo "5) Cave-Ins:........ ${CAVEINS}"
+    echo ""
+    echo "p) Previous Page"
+    echo "m) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)    INVADERS=`toggle_yn ${INVADERS}`;;
+        2)    GRAZING=`toggle_yn ${GRAZING}`;;
+        3)    AQUIFERS=`toggle_yn ${AQUIFERS}`;;
+        4)    RUST=`toggle_yn ${RUST}`;;
+        5)    CAVEINS=`toggle_yn ${CAVEINS}`;;
+        p|P)  MENU="gameplay_one";;
+        m|M)  MENU="main_menu";;
+        *)    ;;
+    esac
+}
+
+save_one() {
+    echo ""
+    echo "Save Settings"
+    echo ""
+    echo "1) Compress Saves:.... ${COMPRESSED_SAVES}"
+    echo "2) Autosave:.......... ${AUTOSAVE}"
+    echo "3) Pause On Load:..... ${PAUSE_ON_LOAD}"
+    echo "4) Pause On Save:..... ${AUTOSAVE_PAUSE}"
+    echo "5) Auto-Backup Saves:. ${AUTOBACKUP}"
+    echo ""
+    echo "m) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)    COMPRESSED_SAVES=`toggle_yn ${COMPRESSED_SAVES}`;;
+        2)    AUTOSAVE=`toggle_autosave ${AUTOSAVE}`;;
+        3)    PAUSE_ON_LOAD=`toggle_yn ${PAUSE_ON_LOAD}`;;
+        4)    AUTOSAVE_PAUSE=`toggle_yn ${AUTOSAVE_PAUSE}`;;
+        5)    AUTOBACKUP=`toggle_yn ${AUTOBACKUP}`;;
+        m|M)  MENU="main_menu";;
+        *)    ;;
+    esac
+}
+
+dbutils_one() {
+    echo ""
+    echo "Dwarf Builder Utilities"
+    echo ""
+    echo "1) Backup DB Files"
+    echo "2) Restore DB Files"
+    echo ""
+    echo "3) Update Save Raws"
+    echo "4) Backup DF Saves"
+    echo "5) Restore DF Saves"
+    echo ""
+    echo "m) Back to Main Menu"
+    echo ""
+    echo "Choice -> \c"
+
+    read -s -n1 CHOICE
+
+    case ${CHOICE} in
+        1)    MENU="db_backup";;
+        2)    MENU="db_restore";;
+        3)    MENU="dfsave_update";;
+        4)    MENU="dfsave_backup";;
+        5)    MENU="dfsave_restore";;
+        m|M)  MENU="main_menu";;
+        *)    ;;
+    esac
+}
+
+save_exit() {
+    echo ""
+    echo "Saving settings..."
+
+    ## Visual settings
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" WINDOWED ${WINDOWED}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" INTRO ${INTRO}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" GRAPHICS ${GRAPHICS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" TILESET ${TILESET}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" TRUETYPE ${TRUETYPE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" FONT_FILE ${FONT_FILE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" FPS ${FPS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" IDLERS ${IDLERS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" SHOW_FLOW_AMOUNTS ${SHOW_FLOW_AMOUNTS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" RESIZABLE ${RESIZABLE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" WINDOWEDX ${WINDOWEDX}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" WINDOWEDY ${WINDOWEDY}
+
+    ## App Settings
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" SOUND ${SOUND}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" VOLUME ${VOLUME}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" SOUNDTRACK ${SOUNDTRACK}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" KEYBINDS ${KEYBINDS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" FPS_CAP ${FPS_CAP}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" G_FPS_CAP ${G_FPS_CAP}
+
+    ## Gameplay Settings
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" EMBARK_WARNING_ALWAYS ${EMBARK_WARNING_ALWAYS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" POPULATION_CAP ${POPULATION_CAP}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_ABS ${BABY_CHILD_CAP_ABS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_PER ${BABY_CHILD_CAP_PER}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_WIDTH ${EMBARK_RECTANGLE_WIDTH}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_HEIGHT ${EMBARK_RECTANGLE_HEIGHT}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" TEMPERATURE ${TEMPERATURE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" WEATHER ${WEATHER}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" INVADERS ${INVADERS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" GRAZING ${GRAZING}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" AQUIFERS ${AQUIFERS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" RUST ${RUST}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" CAVEINS ${CAVEINS}
+
+    ##Save Settings
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" COMPRESSED_SAVES ${COMPRESSED_SAVES}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE ${AUTOSAVE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" PAUSE_ON_LOAD ${PAUSE_ON_LOAD}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE_PAUSE ${AUTOSAVE_PAUSE}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" AUTOBACKUP ${AUTOBACKUP}
+
+    exit_screen
+}
+
+db_backup() {
+    echo ""
+    echo "Backing up Dwarf Builder files..."
+
+    rm -rf "${DB_BACKUP_DIR}"
+    mkdir "${DB_BACKUP_DIR}"
+    cp -p DwarfBuilder.plist "${DB_BACKUP_DIR}/"
+
+    if [ -d dfsave_backup ]
     then
-        echo "Updating Dwarf Therapist..."
-        cp -rp "extras/DwarfTherapist.app/${DT_INI_FILE}" "../../../DwarfTherapist.app/${DT_INI_FILE}"
-    else
-        echo "Installing Dwarf Therapist..."
-        cp -rp extras/DwarfTherapist.app ../../../
+        cp -rp dfsave_backup "${DB_BACKUP_DIR}/"
     fi
 
     echo "Finished..."
@@ -339,9 +432,126 @@ therapist() {
     MENU="main_menu"
 }
 
-compile() {
+db_restore() {
     echo ""
-    echo "Setting up vanilla...."
+
+    if [ -d "${DB_BACKUP_DIR}" ]
+    then
+        echo "Restoring Dwarf Builder files..."
+
+        cp -p "${DB_BACKUP_DIR}/DwarfBuilder.plist" .
+        cp -rp "${DB_BACKUP_DIR}/dfsave_backup" .
+        rm -rf "${DB_BACKUP_DIR}"
+
+        echo "Finished..."
+        echo "Please restart the app to reload settings."
+        exit
+    else
+        echo "Save not found..."
+    fi
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+dfsave_backup() {
+    echo ""
+
+    if [ -d "${DF_BUILT_APP}/${DF_SAVE_DIR}" ]
+    then
+        echo "Backing up game..."
+
+        rm -rf dfsave_backup
+        cp -rp "${DF_BUILT_APP}/${DF_SAVE_DIR}" dfsave_backup
+
+        echo "Finished..."
+    else
+        echo "Save not found..."
+    fi
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+dfsave_restore() {
+    echo ""
+
+    if [ -d dfsave_backup ]
+    then
+        echo "Restoring Game..."
+
+        rm -rf "${DF_BUILT_APP}/${DF_SAVE_DIR}"
+        cp -rp dfsave_backup "${DF_BUILT_APP}/${DF_SAVE_DIR}"
+
+        echo "Finished..."
+    else
+        echo "Save not found..."
+    fi
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+dfsave_update() {
+    echo ""
+
+    if [ -d "${DF_BUILT_APP}/${DF_SAVE_DIR}" ]
+    then
+        echo "Updating Save Raws..."
+
+        for REGION in `ls "${DF_BUILT_APP}/${DF_SAVE_DIR}"`
+        do
+            if [ -d "${DF_BUILT_APP}/${DF_SAVE_DIR}/${REGION}/raw" ]
+            then
+                rm -rf "${DF_BUILT_APP}/${DF_SAVE_DIR}/${REGION}/raw"
+                cp -rp "${DF_BUILT_APP}/${DF_RAW_DIR}" "${DF_BUILT_APP}/${DF_SAVE_DIR}/${REGION}/"
+            fi
+        done
+
+        echo "Finished..."
+    else
+        echo "Save not found..."
+    fi
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+therapist() {
+    echo ""
+
+    if [ -d "${DT_BUILT_APP}/${DT_INI_DIR}" ]
+    then
+        echo "Updating Dwarf Therapist..."
+        cp -rp "extras/DwarfTherapist.app/${DT_INI_DIR}/${DT_INI_FILE}" "${DT_BUILT_APP}/${DT_INI_DIR}/${DT_INI_FILE}"
+    else
+        echo "Installing Dwarf Therapist..."
+        cp -rp extras/DwarfTherapist.app "${DT_BUILT_APP}"
+    fi
+
+    echo "Finished..."
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
+construct() {
+    echo ""
+    echo "Setting up Vanilla...."
 
     cp -rp vanilla build
     rm -rf build/raw/graphics/example/
@@ -416,7 +626,11 @@ compile() {
         s/\[WINDOWED:.*\]/\[WINDOWED:${WINDOWED}\]/g;
         s/\[SOUND:.*\]/\[SOUND:${SOUND}\]/g;
         s/\[VOLUME:.*\]/\[VOLUME:${VOLUME}\]/g;
-        s/\[RESIZABLE:.*\]/\[RESIZABLE:YES\]/g;
+        s/\[RESIZABLE:.*\]/\[RESIZABLE:${RESIZABLE}\]/g;
+        s/\[WINDOWEDX:.*\]/\[WINDOWEDX:${WINDOWEDX}\]/g;
+        s/\[WINDOWEDY:.*\]/\[WINDOWEDY:${WINDOWEDY}\]/g;
+        s/\[GRAPHICS_WINDOWEDX:.*\]/\[GRAPHICS_WINDOWEDX:${WINDOWEDX}\]/g;
+        s/\[GRAPHICS_WINDOWEDY:.*\]/\[GRAPHICS_WINDOWEDY:${WINDOWEDY}\]/g;
         s/\[GRAPHICS:.*\]/\[GRAPHICS:${GRAPHICS}\]/g;
         s/\[TRUETYPE:.*\]/\[TRUETYPE:${TRUETYPE}\]/g;
         s/\[FPS:.*\]/\[FPS:${FPS}\]/g;
@@ -425,7 +639,26 @@ compile() {
         s/\[COMPRESSED_SAVES:.*\]/\[COMPRESSED_SAVES:${COMPRESSED_SAVES}\]/g;" \
         -i".bak" build/data/init/init.txt
     rm build/data/init/init.txt.bak
-    sleep 1
+
+    if [ ${TILESET} == "DEFAULT_SQUARE" ]
+    then
+        sed -e "s/\[FONT:.*\]/\[FONT:curses_square_16x16.png\]/g;
+            s/\[FULLFONT:.*\]/\[FULLFONT:curses_square_16x16.png\]/g; \
+            s/\[GRAPHICS_FONT:.*\]/\[GRAPHICS_FONT:curses_square_16x16.png\]/g; \
+            s/\[GRAPHICS_FULLFONT:.*\]/\[GRAPHICS_FULLFONT:curses_square_16x16.png\]/g;" \
+            -i".bak" build/data/init/init.txt
+        rm build/data/init/init.txt.bak
+    fi
+
+    if [ ${TILESET} == "DEFAULT_TALL" ]
+    then
+        sed -e "s/\[FONT:.*\]/\[FONT:curses_800x600.png\]/g;
+            s/\[FULLFONT:.*\]/\[FULLFONT:curses_800x600.png\]/g; \
+            s/\[GRAPHICS_FONT:.*\]/\[GRAPHICS_FONT:curses_800x600.png\]/g; \
+            s/\[GRAPHICS_FULLFONT:.*\]/\[GRAPHICS_FULLFONT:curses_800x600.png\]/g;" \
+            -i".bak" build/data/init/init.txt
+        rm build/data/init/init.txt.bak
+    fi
 
     if [ ${AQUIFERS} == "NO" ]
     then
@@ -504,12 +737,29 @@ compile() {
             cp extras/default.ttf build/data/art/font.ttf;;
     esac
 
-    echo "Reticulating Splines..."
+    echo "Reticulating splines..."
     cp extras/embark_profiles.txt build/data/init/
 
-    echo "Cleaning Up..."
-    cp -rp extras/DwarfFortress.app ../../../DwarfFortress.app
-    mv build ../../../DwarfFortress.app/Contents/Resources
+    echo "Cleaning up..."
+
+    if [ -d "${DF_BUILT_APP}" ]
+    then
+        if [ -d "${DF_BUILT_APP}/${DF_SAVE_DIR}" ]
+        then
+            mv "${DF_BUILT_APP}/${DF_SAVE_DIR}" dfcompile_backup
+        fi
+
+        rm -rf "${DF_BUILT_APP}"
+    fi
+
+    cp -rp extras/DwarfFortress.app "${DF_BUILT_APP}"
+    mv build "${DF_BUILT_APP}/Contents/Resources"
+
+    if [ -d dfcompile_backup ]
+    then
+        mv dfcompile_backup "${DF_BUILT_APP}/${DF_SAVE_DIR}"
+        rm -rf dfcompile_backup
+    fi
 
     echo ""
     echo "Press any key to continue..."
@@ -547,12 +797,13 @@ toggle_yn() {
 
 toggle_tileset() {
     case ${1} in
-        "DEFAULT") echo "IRONHAND";;
+        "DEFAULT_TALL") echo "IRONHAND";;
         "IRONHAND") echo "PHOEBUS";;
         "PHOEBUS") echo "JOLLY_SQUARE";;
         "JOLLY_SQUARE") echo "JOLLY_TALL";;
         "JOLLY_TALL") echo "MAYDAY";;
-        *) echo "DEFAULT";;
+        "MAYDAY") echo "DEFAULT_SQUARE";;
+        *) echo "DEFAULT_TALL";;
     esac
 }
 
