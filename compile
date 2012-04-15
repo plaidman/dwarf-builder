@@ -1,32 +1,88 @@
 #!/bin/sh
 
-# Changes:
-#   Dwarf Therapist support
-#   Tuffy font
-#   Updating About/Version
-#   Added a help screen
-#   Mayday tileset
-
 SCRIPT_ROOT=`dirname "${0}"`
 cd "${SCRIPT_ROOT}"
 
+RESOURCES_DIR="DwarfBuilder.app/Contents/Resources"
+DT_INI_DIR="Contents/MacOS/etc/memory_layouts/osx"
+
 echo ""
-echo "creating a new Builder"
 
+echo "Creating a new Builder..."
+rm -rf DwarfBuilder.app
 cp -rp extras/DwarfBuilder.app .
+mkdir "${RESOURCES_DIR}"
 
-echo "populating materials..."
+echo "Setting default values..."
+## Visual settings
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" WINDOWED YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" INTRO NO
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" GRAPHICS YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" TILESET IRONHAND
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" TRUETYPE NO
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" FONT_FILE IRONHAND
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" FPS YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" IDLERS TOP
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" SHOW_FLOW_AMOUNTS YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" RESIZABLE YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" WINDOWEDX 1280
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" WINDOWEDY 600
 
-cp -rp extras DwarfBuilder.app/Contents/Resources
-cp -rp ironhand DwarfBuilder.app/Contents/Resources
-cp -rp jolly DwarfBuilder.app/Contents/Resources
-cp -rp mayday DwarfBuilder.app/Contents/Resources
-cp -rp phoebus DwarfBuilder.app/Contents/Resources
-cp -rp vanilla DwarfBuilder.app/Contents/Resources
-cp -p menu DwarfBuilder.app/Contents/Resources
+## App Settings
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" SOUND NO
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" VOLUME 255
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" SOUNDTRACK DEFAULT
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" KEYBINDS LAPTOP
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" FPS_CAP 100
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" G_FPS_CAP 50
 
-echo "cleaning up..."
+## Gameplay Settings
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" EMBARK_WARNING_ALWAYS YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" POPULATION_CAP 100
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" BABY_CHILD_CAP_ABS 15
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" BABY_CHILD_CAP_PER 20
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" EMBARK_RECTANGLE_WIDTH 3
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" EMBARK_RECTANGLE_HEIGHT 3
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" TEMPERATURE YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" WEATHER YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" INVADERS YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" GRAZING NO
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" AQUIFERS NO
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" RUST NO
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" CAVEINS YES
 
-rm -rf DwarfBuilder.app/Contents/Resources/extras/DwarfBuilder.app
+##Save Settings
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" COMPRESSED_SAVES YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" AUTOSAVE SEASONAL
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" PAUSE_ON_LOAD YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" AUTOSAVE_PAUSE YES
+defaults write "${SCRIPT_ROOT}/DwarfBuilder" AUTOBACKUP NO
 
-echo "finished!"
+mv ${SCRIPT_ROOT}/DwarfBuilder.plist "${RESOURCES_DIR}/"
+
+echo "Populating materials..."
+cp -rp extras "${RESOURCES_DIR}/"
+cp -p menu "${RESOURCES_DIR}/"
+cp -p extras/memory_layouts/* "${RESOURCES_DIR}/extras/DwarfTherapist.app/${DT_INI_DIR}/"
+
+echo "Adding tilesets..."
+cp -rp ironhand "${RESOURCES_DIR}/"
+cp -rp jolly "${RESOURCES_DIR}/"
+cp -rp mayday "${RESOURCES_DIR}/"
+cp -rp phoebus "${RESOURCES_DIR}/"
+
+echo "Reticulating splines..."
+cp -rp vanilla "${RESOURCES_DIR}/"
+
+echo "Cleaning up..."
+rm -rf "${RESOURCES_DIR}/extras/DwarfBuilder.app"
+rm -rf "${RESOURCES_DIR}/extras/memory_layouts"
+
+echo ""
+echo "Finished! Don't forget to follow the checklist:"
+echo "1) Update instructions, then convert to PDF."
+echo "2) Check app and executable icons."
+echo "3) Clean up .DS_Store, .git files."
+echo "4) Zip up the app and the PDF."
+echo "5) Update forum markup and update forum post (and title)."
+echo "6) Upload to plaidsoft, dffd, github."
