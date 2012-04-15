@@ -140,7 +140,7 @@ main_menu() {
     echo ""
     echo "c) Contstruct Dwarf Fortress"
     echo "t) Install/Update Dwarf Therapist"
-    echo "u) DwarfBuilder Utilities"
+    echo "u) Dwarf Builder Utilities"
     echo ""
     echo "q) Save and Quit Dwarf Builder"
     echo "w) Quit Without Saving"
@@ -168,7 +168,7 @@ main_menu() {
 
 visual_one() {
     echo ""
-    echo "Visual Options"
+    echo "Visual Settings"
     echo ""
     echo "1) Window Mode:....... ${WINDOWED}"
     echo "2) Show Intro:........ ${INTRO}"
@@ -208,7 +208,7 @@ visual_one() {
 
 application_one() {
     echo ""
-    echo "Application Options"
+    echo "Application Settings"
     echo ""
     echo "1) Sound:......... ${SOUND}"
     echo "2) Volume:........ ${VOLUME}"
@@ -240,7 +240,7 @@ application_one() {
 
 gameplay_one() {
     echo ""
-    echo "Gameplay Options (page 1)"
+    echo "Gameplay Settings (page 1)"
     echo ""
     echo "1) Embark Warning:. ${EMBARK_WARNING_ALWAYS}"
     echo "2) Population Cap:. ${POPULATION_CAP}"
@@ -278,7 +278,7 @@ gameplay_one() {
 
 gameplay_two() {
     echo ""
-    echo "Gameplay Options (page 2)"
+    echo "Gameplay Settings (page 2)"
     echo ""
     echo "1) Invaders:........ ${INVADERS}"
     echo "2) Grazing Animals:. ${GRAZING}"
@@ -307,7 +307,7 @@ gameplay_two() {
 
 save_one() {
     echo ""
-    echo "Save Options"
+    echo "Save Settings"
     echo ""
     echo "1) Compress Saves:.... ${COMPRESSED_SAVES}"
     echo "2) Autosave:.......... ${AUTOSAVE}"
@@ -334,14 +334,14 @@ save_one() {
 
 dbutils_one() {
     echo ""
-    echo "DB Settings"
+    echo "Dwarf Builder Utilities"
     echo ""
     echo "1) Backup DB Files"
     echo "2) Restore DB Files"
     echo ""
     echo "3) Update Save Raws"
-    echo "4) Backup DF Regions"
-    echo "5) Restore Regions"
+    echo "4) Backup DF Saves"
+    echo "5) Restore DF Saves"
     echo ""
     echo "m) Back to Main Menu"
     echo ""
@@ -413,7 +413,7 @@ save_exit() {
 
 db_backup() {
     echo ""
-    echo "Backing up DwarfBuilder files..."
+    echo "Backing up Dwarf Builder files..."
 
     rm -rf "${DB_BACKUP_DIR}"
     mkdir "${DB_BACKUP_DIR}"
@@ -437,7 +437,7 @@ db_restore() {
 
     if [ -d "${DB_BACKUP_DIR}" ]
     then
-        echo "Restoring DwarfBuilder files..."
+        echo "Restoring Dwarf Builder files..."
 
         cp -p "${DB_BACKUP_DIR}/DwarfBuilder.plist" .
         cp -rp "${DB_BACKUP_DIR}/dfsave_backup" .
