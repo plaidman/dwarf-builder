@@ -15,67 +15,73 @@ mkdir "${RESOURCES_DIR}"
 
 echo "Setting default values..."
 ## Visual settings
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" WINDOWED YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" INTRO NO
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" GRAPHICS YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" TILESET IRONHAND
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" TRUETYPE NO
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" FONT_FILE IRONHAND
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" FPS YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" IDLERS TOP
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" SHOW_FLOW_AMOUNTS YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" RESIZABLE YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" WINDOWEDX 1280
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" WINDOWEDY 600
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" WINDOWED YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" INTRO NO
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" GRAPHICS YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" TILESET IRONHAND
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" TRUETYPE NO
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" FONT_FILE IRONHAND
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" FPS YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" IDLERS TOP
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" SHOW_FLOW_AMOUNTS YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" RESIZABLE YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" WINDOWEDX 1280
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" WINDOWEDY 600
 
 ## App Settings
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" SOUND NO
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" VOLUME 255
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" SOUNDTRACK DEFAULT
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" KEYBINDS LAPTOP
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" FPS_CAP 100
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" G_FPS_CAP 50
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" SOUND NO
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" VOLUME 255
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" SOUNDTRACK DEFAULT
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" KEYBINDS LAPTOP
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" FPS_CAP 100
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" G_FPS_CAP 50
 
 ## Gameplay Settings
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" EMBARK_WARNING_ALWAYS YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" POPULATION_CAP 100
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" BABY_CHILD_CAP_ABS 15
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" BABY_CHILD_CAP_PER 20
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" EMBARK_RECTANGLE_WIDTH 3
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" EMBARK_RECTANGLE_HEIGHT 3
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" TEMPERATURE YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" WEATHER YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" INVADERS YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" GRAZING NO
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" AQUIFERS NO
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" RUST NO
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" CAVEINS YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" EMBARK_WARNING_ALWAYS YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" POPULATION_CAP 100
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_ABS 15
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" BABY_CHILD_CAP_PER 20
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_WIDTH 3
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_HEIGHT 3
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" TEMPERATURE YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" WEATHER YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" INVADERS YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" GRAZING NO
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" AQUIFERS NO
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" RUST NO
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" CAVEINS YES
 
 ##Save Settings
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" COMPRESSED_SAVES YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" AUTOSAVE SEASONAL
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" PAUSE_ON_LOAD YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" AUTOSAVE_PAUSE YES
-defaults write "${SCRIPT_ROOT}/DwarfBuilder" AUTOBACKUP NO
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" COMPRESSED_SAVES YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE SEASONAL
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" PAUSE_ON_LOAD YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE_PAUSE YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" AUTOBACKUP NO
 
-mv ${SCRIPT_ROOT}/DwarfBuilder.plist "${RESOURCES_DIR}/"
+# mv ${SCRIPT_ROOT}/DwarfBuilder.plist "${RESOURCES_DIR}/"
 
 echo "Populating materials..."
 cp -rp extras "${RESOURCES_DIR}/"
-cp -p menu "${RESOURCES_DIR}/"
+cp -p extras/menu "${RESOURCES_DIR}/"
 cp -p extras/memory_layouts/* "${RESOURCES_DIR}/extras/DwarfTherapist.app/${DT_INI_DIR}/"
 
 echo "Adding tilesets..."
-cp -rp ironhand "${RESOURCES_DIR}/"
-cp -rp jolly "${RESOURCES_DIR}/"
-cp -rp mayday "${RESOURCES_DIR}/"
-cp -rp phoebus "${RESOURCES_DIR}/"
+# cp -rp ironhand "${RESOURCES_DIR}/"
+# cp -rp jolly "${RESOURCES_DIR}/"
+# cp -rp mayday "${RESOURCES_DIR}/"
+# cp -rp phoebus "${RESOURCES_DIR}/"
+tar -zcf "${RESOURCES_DIR}/ironhand.dbz" ironhand
+tar -zcf "${RESOURCES_DIR}/jolly.dbz" jolly
+tar -zcf "${RESOURCES_DIR}/mayday.dbz" mayday
+tar -zcf "${RESOURCES_DIR}/phoebus.dbz" phoebus
 
 echo "Reticulating splines..."
-cp -rp vanilla "${RESOURCES_DIR}/"
+# cp -rp vanilla "${RESOURCES_DIR}/"
+tar -zcf "${RESOURCES_DIR}/vanilla.dbz" vanilla
 
 echo "Cleaning up..."
 rm -rf "${RESOURCES_DIR}/extras/DwarfBuilder.app"
+rm -rf "${RESOURCES_DIR}/extras/menu"
 rm -rf "${RESOURCES_DIR}/extras/memory_layouts"
 
 echo ""

@@ -59,7 +59,7 @@ PAUSE_ON_LOAD=`defaults read "${RESOURCES_DIR}/DwarfBuilder" PAUSE_ON_LOAD`
 AUTOSAVE_PAUSE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE_PAUSE`
 AUTOBACKUP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOBACKUP`
 
-if [ ! -d vanilla ]
+if [ ! -f vanilla.dbz ]
 then
     echo "vanilla package required"
     exit
