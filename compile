@@ -66,18 +66,13 @@ cp -p extras/menu "${RESOURCES_DIR}/"
 cp -p extras/memory_layouts/* "${RESOURCES_DIR}/extras/DwarfTherapist.app/${DT_INI_DIR}/"
 
 echo "Adding tilesets..."
-# cp -rp ironhand "${RESOURCES_DIR}/"
-# cp -rp jolly "${RESOURCES_DIR}/"
-# cp -rp mayday "${RESOURCES_DIR}/"
-# cp -rp phoebus "${RESOURCES_DIR}/"
-tar -zcf "${RESOURCES_DIR}/ironhand.dbz" ironhand
-tar -zcf "${RESOURCES_DIR}/jolly.dbz" jolly
-tar -zcf "${RESOURCES_DIR}/mayday.dbz" mayday
-tar -zcf "${RESOURCES_DIR}/phoebus.dbz" phoebus
+cp -rp ironhand "${RESOURCES_DIR}/"
+cp -rp jolly "${RESOURCES_DIR}/"
+cp -rp mayday "${RESOURCES_DIR}/"
+cp -rp phoebus "${RESOURCES_DIR}/"
 
 echo "Reticulating splines..."
-# cp -rp vanilla "${RESOURCES_DIR}/"
-tar -zcf "${RESOURCES_DIR}/vanilla.dbz" vanilla
+cp -rp vanilla "${RESOURCES_DIR}/"
 
 echo "Cleaning up..."
 rm -rf "${RESOURCES_DIR}/extras/DwarfBuilder.app"
