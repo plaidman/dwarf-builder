@@ -3,7 +3,7 @@
 RESOURCES_DIR=`dirname "${0}"`
 cd "${RESOURCES_DIR}"
 
-DB_BACKUP_DIR="../../../DBbackup"
+DB_BACKUP_DIR="../../../DwarfBuilder_backup"
 
 DF_BUILT_APP="../../../DwarfFortress.app"
 DF_SAVE_DIR="Contents/Resources/data/save"
@@ -59,7 +59,7 @@ PAUSE_ON_LOAD=`defaults read "${RESOURCES_DIR}/DwarfBuilder" PAUSE_ON_LOAD`
 AUTOSAVE_PAUSE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOSAVE_PAUSE`
 AUTOBACKUP=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AUTOBACKUP`
 
-if [ ! -f vanilla ]
+if [ ! -d vanilla ]
 then
     echo "vanilla package required"
     exit
@@ -425,7 +425,7 @@ db_backup() {
     fi
 
     echo "Finished..."
-    echo "Your backup is stored in the DBbackup folder"
+    echo "Your backup is stored in the DwarfBuilder_backup folder"
     echo ""
     echo "Press any key to continue..."
 
@@ -448,7 +448,7 @@ db_restore() {
         echo "Please restart the app to reload settings."
         exit
     else
-        echo "Could not find DBbackup..."
+        echo "Could not find DwarfBuilder_backup..."
     fi
 
     echo ""
