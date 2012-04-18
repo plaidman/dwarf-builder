@@ -1,0 +1,3 @@
+#!/bin/sh
+PWD=`dirname "${0}"`
+cd "${PWD}/../Resources/"; ./soundSense.sh

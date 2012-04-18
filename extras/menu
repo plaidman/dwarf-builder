@@ -13,6 +13,8 @@ DT_BUILT_APP="../../../DwarfTherapist.app"
 DT_INI_DIR="Contents/MacOS/etc/memory_layouts/osx"
 DT_INI_FILE="v0.34.07.ini"
 
+SS_BUILT_APP="../../../SoundSense.app"
+
 MENU="main_menu"
 
 ## Visual settings
@@ -140,6 +142,7 @@ main_menu() {
     echo ""
     echo "c) Contstruct Dwarf Fortress"
     echo "t) Install/Update Dwarf Therapist"
+    echo "s) Install Sound Sense"
     echo "u) Dwarf Builder Utilities"
     echo ""
     echo "q) Save and Quit Dwarf Builder"
@@ -156,6 +159,7 @@ main_menu() {
         2)    MENU="application_one";;
         3)    MENU="gameplay_one";;
         4)    MENU="save_one";;
+        s|S)  MENU="soundsense";;
         u|U)  MENU="dbutils_one";;
         a|A)  MENU="about";;
         c|C)  MENU="construct";;
@@ -550,6 +554,38 @@ therapist() {
     MENU="main_menu"
 }
 
+soundsense() {
+    echo ""
+
+    if [ -d "${SS_BUILT_APP}" ]
+    then
+        echo "Sound Sense already installed..."
+    else
+        echo "Installing Sound Sense..."
+
+        cp -rp extras/SoundSense.app "${SS_BUILT_APP}"
+        cp -rp soundsense "${SS_BUILT_APP}/Contents/Resources"
+
+        sed -e "s///;" \
+            -i".bak" ${SS_BUILT_APP}/Contents/Resources/soundSense.sh
+        rm ${SS_BUILT_APP}/Contents/Resources/soundSense.sh.bak
+
+        chmod 755 ${SS_BUILT_APP}/Contents/Resources/soundSense.sh
+
+        sed -e 's/\<gamelog path=".*" \/\>/\<gamelog path="..\/..\/..\/DwarfFortress.app\/Contents\/Resources\/gamelog.txt" \/\>/;' \
+            -i".bak" ${SS_BUILT_APP}/Contents/Resources/configuration.xml
+        rm ${SS_BUILT_APP}/Contents/Resources/configuration.xml.bak
+
+        echo "Finished..."
+    fi
+
+    echo ""
+    echo "Press any key to continue..."
+
+    read -s -n1
+    MENU="main_menu"
+}
+
 construct() {
     echo ""
     echo "Setting up Vanilla...."
@@ -562,8 +598,7 @@ construct() {
         "PHOEBUS")
             echo "Installing Phoebus..."
 
-            cp -rp phoebus/data/art/* build/data/art/
-            cp -rp phoebus/data/init/phoebus/* build/data/init/
+            cp -rp phoebus/data/* build/data/
             cp -rp phoebus/raw/* build/raw/
             ;;
 

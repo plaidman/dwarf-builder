@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<gamelog path="../gamelog.txt" />
+	
+	<soundpacks path="./packs/" />
+	
+	<volume value="0" />
+	
+	<gui value="true" />
+	
+	<playbackTheshhold value="4"/>
+	
+	<autoUpdateURL path="http://df.zweistein.cz/soundsense/soundpack" />
+	<autoUpdateReplaceFiles value="true"/>
+	<autoUpdateDeleteFiles value="false"/>
+
+</configuration>

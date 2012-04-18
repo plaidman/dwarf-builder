@@ -73,6 +73,7 @@ cp -rp phoebus "${RESOURCES_DIR}/"
 
 echo "Reticulating splines..."
 cp -rp vanilla "${RESOURCES_DIR}/"
+cp -rp soundsense "${RESOURCES_DIR}/"
 
 echo "Cleaning up..."
 rm -rf "${RESOURCES_DIR}/extras/DwarfBuilder.app"
