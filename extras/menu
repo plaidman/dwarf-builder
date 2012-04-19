@@ -53,6 +53,8 @@ GRAZING=`defaults read "${RESOURCES_DIR}/DwarfBuilder" GRAZING`
 AQUIFERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AQUIFERS`
 RUST=`defaults read "${RESOURCES_DIR}/DwarfBuilder" RUST`
 CAVEINS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" CAVEINS`
+PAUSE_CAVEIN=`defaults read "${RESOURCES_DIR}/DwarfBuilder" PAUSE_CAVEIN`
+PAUSE_DIG_DANGER=`defaults read "${RESOURCES_DIR}/DwarfBuilder" PAUSE_DIG_DANGER`
 
 ##Save Settings
 COMPRESSED_SAVES=`defaults read "${RESOURCES_DIR}/DwarfBuilder" COMPRESSED_SAVES`
@@ -94,7 +96,7 @@ about() {
     echo "Dwarf Builder:... v6"
     echo ""
     echo "Dwarf Fortress:.. 0.34.07"
-    echo "Dwarf Therapist:. 0.6.12b4"
+    echo "Dwarf Therapist:. 0.6.12b5"
     echo "Sound Sense:..... r34"
     echo ""
     echo "Phoebus:......... v00"
@@ -254,6 +256,7 @@ gameplay_one() {
     echo "4) Embark Size:.... ${EMBARK_RECTANGLE_WIDTH}:${EMBARK_RECTANGLE_HEIGHT}"
     echo "5) Temperature:.... ${TEMPERATURE}"
     echo "6) Weather:........ ${WEATHER}"
+    echo "7) Invaders:........ ${INVADERS}"
     echo ""
     echo "n) Next Page"
     echo "m) Back to Main Menu"
@@ -276,6 +279,7 @@ gameplay_one() {
               EMBARK_RECTANGLE_HEIGHT=`input_int ${EMBARK_RECTANGLE_HEIGHT}`;;
         5)    TEMPERATURE=`toggle_yn ${TEMPERATURE}`;;
         6)    WEATHER=`toggle_yn ${WEATHER}`;;
+        7)    INVADERS=`toggle_yn ${INVADERS}`;;
         n|N)  MENU="gameplay_two";;
         m|M)  MENU="main_menu";;
         *)    ;;
@@ -286,11 +290,12 @@ gameplay_two() {
     echo ""
     echo "Gameplay Settings (page 2)"
     echo ""
-    echo "1) Invaders:........ ${INVADERS}"
-    echo "2) Grazing Animals:. ${GRAZING}"
-    echo "3) Aquifers:........ ${AQUIFERS}"
-    echo "4) Skill Rusting:... ${RUST}"
-    echo "5) Cave-Ins:........ ${CAVEINS}"
+    echo "1) Grazing Animals:.... ${GRAZING}"
+    echo "2) Aquifers:........... ${AQUIFERS}"
+    echo "3) Skill Rusting:...... ${RUST}"
+    echo "4) Cave-Ins:........... ${CAVEINS}"
+    echo "5) Pause on Cave-Ins:.. ${PAUSE_CAVEIN}"
+    echo "6) Pause on Warm/Damp:. ${PAUSE_DIG_DANGER}"
     echo ""
     echo "p) Previous Page"
     echo "m) Back to Main Menu"
@@ -300,11 +305,12 @@ gameplay_two() {
     read -s -n1 CHOICE
 
     case ${CHOICE} in
-        1)    INVADERS=`toggle_yn ${INVADERS}`;;
-        2)    GRAZING=`toggle_yn ${GRAZING}`;;
-        3)    AQUIFERS=`toggle_yn ${AQUIFERS}`;;
-        4)    RUST=`toggle_yn ${RUST}`;;
-        5)    CAVEINS=`toggle_yn ${CAVEINS}`;;
+        1)    GRAZING=`toggle_yn ${GRAZING}`;;
+        2)    AQUIFERS=`toggle_yn ${AQUIFERS}`;;
+        3)    RUST=`toggle_yn ${RUST}`;;
+        4)    CAVEINS=`toggle_yn ${CAVEINS}`;;
+        5)    PAUSE_CAVEIN=`toggle_yn ${PAUSE_CAVEIN}`;;
+        6)    PAUSE_DIG_DANGER=`toggle_yn ${PAUSE_DIG_DANGER}`;;
         p|P)  MENU="gameplay_one";;
         m|M)  MENU="main_menu";;
         *)    ;;
@@ -406,6 +412,8 @@ save_exit() {
     defaults write "${RESOURCES_DIR}/DwarfBuilder" AQUIFERS ${AQUIFERS}
     defaults write "${RESOURCES_DIR}/DwarfBuilder" RUST ${RUST}
     defaults write "${RESOURCES_DIR}/DwarfBuilder" CAVEINS ${CAVEINS}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" PAUSE_CAVEIN ${PAUSE_CAVEIN}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" PAUSE_DIG_DANGER ${PAUSE_DIG_DANGER}
 
     ##Save Settings
     defaults write "${RESOURCES_DIR}/DwarfBuilder" COMPRESSED_SAVES ${COMPRESSED_SAVES}
@@ -681,8 +689,8 @@ construct() {
     if [ ${TILESET} == "DEFAULT_SQUARE" ]
     then
         sed -e "s/\[FONT:.*\]/\[FONT:curses_square_16x16.png\]/g;
-            s/\[FULLFONT:.*\]/\[FULLFONT:curses_square_16x16.png\]/g; \
-            s/\[GRAPHICS_FONT:.*\]/\[GRAPHICS_FONT:curses_square_16x16.png\]/g; \
+            s/\[FULLFONT:.*\]/\[FULLFONT:curses_square_16x16.png\]/g;
+            s/\[GRAPHICS_FONT:.*\]/\[GRAPHICS_FONT:curses_square_16x16.png\]/g;
             s/\[GRAPHICS_FULLFONT:.*\]/\[GRAPHICS_FULLFONT:curses_square_16x16.png\]/g;" \
             -i".bak" build/data/init/init.txt
         rm build/data/init/init.txt.bak
@@ -691,8 +699,8 @@ construct() {
     if [ ${TILESET} == "DEFAULT_TALL" ]
     then
         sed -e "s/\[FONT:.*\]/\[FONT:curses_800x600.png\]/g;
-            s/\[FULLFONT:.*\]/\[FULLFONT:curses_800x600.png\]/g; \
-            s/\[GRAPHICS_FONT:.*\]/\[GRAPHICS_FONT:curses_800x600.png\]/g; \
+            s/\[FULLFONT:.*\]/\[FULLFONT:curses_800x600.png\]/g;
+            s/\[GRAPHICS_FONT:.*\]/\[GRAPHICS_FONT:curses_800x600.png\]/g;
             s/\[GRAPHICS_FULLFONT:.*\]/\[GRAPHICS_FULLFONT:curses_800x600.png\]/g;" \
             -i".bak" build/data/init/init.txt
         rm build/data/init/init.txt.bak
@@ -700,15 +708,32 @@ construct() {
 
     if [ ${AQUIFERS} == "NO" ]
     then
-        echo "Removing Aquifers..."
+        echo "Removing aquifers..."
         sed -e "s/\[AQUIFER\]/(AQUIFER)/g;" \
             -i".bak" build/raw/objects/*.txt
         rm build/raw/objects/*.txt.bak
     fi
 
+    if [ ${PAUSE_CAVEIN} == "NO" ]
+    then
+        echo "Disabling pause on cavein..."
+        sed -e "s/\[CAVE_COLLAPSE:.*\]/\[CAVE_COLLAPSE:A_D:D_D\]/g;" \
+            -i".bak" build/data/init/announcements.txt
+        rm build/data/init/announcements.txt.bak
+    fi
+
+    if [ ${PAUSE_DIG_DANGER} == "NO" ]
+    then
+        echo "Disabling pause on warm/damp stone..."
+        sed -e "s/\[DIG_CANCEL_WARM:.*\]/\[DIG_CANCEL_WARM:A_D:D_D\]/g;
+            s/\[DIG_CANCEL_DAMP:.*\]/\[DIG_CANCEL_DAMP:A_D:D_D\]/g;" \
+            -i".bak" build/data/init/announcements.txt
+        rm build/data/init/announcements.txt.bak
+    fi
+
     if [ ${GRAZING} == "NO" ]
     then
-        echo "Disabling Grazing..."
+        echo "Disabling grazing..."
         sed -e "s/\[GRAZER:\(.*\)\]/(GRAZER:\1)/g;" \
             -i".bak" build/raw/objects/*.txt
         rm build/raw/objects/*.txt.bak
@@ -735,7 +760,7 @@ construct() {
 
     if [ ${RUST} == "NO" ]
     then
-        echo "Disabling Skill Rust..."
+        echo "Disabling skill rusting..."
         sed -n "1,/CREATURE:DWARF/ p" \
             build/raw/objects/creature_standard.txt > build/raw/objects/creature_standard_one.txt
         sed -n "/CREATURE:DWARF/,\$ {/CREATURE:DWARF/n;p;}" \
@@ -754,22 +779,22 @@ construct() {
 
     if [ ${SOUNDTRACK} == "EXTENDED" ]
     then
-        echo "Installing Extended Soundtrack..."
+        echo "Installing extended soundtrack..."
         cp extras/extended.ogg build/data/sound/song_game.ogg
     fi
 
     case ${FONT_FILE} in
         "PHOEBUS")
-            echo "Installing Phoebus Font..."
+            echo "Installing Phoebus font..."
             cp extras/phoebus.ttf build/data/art/font.ttf;;
         "IRONHAND")
-            echo "Installing Ironhand Font..."
+            echo "Installing Ironhand font..."
             cp extras/ironhand.ttf build/data/art/font.ttf;;
         "MASTERWORK")
-            echo "Installing Masterwork Font..."
+            echo "Installing Masterwork font..."
             cp extras/masterwork.ttf build/data/art/font.ttf;;
         "TUFFY")
-            echo "Installing Tuffy Font..."
+            echo "Installing Tuffy font..."
             cp extras/tuffy.ttf build/data/art/font.ttf;;
         "DEFAULT") 
             cp extras/default.ttf build/data/art/font.ttf;;

@@ -46,10 +46,12 @@ defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" EMBARK_RECTANGLE_H
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" TEMPERATURE YES
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" WEATHER YES
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" INVADERS YES
-defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" GRAZING NO
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" GRAZING YES
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" AQUIFERS NO
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" RUST NO
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" CAVEINS YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" PAUSE_CAVEIN YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" PAUSE_DIG_DANGER YES
 
 ##Save Settings
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" COMPRESSED_SAVES YES
