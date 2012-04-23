@@ -50,6 +50,7 @@ TEMPERATURE=`defaults read "${RESOURCES_DIR}/DwarfBuilder" TEMPERATURE`
 WEATHER=`defaults read "${RESOURCES_DIR}/DwarfBuilder" WEATHER`
 INVADERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" INVADERS`
 GRAZING=`defaults read "${RESOURCES_DIR}/DwarfBuilder" GRAZING`
+EXTRA_SHELLS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" EXTRA_SHELLS`
 AQUIFERS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" AQUIFERS`
 RUST=`defaults read "${RESOURCES_DIR}/DwarfBuilder" RUST`
 CAVEINS=`defaults read "${RESOURCES_DIR}/DwarfBuilder" CAVEINS`
@@ -291,11 +292,12 @@ gameplay_two() {
     echo "Gameplay Settings (page 2)"
     echo ""
     echo "1) Grazing Animals:.... ${GRAZING}"
-    echo "2) Aquifers:........... ${AQUIFERS}"
-    echo "3) Skill Rusting:...... ${RUST}"
-    echo "4) Cave-Ins:........... ${CAVEINS}"
-    echo "5) Pause on Cave-Ins:.. ${PAUSE_CAVEIN}"
-    echo "6) Pause on Warm/Damp:. ${PAUSE_DIG_DANGER}"
+    echo "2) Extra Shell Items:.. ${EXTRA_SHELLS}"
+    echo "3) Aquifers:........... ${AQUIFERS}"
+    echo "4) Skill Rusting:...... ${RUST}"
+    echo "5) Cave-Ins:........... ${CAVEINS}"
+    echo "6) Pause on Cave-Ins:.. ${PAUSE_CAVEIN}"
+    echo "7) Pause on Warm/Damp:. ${PAUSE_DIG_DANGER}"
     echo ""
     echo "p) Previous Page"
     echo "m) Back to Main Menu"
@@ -306,11 +308,12 @@ gameplay_two() {
 
     case ${CHOICE} in
         1)    GRAZING=`toggle_yn ${GRAZING}`;;
-        2)    AQUIFERS=`toggle_yn ${AQUIFERS}`;;
-        3)    RUST=`toggle_yn ${RUST}`;;
-        4)    CAVEINS=`toggle_yn ${CAVEINS}`;;
-        5)    PAUSE_CAVEIN=`toggle_yn ${PAUSE_CAVEIN}`;;
-        6)    PAUSE_DIG_DANGER=`toggle_yn ${PAUSE_DIG_DANGER}`;;
+        2)    EXTRA_SHELLS=`toggle_yn ${EXTRA_SHELLS}`;;
+        3)    AQUIFERS=`toggle_yn ${AQUIFERS}`;;
+        4)    RUST=`toggle_yn ${RUST}`;;
+        5)    CAVEINS=`toggle_yn ${CAVEINS}`;;
+        6)    PAUSE_CAVEIN=`toggle_yn ${PAUSE_CAVEIN}`;;
+        7)    PAUSE_DIG_DANGER=`toggle_yn ${PAUSE_DIG_DANGER}`;;
         p|P)  MENU="gameplay_one";;
         m|M)  MENU="main_menu";;
         *)    ;;
@@ -409,6 +412,7 @@ save_exit() {
     defaults write "${RESOURCES_DIR}/DwarfBuilder" WEATHER ${WEATHER}
     defaults write "${RESOURCES_DIR}/DwarfBuilder" INVADERS ${INVADERS}
     defaults write "${RESOURCES_DIR}/DwarfBuilder" GRAZING ${GRAZING}
+    defaults write "${RESOURCES_DIR}/DwarfBuilder" EXTRA_SHELLS ${EXTRA_SHELLS}
     defaults write "${RESOURCES_DIR}/DwarfBuilder" AQUIFERS ${AQUIFERS}
     defaults write "${RESOURCES_DIR}/DwarfBuilder" RUST ${RUST}
     defaults write "${RESOURCES_DIR}/DwarfBuilder" CAVEINS ${CAVEINS}
@@ -741,7 +745,7 @@ construct() {
     
     if [ ${KEYBINDS} == "LAPTOP" ]
     then
-        echo "Changing Keybindings..."
+        echo "Changing keybindings..."
         sed -e "/\[BIND:SECONDSCROLL_UP:REPEAT_SLOW\]/ {n;s/\[KEY:.*\]/\[KEY:\-\]/g;};
             /\[BIND:SECONDSCROLL_DOWN:REPEAT_SLOW\]/ {n;s/\[KEY:.*\]/\[KEY:=\]/g;};
             /\[BIND:SECONDSCROLL_PAGEUP:REPEAT_SLOW\]/ {n;s/\[KEY:.*\]/\[KEY:_\]/g;};
@@ -761,21 +765,60 @@ construct() {
     if [ ${RUST} == "NO" ]
     then
         echo "Disabling skill rusting..."
-        sed -n "1,/CREATURE:DWARF/ p" \
-            build/raw/objects/creature_standard.txt > build/raw/objects/creature_standard_one.txt
-        sed -n "/CREATURE:DWARF/,\$ {/CREATURE:DWARF/n;p;}" \
-            build/raw/objects/creature_standard.txt > build/raw/objects/creature_standard_two.txt
 
-        rm build/raw/objects/creature_standard.txt
+        OLD_IFS="${IFS}"
+        IFS="\n"
 
-        cat build/raw/objects/creature_standard_one.txt >> build/raw/objects/creature_standard.txt
-        cat extras/rust_proof.txt >> build/raw/objects/creature_standard.txt
-        cat build/raw/objects/creature_standard_two.txt >> build/raw/objects/creature_standard.txt
+        rm -rf build/raw/objects/creature_standard.new.txt
+        while read CREATURE
+        do
+            echo "${CREATURE}" >> build/raw/objects/creature_standard.new.txt
 
-        rm build/raw/objects/creature_standard_one.txt
-        rm build/raw/objects/creature_standard_two.txt
+            case "${CREATURE}" in
+                *"CREATURE:DWARF"*)
+                    while read RUST
+                    do
+                        echo "${RUST}" >> build/raw/objects/creature_standard.new.txt
+                    done < extras/rust_proof.txt
+                    ;;
+            esac
+        done < build/raw/objects/creature_standard.txt
+
+        rm -rf build/raw/objects/creature_standard.txt
+        mv build/raw/objects/creature_standard.new.txt build/raw/objects/creature_standard.txt
+
+        IFS="${OLD_IFS}"
     fi
 
+    if [ ${EXTRA_SHELLS} == "YES" ]
+    then
+        echo "Adding extra shell items..."
+
+        OLD_IFS="${IFS}"
+        IFS="\n"
+
+        rm -rf build/raw/objects/material_template_default.new.txt
+        while read MATERIAL
+        do
+            echo "${MATERIAL}" >> build/raw/objects/material_template_default.new.txt
+
+            case "${MATERIAL}" in
+                *"MATERIAL_TEMPLATE:SCALE_TEMPLATE"*)
+                    echo "\t[SHELL]" >> build/raw/objects/material_template_default.new.txt;;
+                *"MATERIAL_TEMPLATE:HORN_TEMPLATE"*)
+                    echo "\t[SHELL]" >> build/raw/objects/material_template_default.new.txt;;
+                *"MATERIAL_TEMPLATE:HOOF_TEMPLATE"*)
+                    echo "\t[SHELL]" >> build/raw/objects/material_template_default.new.txt;;
+                *"MATERIAL_TEMPLATE:CHITIN_TEMPLATE"*)
+                    echo "\t[SHELL]" >> build/raw/objects/material_template_default.new.txt;;
+            esac
+        done < build/raw/objects/material_template_default.txt
+
+        rm -rf build/raw/objects/material_template_default.txt
+        mv build/raw/objects/material_template_default.new.txt build/raw/objects/material_template_default.txt
+
+        IFS="${OLD_IFS}"
+    fi
 
     if [ ${SOUNDTRACK} == "EXTENDED" ]
     then
@@ -801,7 +844,16 @@ construct() {
     esac
 
     echo "Reticulating splines..."
+    OLD_IFS="${IFS}"
+    IFS="\n"
+
+    while read WORLDGEN
+    do
+        echo "${WORLDGEN}" >> build/data/init/world_gen.txt
+    done < extras/extra_world_gen.txt
     cp extras/embark_profiles.txt build/data/init/
+
+    IFS="${OLD_IFS}"
 
     echo "Cleaning up..."
 

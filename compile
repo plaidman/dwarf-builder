@@ -47,6 +47,7 @@ defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" TEMPERATURE YES
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" WEATHER YES
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" INVADERS YES
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" GRAZING YES
+defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" EXTRA_SHELLS YES
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" AQUIFERS NO
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" RUST NO
 defaults write "${SCRIPT_ROOT}/${RESOURCES_DIR}/DwarfBuilder" CAVEINS YES
