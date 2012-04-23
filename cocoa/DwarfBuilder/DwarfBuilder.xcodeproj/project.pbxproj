@@ -1,0 +1,293 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E4A607F21545F4E100C51D98 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A607F11545F4E100C51D98 /* Cocoa.framework */; };
+		E4A607FC1545F4E100C51D98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E4A607FA1545F4E100C51D98 /* InfoPlist.strings */; };
+		E4A607FE1545F4E100C51D98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A607FD1545F4E100C51D98 /* main.m */; };
+		E4A608021545F4E100C51D98 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E4A608001545F4E100C51D98 /* Credits.rtf */; };
+		E4A608051545F4E100C51D98 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A608041545F4E100C51D98 /* AppDelegate.m */; };
+		E4A608081545F4E100C51D98 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4A608061545F4E100C51D98 /* MainMenu.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E4A607ED1545F4E100C51D98 /* DwarfBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DwarfBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4A607F11545F4E100C51D98 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		E4A607F41545F4E100C51D98 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		E4A607F51545F4E100C51D98 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E4A607F61545F4E100C51D98 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E4A607F91545F4E100C51D98 /* DwarfBuilder-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DwarfBuilder-Info.plist"; sourceTree = "<group>"; };
+		E4A607FB1545F4E100C51D98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E4A607FD1545F4E100C51D98 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E4A607FF1545F4E100C51D98 /* DwarfBuilder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DwarfBuilder-Prefix.pch"; sourceTree = "<group>"; };
+		E4A608011545F4E100C51D98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		E4A608031545F4E100C51D98 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E4A608041545F4E100C51D98 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E4A608071545F4E100C51D98 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E4A607EA1545F4E100C51D98 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4A607F21545F4E100C51D98 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E4A607E21545F4E100C51D98 = {
+			isa = PBXGroup;
+			children = (
+				E4A607F71545F4E100C51D98 /* DwarfBuilder */,
+				E4A607F01545F4E100C51D98 /* Frameworks */,
+				E4A607EE1545F4E100C51D98 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E4A607EE1545F4E100C51D98 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E4A607ED1545F4E100C51D98 /* DwarfBuilder.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E4A607F01545F4E100C51D98 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E4A607F11545F4E100C51D98 /* Cocoa.framework */,
+				E4A607F31545F4E100C51D98 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E4A607F31545F4E100C51D98 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E4A607F41545F4E100C51D98 /* AppKit.framework */,
+				E4A607F51545F4E100C51D98 /* CoreData.framework */,
+				E4A607F61545F4E100C51D98 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		E4A607F71545F4E100C51D98 /* DwarfBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				E4A608031545F4E100C51D98 /* AppDelegate.h */,
+				E4A608041545F4E100C51D98 /* AppDelegate.m */,
+				E4A608061545F4E100C51D98 /* MainMenu.xib */,
+				E4A607F81545F4E100C51D98 /* Supporting Files */,
+			);
+			path = DwarfBuilder;
+			sourceTree = "<group>";
+		};
+		E4A607F81545F4E100C51D98 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E4A607F91545F4E100C51D98 /* DwarfBuilder-Info.plist */,
+				E4A607FA1545F4E100C51D98 /* InfoPlist.strings */,
+				E4A607FD1545F4E100C51D98 /* main.m */,
+				E4A607FF1545F4E100C51D98 /* DwarfBuilder-Prefix.pch */,
+				E4A608001545F4E100C51D98 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E4A607EC1545F4E100C51D98 /* DwarfBuilder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4A6080B1545F4E100C51D98 /* Build configuration list for PBXNativeTarget "DwarfBuilder" */;
+			buildPhases = (
+				E4A607E91545F4E100C51D98 /* Sources */,
+				E4A607EA1545F4E100C51D98 /* Frameworks */,
+				E4A607EB1545F4E100C51D98 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DwarfBuilder;
+			productName = DwarfBuilder;
+			productReference = E4A607ED1545F4E100C51D98 /* DwarfBuilder.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E4A607E41545F4E100C51D98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = E4A607E71545F4E100C51D98 /* Build configuration list for PBXProject "DwarfBuilder" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E4A607E21545F4E100C51D98;
+			productRefGroup = E4A607EE1545F4E100C51D98 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E4A607EC1545F4E100C51D98 /* DwarfBuilder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E4A607EB1545F4E100C51D98 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4A607FC1545F4E100C51D98 /* InfoPlist.strings in Resources */,
+				E4A608021545F4E100C51D98 /* Credits.rtf in Resources */,
+				E4A608081545F4E100C51D98 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E4A607E91545F4E100C51D98 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4A607FE1545F4E100C51D98 /* main.m in Sources */,
+				E4A608051545F4E100C51D98 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		E4A607FA1545F4E100C51D98 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4A607FB1545F4E100C51D98 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E4A608001545F4E100C51D98 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4A608011545F4E100C51D98 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		E4A608061545F4E100C51D98 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4A608071545F4E100C51D98 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E4A608091545F4E100C51D98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E4A6080A1545F4E100C51D98 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E4A6080C1545F4E100C51D98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DwarfBuilder/DwarfBuilder-Prefix.pch";
+				INFOPLIST_FILE = "DwarfBuilder/DwarfBuilder-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		E4A6080D1545F4E100C51D98 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DwarfBuilder/DwarfBuilder-Prefix.pch";
+				INFOPLIST_FILE = "DwarfBuilder/DwarfBuilder-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E4A607E71545F4E100C51D98 /* Build configuration list for PBXProject "DwarfBuilder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4A608091545F4E100C51D98 /* Debug */,
+				E4A6080A1545F4E100C51D98 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4A6080B1545F4E100C51D98 /* Build configuration list for PBXNativeTarget "DwarfBuilder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4A6080C1545F4E100C51D98 /* Debug */,
+				E4A6080D1545F4E100C51D98 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E4A607E41545F4E100C51D98 /* Project object */;
+}
