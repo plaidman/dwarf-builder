@@ -11,6 +11,7 @@
 			<string key="NS.object.0">2182</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
+			<string>NSUserDefaultsController</string>
 			<string>NSPopUpButton</string>
 			<string>NSMenuItem</string>
 			<string>NSMenu</string>
@@ -221,7 +222,7 @@
 			<object class="NSWindowTemplate" id="972006081">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{335, 390}, {462, 466}}</string>
+				<string key="NSWindowRect">{{233, 207}, {462, 466}}</string>
 				<int key="NSWTFlags">1954021376</int>
 				<string key="NSWindowTitle">Dwarf Builder</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -1294,9 +1295,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																	<string key="NSContents"/>
 																	<string key="NSCellIdentifier">_NS:9</string>
 																	<reference key="NSControlView" ref="844405050"/>
-																	<double key="NSMaxValue">100</double>
+																	<double key="NSMaxValue">255</double>
 																	<double key="NSMinValue">0.0</double>
-																	<double key="NSValue">50</double>
+																	<double key="NSValue">128</double>
 																	<double key="NSAltIncValue">0.0</double>
 																	<int key="NSNumberOfTickMarks">0</int>
 																	<int key="NSTickMarkPosition">1</int>
@@ -1484,7 +1485,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																		<string key="NSContents">Default</string>
 																		<reference key="NSSupport" ref="599397884"/>
 																		<reference key="NSControlView" ref="628197508"/>
-																		<int key="NSTag">1</int>
 																		<int key="NSButtonFlags">1211912703</int>
 																		<int key="NSButtonFlags2">0</int>
 																		<reference key="NSAlternateImage" ref="723234015"/>
@@ -1499,6 +1499,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																		<string key="NSContents">Laptop</string>
 																		<reference key="NSSupport" ref="599397884"/>
 																		<reference key="NSControlView" ref="628197508"/>
+																		<int key="NSTag">1</int>
 																		<int key="NSButtonFlags">1211912703</int>
 																		<int key="NSButtonFlags2">0</int>
 																		<object class="NSImage" key="NSNormalImage">
@@ -1701,7 +1702,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																		<string key="NSContents">Seasonal</string>
 																		<reference key="NSSupport" ref="599397884"/>
 																		<reference key="NSControlView" ref="1037122959"/>
-																		<int key="NSTag">1</int>
 																		<int key="NSButtonFlags">1211912703</int>
 																		<int key="NSButtonFlags2">0</int>
 																		<reference key="NSAlternateImage" ref="723234015"/>
@@ -1716,6 +1716,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																		<string key="NSContents">Yearly</string>
 																		<reference key="NSSupport" ref="599397884"/>
 																		<reference key="NSControlView" ref="1037122959"/>
+																		<int key="NSTag">1</int>
 																		<int key="NSButtonFlags">1211912703</int>
 																		<int key="NSButtonFlags2">0</int>
 																		<object class="NSImage" key="NSNormalImage">
@@ -1767,6 +1768,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																		<string key="NSContents">Disabled</string>
 																		<reference key="NSSupport" ref="599397884"/>
 																		<reference key="NSControlView" ref="1037122959"/>
+																		<int key="NSTag">2</int>
 																		<int key="NSButtonFlags">1211912703</int>
 																		<int key="NSButtonFlags2">0</int>
 																		<reference key="NSAlternateImage" ref="723234015"/>
@@ -1917,7 +1919,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<string key="NSFrame">{{160, 14}, {158, 18}}</string>
 																<reference key="NSSuperview" ref="711966746"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="271490091"/>
+																<reference key="NSNextKeyView"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSButtonCell" key="NSCell" id="211527447">
@@ -2623,6 +2625,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<object class="NSCustomObject" id="213136997">
 				<string key="NSClassName">AppController</string>
 			</object>
+			<object class="NSUserDefaultsController" id="865322441">
+				<bool key="NSSharedInstance">YES</bool>
+			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -2715,308 +2720,180 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<int key="connectionID">532</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">windowWidthField</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="12867457"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: settings.enableSound</string>
+						<reference key="source" ref="267702717"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="267702717"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">value: settings.enableSound</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">settings.enableSound</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1372</int>
+					<int key="connectionID">1433</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">windowHeightField</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="260676959"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: settings.extendedOST</string>
+						<reference key="source" ref="379000037"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="379000037"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">value: settings.extendedOST</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">settings.extendedOST</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1373</int>
+					<int key="connectionID">1437</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">fullscreenCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="140094575"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: settings.volume</string>
+						<reference key="source" ref="844405050"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="844405050"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">value: settings.volume</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">settings.volume</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1374</int>
+					<int key="connectionID">1429</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">tilesetRadio</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="468330434"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: settings.cFPSCap</string>
+						<reference key="source" ref="167446796"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="167446796"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">value: settings.cFPSCap</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">settings.cFPSCap</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1375</int>
+					<int key="connectionID">1464</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">creatureCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="466295776"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: settings.gFPSCap</string>
+						<reference key="source" ref="812314908"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="812314908"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">value: settings.gFPSCap</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">settings.gFPSCap</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1376</int>
+					<int key="connectionID">1462</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">introCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="699984343"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: settings.keybindings</string>
+						<reference key="source" ref="628197508"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="628197508"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">selectedTag: settings.keybindings</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">settings.keybindings</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1377</int>
+					<int key="connectionID">1443</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">fontRadio</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="676352976"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: settings.autosave</string>
+						<reference key="source" ref="1037122959"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1037122959"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">selectedTag: settings.autosave</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">settings.autosave</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1381</int>
+					<int key="connectionID">1465</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">fontCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="45589208"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: settings.compressSaves</string>
+						<reference key="source" ref="620337772"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="620337772"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">value: settings.compressSaves</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">settings.compressSaves</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1382</int>
+					<int key="connectionID">1449</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">soundCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="118326075"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: settings.pauseOnLoad</string>
+						<reference key="source" ref="639402093"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="639402093"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">value: settings.pauseOnLoad</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">settings.pauseOnLoad</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1383</int>
+					<int key="connectionID">1456</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">extendOSTCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="118326075"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: settings.pauseOnSave</string>
+						<reference key="source" ref="733907460"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="733907460"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">value: settings.pauseOnSave</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">settings.pauseOnSave</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1384</int>
+					<int key="connectionID">1453</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">volumeSlider</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="844405050"/>
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: settings.autoBackupSaves</string>
+						<reference key="source" ref="288078931"/>
+						<reference key="destination" ref="213136997"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="288078931"/>
+							<reference key="NSDestination" ref="213136997"/>
+							<string key="NSLabel">value: settings.autoBackupSaves</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">settings.autoBackupSaves</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
 					</object>
-					<int key="connectionID">1385</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">autosaveRadio</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="1037122959"/>
-					</object>
-					<int key="connectionID">1386</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">pauseOnSaveCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="733907460"/>
-					</object>
-					<int key="connectionID">1390</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">pauseOnLoadCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="639402093"/>
-					</object>
-					<int key="connectionID">1392</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">compressSavesCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="620337772"/>
-					</object>
-					<int key="connectionID">1394</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">autoBackupSavesCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="288078931"/>
-					</object>
-					<int key="connectionID">1395</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">keybindingsRadio</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="628197508"/>
-					</object>
-					<int key="connectionID">1396</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">cFPSCapField</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="167446796"/>
-					</object>
-					<int key="connectionID">1399</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">fPSCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="274248414"/>
-					</object>
-					<int key="connectionID">1400</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">liquidDepthCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="21941714"/>
-					</object>
-					<int key="connectionID">1401</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">idlersPopup</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="804180547"/>
-					</object>
-					<int key="connectionID">1402</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">skillRustCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="120190999"/>
-					</object>
-					<int key="connectionID">1403</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">embarkWarningCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="964428910"/>
-					</object>
-					<int key="connectionID">1404</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">grazingAnimalCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="778760045"/>
-					</object>
-					<int key="connectionID">1405</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">pauseCaveinCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="273197786"/>
-					</object>
-					<int key="connectionID">1406</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">extraShellCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="1008098818"/>
-					</object>
-					<int key="connectionID">1407</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">pauseWarmDampCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="803313379"/>
-					</object>
-					<int key="connectionID">1408</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">temperatureCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="476574870"/>
-					</object>
-					<int key="connectionID">1409</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">aquiferCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="881426780"/>
-					</object>
-					<int key="connectionID">1410</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">caveinCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="847604240"/>
-					</object>
-					<int key="connectionID">1411</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">invaderCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="108569593"/>
-					</object>
-					<int key="connectionID">1412</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">weatherCheckbox</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="579904520"/>
-					</object>
-					<int key="connectionID">1413</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">dwarfCapField</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="42460309"/>
-					</object>
-					<int key="connectionID">1415</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">childHardCapField</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="806947415"/>
-					</object>
-					<int key="connectionID">1416</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">childPercentCapField</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="188145671"/>
-					</object>
-					<int key="connectionID">1417</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">embarkWidthField</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="520290307"/>
-					</object>
-					<int key="connectionID">1418</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">embarkHeightField</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="728867572"/>
-					</object>
-					<int key="connectionID">1419</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">gFPSCapField</string>
-						<reference key="source" ref="213136997"/>
-						<reference key="destination" ref="812314908"/>
-					</object>
-					<int key="connectionID">1420</int>
+					<int key="connectionID">1459</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4266,8 +4143,13 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="parent" ref="722061614"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">1368</int>
+						<int key="objectID">1425</int>
 						<reference key="object" ref="213136997"/>
+						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1426</int>
+						<reference key="object" ref="865322441"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</array>
@@ -4406,7 +4288,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="1365.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1366.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1367.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1368.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1425.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1426.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="143.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="145.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4416,6 +4299,8 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<string key="239.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<boolean value="NO" key="371.IBNSWindowAutoPositionCentersHorizontal"/>
+				<boolean value="NO" key="371.IBNSWindowAutoPositionCentersVertical"/>
 				<string key="371.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="371.IBWindowTemplateEditedContentRect">{{380, 496}, {480, 360}}</string>
 				<integer value="1" key="371.NSWindowTemplate.visibleAtLaunch"/>
@@ -4459,207 +4344,13 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1420</int>
+			<int key="maxID">1465</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">AppController</string>
 					<string key="superclassName">NSObject</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="aquiferCheckbox">NSButton</string>
-						<string key="autoBackupSavesCheckbox">NSButton</string>
-						<string key="autosaveRadio">NSMatrix</string>
-						<string key="cFPSCapField">NSTextField</string>
-						<string key="caveinCheckbox">NSButton</string>
-						<string key="childHardCapField">NSTextField</string>
-						<string key="childPercentCapField">NSTextField</string>
-						<string key="compressSavesCheckbox">NSButton</string>
-						<string key="creatureCheckbox">NSButton</string>
-						<string key="dwarfCapField">NSTextField</string>
-						<string key="embarkHeightField">NSTextField</string>
-						<string key="embarkWarningCheckbox">NSButton</string>
-						<string key="embarkWidthField">NSTextField</string>
-						<string key="extendOSTCheckbox">NSBox</string>
-						<string key="extraShellCheckbox">NSButton</string>
-						<string key="fPSCheckbox">NSButton</string>
-						<string key="fontCheckbox">NSButton</string>
-						<string key="fontRadio">NSMatrix</string>
-						<string key="fullscreenCheckbox">NSButton</string>
-						<string key="gFPSCapField">NSTextField</string>
-						<string key="grazingAnimalCheckbox">NSButton</string>
-						<string key="idlersPopup">NSPopUpButton</string>
-						<string key="introCheckbox">NSButton</string>
-						<string key="invaderCheckbox">NSButton</string>
-						<string key="keybindingsRadio">NSMatrix</string>
-						<string key="liquidDepthCheckbox">NSButton</string>
-						<string key="pauseCaveinCheckbox">NSButton</string>
-						<string key="pauseOnLoadCheckbox">NSButton</string>
-						<string key="pauseOnSaveCheckbox">NSButton</string>
-						<string key="pauseWarmDampCheckbox">NSButton</string>
-						<string key="skillRustCheckbox">NSButton</string>
-						<string key="soundCheckbox">NSBox</string>
-						<string key="temperatureCheckbox">NSButton</string>
-						<string key="tilesetRadio">NSMatrix</string>
-						<string key="volumeSlider">NSSlider</string>
-						<string key="weatherCheckbox">NSButton</string>
-						<string key="windowHeightField">NSTextField</string>
-						<string key="windowWidthField">NSTextField</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="aquiferCheckbox">
-							<string key="name">aquiferCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="autoBackupSavesCheckbox">
-							<string key="name">autoBackupSavesCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="autosaveRadio">
-							<string key="name">autosaveRadio</string>
-							<string key="candidateClassName">NSMatrix</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="cFPSCapField">
-							<string key="name">cFPSCapField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="caveinCheckbox">
-							<string key="name">caveinCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="childHardCapField">
-							<string key="name">childHardCapField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="childPercentCapField">
-							<string key="name">childPercentCapField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="compressSavesCheckbox">
-							<string key="name">compressSavesCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="creatureCheckbox">
-							<string key="name">creatureCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="dwarfCapField">
-							<string key="name">dwarfCapField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="embarkHeightField">
-							<string key="name">embarkHeightField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="embarkWarningCheckbox">
-							<string key="name">embarkWarningCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="embarkWidthField">
-							<string key="name">embarkWidthField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="extendOSTCheckbox">
-							<string key="name">extendOSTCheckbox</string>
-							<string key="candidateClassName">NSBox</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="extraShellCheckbox">
-							<string key="name">extraShellCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="fPSCheckbox">
-							<string key="name">fPSCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="fontCheckbox">
-							<string key="name">fontCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="fontRadio">
-							<string key="name">fontRadio</string>
-							<string key="candidateClassName">NSMatrix</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="fullscreenCheckbox">
-							<string key="name">fullscreenCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="gFPSCapField">
-							<string key="name">gFPSCapField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="grazingAnimalCheckbox">
-							<string key="name">grazingAnimalCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="idlersPopup">
-							<string key="name">idlersPopup</string>
-							<string key="candidateClassName">NSPopUpButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="introCheckbox">
-							<string key="name">introCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="invaderCheckbox">
-							<string key="name">invaderCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="keybindingsRadio">
-							<string key="name">keybindingsRadio</string>
-							<string key="candidateClassName">NSMatrix</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="liquidDepthCheckbox">
-							<string key="name">liquidDepthCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pauseCaveinCheckbox">
-							<string key="name">pauseCaveinCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pauseOnLoadCheckbox">
-							<string key="name">pauseOnLoadCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pauseOnSaveCheckbox">
-							<string key="name">pauseOnSaveCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pauseWarmDampCheckbox">
-							<string key="name">pauseWarmDampCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="skillRustCheckbox">
-							<string key="name">skillRustCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="soundCheckbox">
-							<string key="name">soundCheckbox</string>
-							<string key="candidateClassName">NSBox</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="temperatureCheckbox">
-							<string key="name">temperatureCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="tilesetRadio">
-							<string key="name">tilesetRadio</string>
-							<string key="candidateClassName">NSMatrix</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="volumeSlider">
-							<string key="name">volumeSlider</string>
-							<string key="candidateClassName">NSSlider</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="weatherCheckbox">
-							<string key="name">weatherCheckbox</string>
-							<string key="candidateClassName">NSButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="windowHeightField">
-							<string key="name">windowHeightField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="windowWidthField">
-							<string key="name">windowWidthField</string>
-							<string key="candidateClassName">NSTextField</string>
-						</object>
-					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/AppController.h</string>
