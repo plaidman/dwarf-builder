@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96011D5F1547686100DFD68D /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96011D5E1547686100DFD68D /* AppController.m */; };
 		E4A607F21545F4E100C51D98 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A607F11545F4E100C51D98 /* Cocoa.framework */; };
 		E4A607FC1545F4E100C51D98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E4A607FA1545F4E100C51D98 /* InfoPlist.strings */; };
 		E4A607FE1545F4E100C51D98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A607FD1545F4E100C51D98 /* main.m */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		96011D5D1547686100DFD68D /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		96011D5E1547686100DFD68D /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		E4A607ED1545F4E100C51D98 /* DwarfBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DwarfBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4A607F11545F4E100C51D98 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E4A607F41545F4E100C51D98 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -82,6 +85,8 @@
 		E4A607F71545F4E100C51D98 /* DwarfBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				96011D5D1547686100DFD68D /* AppController.h */,
+				96011D5E1547686100DFD68D /* AppController.m */,
 				E4A608031545F4E100C51D98 /* AppDelegate.h */,
 				E4A608041545F4E100C51D98 /* AppDelegate.m */,
 				E4A608061545F4E100C51D98 /* MainMenu.xib */,
@@ -167,6 +172,7 @@
 			files = (
 				E4A607FE1545F4E100C51D98 /* main.m in Sources */,
 				E4A608051545F4E100C51D98 /* AppDelegate.m in Sources */,
+				96011D5F1547686100DFD68D /* AppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +292,7 @@
 				E4A6080D1545F4E100C51D98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
