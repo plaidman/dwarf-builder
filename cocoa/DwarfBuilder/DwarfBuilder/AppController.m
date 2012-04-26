@@ -1,10 +1,3 @@
-//
-//  AppController.m
-//  DwarfBuilder
-//
-//  Created by Tomsic, Jason on 4/25/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #import "AppController.h"
 #import "DwarfBuilderSettings.h"
@@ -18,6 +11,7 @@
     
     if (self) {
         settings = [[DwarfBuilderSettings alloc] init];
+        [settings writeSettingsToFile:@"/blah.plist"];
     }
     
     return self;

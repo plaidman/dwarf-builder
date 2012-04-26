@@ -1,14 +1,9 @@
-//
-//  DwarfBuilderSettings.h
-//  DwarfBuilder
-//
-//  Created by Tomsic, Jason on 4/25/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #import <Foundation/Foundation.h>
 
 @interface DwarfBuilderSettings : NSObject {
+    NSArray *properties;
+    
     /* APPLICATION OPTIONS */
     bool enableSound;
     bool extendedOST;
@@ -20,9 +15,9 @@
     NSString *cFPSCap;
     NSString *gFPSCap;
     
-    NSNumber *volume;
-    NSNumber *keybindings;
-    NSNumber *autosave;
+    int volume;
+    int keybindings;
+    int autosave;
     
     /* VISUAL SETTINGS */
     bool fullscreen;
@@ -35,9 +30,9 @@
     NSString *windowWidth;
     NSString *windowHeight;
     
-    NSNumber *showIdlers;
-    NSNumber *tileset;
-    NSNumber *font;
+    int showIdlers;
+    int tileset;
+    int font;
     
     /* GAMEPLAY SETTINGS */
     bool skillRust;
@@ -59,15 +54,17 @@
     NSString *embarkHeight;
 }
 
+@property (retain) NSArray *properties;
+
 @property bool enableSound, extendedOST, compressSaves,
     pauseOnLoad, pauseOnSave, autoBackupSaves;
 @property (retain) NSString *cFPSCap, *gFPSCap;
-@property (retain) NSNumber *volume, *keybindings, *autosave;
+@property int volume, keybindings, autosave;
 
 @property bool fullscreen, showIntro, showFPS,
     showDepth, creatureGraphics, useFont;
 @property (retain) NSString *windowWidth, *windowHeight;
-@property (retain) NSNumber *showIdlers, *tileset, *font;
+@property int showIdlers, tileset, font;
 
 @property bool skillRust, embarkWarning, grazingAnimals,
     pauseOnCaveIns, extraShellItems, pauseOnWarmDampStone, 
@@ -76,14 +73,20 @@
     *childPercentageCap, *embarkWidth, *embarkHeight;
 
 enum {
-    kDefault = 0,
-    kLaptop
+    kbDefault = 0,
+    kbLaptop
 };
 
 enum {
     asSeasonal = 0,
     asYearly,
     asDisabled
+};
+
+enum {
+    siTop = 0,
+    siBottom,
+    siDisabled
 };
 
 enum {
@@ -103,5 +106,8 @@ enum {
     fTuffy,
     fDefault
 };
+
+-(void)writeSettingsToFile: (NSString*)filename;
+-(void)readSettingsFromFile: (NSString*)filename;
 
 @end

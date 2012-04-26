@@ -1,10 +1,3 @@
-//
-//  AppDelegate.m
-//  DwarfBuilder
-//
-//  Created by Tomsic, Jason on 4/23/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
 #import "AppDelegate.h"
 
