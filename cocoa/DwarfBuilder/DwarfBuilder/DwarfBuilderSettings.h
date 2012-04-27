@@ -78,9 +78,9 @@ enum {
 };
 
 enum {
-    asSeasonal = 0,
-    asYearly,
-    asDisabled
+    asDisabled = 0,
+    asSeasonal,
+    asYearly
 };
 
 enum {
@@ -90,24 +90,27 @@ enum {
 };
 
 enum {
-    tsIronhand = 0,
+    tsDefaultTall = 0,
+    tsIronhand,
     tsPhoebus,
     tsJollySquare,
     tsJollyTall,
     tsMayday,
-    tsDefaultTall,
     tsDefaultSquare
 };
 
 enum {
-    fIronhand = 0,
+    fDefault = 0,
+    fIronhand,
     fPhoebus,
     fMasterwork,
-    fTuffy,
-    fDefault
+    fTuffy
 };
 
 -(void)writeSettingsToFile: (NSString*)filename;
 -(void)readSettingsFromFile: (NSString*)filename;
+
+-(void)setPlaidmanDefaults;
+-(void)setDFDefaults;
 
 @end

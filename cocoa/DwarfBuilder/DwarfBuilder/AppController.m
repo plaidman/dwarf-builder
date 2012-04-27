@@ -11,7 +11,6 @@
     
     if (self) {
         settings = [[DwarfBuilderSettings alloc] init];
-        [settings writeSettingsToFile:@"/blah.plist"];
     }
     
     return self;
