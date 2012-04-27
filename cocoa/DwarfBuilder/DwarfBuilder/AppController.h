@@ -6,6 +6,6 @@
     DwarfBuilderSettings *settings;
 }
 
-@property (retain) DwarfBuilderSettings *settings;
+@property DwarfBuilderSettings *settings;
 
 @end

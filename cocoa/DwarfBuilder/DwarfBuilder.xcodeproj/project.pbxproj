@@ -260,6 +260,7 @@
 		E4A6080C1545F4E100C51D98 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DwarfBuilder/DwarfBuilder-Prefix.pch";
 				INFOPLIST_FILE = "DwarfBuilder/DwarfBuilder-Info.plist";
@@ -271,6 +272,7 @@
 		E4A6080D1545F4E100C51D98 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DwarfBuilder/DwarfBuilder-Prefix.pch";
 				INFOPLIST_FILE = "DwarfBuilder/DwarfBuilder-Info.plist";

@@ -2,110 +2,50 @@
 #import <Foundation/Foundation.h>
 
 @interface DwarfBuilderSettings : NSObject {
-    NSArray *properties;
+    NSArray *propertyNames;
     
     /* APPLICATION OPTIONS */
-    bool enableSound;
-    bool extendSoundtk;
-    bool compressSaves;
-    bool pauseOnLoad;
-    bool pauseOnSave;
-    bool autoBackupSaves;
-    
-    NSString *cFPSCap;
-    NSString *gFPSCap;
-    
-    int volume;
-    int keybindings;
-    int autosave;
+    bool enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
+    NSString *cFPSCap, *gFPSCap;
+    int volume, keybindings, autosave;
     
     /* VISUAL SETTINGS */
-    bool fullscreen;
-    bool showIntro;
-    bool showFPS;
-    bool liquidDepth;
-    bool creatureGraphics;
-    bool useFont;
-    
-    NSString *windowWidth;
-    NSString *windowHeight;
-    
-    int showIdlers;
-    int tileset;
-    int font;
+    bool fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont;
+    NSString *windowWidth, *windowHeight;
+    int showIdlers, tileset, font;
     
     /* GAMEPLAY SETTINGS */
-    bool skillRusting;
-    bool embarkConfirmation;
-    bool grazingAnimals;
-    bool pauseOnCaveIns;
-    bool extraShellItems;
-    bool pauseOnWarmDampStone;
-    bool temperature;
-    bool aquifers;
-    bool caveIns;
-    bool invaders;
-    bool weather;
-    
-    NSString *dwarfCap;
-    NSString *childHardCap;
-    NSString *childPercentageCap;
-    NSString *embarkWidth;
-    NSString *embarkHeight;
+    bool skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems, pauseOnWarmDampStone,
+         temperature, aquifers, caveIns, invaders, weather;
+    NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
 }
 
-@property (retain) NSArray *properties;
+@property NSArray *propertyNames;
 
+/* APPLICATION OPTIONS */
 @property bool enableSound, extendSoundtk, compressSaves,
     pauseOnLoad, pauseOnSave, autoBackupSaves;
-@property (retain) NSString *cFPSCap, *gFPSCap;
+@property NSString *cFPSCap, *gFPSCap;
 @property int volume, keybindings, autosave;
 
+/* VISUAL SETTINGS */
 @property bool fullscreen, showIntro, showFPS,
     liquidDepth, creatureGraphics, useFont;
-@property (retain) NSString *windowWidth, *windowHeight;
+@property NSString *windowWidth, *windowHeight;
 @property int showIdlers, tileset, font;
 
+/* GAMEPLAY SETTINGS */
 @property bool skillRusting, embarkConfirmation, grazingAnimals,
     pauseOnCaveIns, extraShellItems, pauseOnWarmDampStone, 
     temperature, aquifers, caveIns, invaders, weather;
-@property (retain) NSString *dwarfCap, *childHardCap,
+@property NSString *dwarfCap, *childHardCap,
     *childPercentageCap, *embarkWidth, *embarkHeight;
 
-enum {
-    kbDefault = 0,
-    kbLaptop
-};
-
-enum {
-    asDisabled = 0,
-    asSeasonal,
-    asYearly
-};
-
-enum {
-    siTop = 0,
-    siBottom,
-    siDisabled
-};
-
-enum {
-    tsDefaultTall = 0,
-    tsIronhand,
-    tsPhoebus,
-    tsJollySquare,
-    tsJollyTall,
-    tsMayday,
-    tsDefaultSquare
-};
-
-enum {
-    fDefault = 0,
-    fIronhand,
-    fPhoebus,
-    fMasterwork,
-    fTuffy
-};
+enum {kbDefault = 0, kbLaptop};
+enum {asDisabled = 0, asSeasonal, asYearly};
+enum {siTop = 0, siBottom, siDisabled};
+enum {tsDefaultTall = 0, tsIronhand, tsPhoebus, tsJollySquare, tsJollyTall, tsMayday, tsDefaultSquare};
+enum {fDefault = 0, fIronhand, fPhoebus, fMasterwork, fTuffy};
 
 -(void)writeSettingsToFile: (NSString*)filename;
 -(void)readSettingsFromFile: (NSString*)filename;
