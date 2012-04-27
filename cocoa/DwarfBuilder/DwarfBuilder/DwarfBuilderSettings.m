@@ -5,17 +5,17 @@
 
 @synthesize properties;
 
-@synthesize enableSound, extendedOST, compressSaves, 
+@synthesize enableSound, extendSoundtk, compressSaves, 
     pauseOnLoad, pauseOnSave, autoBackupSaves;
 @synthesize volume, keybindings, autosave;
 @synthesize cFPSCap, gFPSCap;
 
 @synthesize fullscreen, showIntro, showFPS,
-    showDepth, creatureGraphics, useFont;
+    liquidDepth, creatureGraphics, useFont;
 @synthesize windowWidth, windowHeight;
 @synthesize showIdlers, tileset, font;
 
-@synthesize skillRust, embarkWarning, grazingAnimals,
+@synthesize skillRusting, embarkConfirmation, grazingAnimals,
     pauseOnCaveIns, extraShellItems, pauseOnWarmDampStone, 
     temperature, aquifers, caveIns, invaders, weather;
 @synthesize dwarfCap, childHardCap, childPercentageCap,
@@ -25,16 +25,16 @@
     self = [super init];
     
     if (self) {
-        [self setProperties:[[NSArray alloc] initWithObjects:@"enableSound", @"extendedOST", @"compressSaves", 
+        [self setProperties:[[NSArray alloc] initWithObjects:@"enableSound", @"extendSoundtk", @"compressSaves", 
                              @"pauseOnLoad", @"pauseOnSave", @"autoBackupSaves", @"volume", @"keybindings", 
                              @"autosave", @"cFPSCap", @"gFPSCap", @"fullscreen", @"showIntro", @"showFPS", 
-                             @"showDepth", @"creatureGraphics", @"useFont",@"windowWidth", @"windowHeight", 
-                             @"showIdlers", @"tileset", @"skillRust", @"embarkWarning", @"grazingAnimals",
+                             @"liquidDepth", @"creatureGraphics", @"useFont",@"windowWidth", @"windowHeight", 
+                             @"showIdlers", @"tileset", @"skillRusting", @"embarkConfirmation", @"grazingAnimals",
                              @"pauseOnCaveIns", @"extraShellItems", @"pauseOnWarmDampStone", @"invaders",
                              @"temperature", @"font", @"aquifers", @"caveIns", @"weather", @"dwarfCap", 
                              @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight", nil]];
         [self setEnableSound:false];
-        [self setExtendedOST:false];
+        [self setExtendSoundtk:false];
         [self setCompressSaves:true];
         [self setPauseOnLoad:true];
         [self setPauseOnSave:true];
@@ -47,7 +47,7 @@
         [self setFullscreen:false];
         [self setShowIntro:false];
         [self setShowFPS:true];
-        [self setShowDepth:true];
+        [self setLiquidDepth:true];
         [self setCreatureGraphics:true];
         [self setUseFont:false];
         [self setWindowWidth:@"1280"];
@@ -55,8 +55,8 @@
         [self setShowIdlers:siTop];
         [self setTileset:tsIronhand];
         [self setFont:fIronhand];
-        [self setSkillRust:false];
-        [self setEmbarkWarning:true];
+        [self setSkillRusting:false];
+        [self setEmbarkConfirmation:true];
         [self setGrazingAnimals:false];
         [self setPauseOnCaveIns:true];
         [self setExtraShellItems:true];
@@ -77,11 +77,7 @@
 }
 
 -(void)writeSettingsToFile:(NSString *)filename {
-//    NSDictionary *dict = [self dictionaryWithValuesForKeys:[self properties]];
-//    [dict writeToFile:filename atomically:true];
-//    NSLog(@"%@", dict);
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
-                          @"one", @"two", @"three", @"four", @"five", @"six", nil];
+    NSDictionary *dict = [self dictionaryWithValuesForKeys:[self properties]];
     [dict writeToFile:filename atomically:true];
 }
 

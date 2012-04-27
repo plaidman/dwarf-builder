@@ -6,7 +6,7 @@
     
     /* APPLICATION OPTIONS */
     bool enableSound;
-    bool extendedOST;
+    bool extendSoundtk;
     bool compressSaves;
     bool pauseOnLoad;
     bool pauseOnSave;
@@ -23,7 +23,7 @@
     bool fullscreen;
     bool showIntro;
     bool showFPS;
-    bool showDepth;
+    bool liquidDepth;
     bool creatureGraphics;
     bool useFont;
     
@@ -35,8 +35,8 @@
     int font;
     
     /* GAMEPLAY SETTINGS */
-    bool skillRust;
-    bool embarkWarning;
+    bool skillRusting;
+    bool embarkConfirmation;
     bool grazingAnimals;
     bool pauseOnCaveIns;
     bool extraShellItems;
@@ -56,17 +56,17 @@
 
 @property (retain) NSArray *properties;
 
-@property bool enableSound, extendedOST, compressSaves,
+@property bool enableSound, extendSoundtk, compressSaves,
     pauseOnLoad, pauseOnSave, autoBackupSaves;
 @property (retain) NSString *cFPSCap, *gFPSCap;
 @property int volume, keybindings, autosave;
 
 @property bool fullscreen, showIntro, showFPS,
-    showDepth, creatureGraphics, useFont;
+    liquidDepth, creatureGraphics, useFont;
 @property (retain) NSString *windowWidth, *windowHeight;
 @property int showIdlers, tileset, font;
 
-@property bool skillRust, embarkWarning, grazingAnimals,
+@property bool skillRusting, embarkConfirmation, grazingAnimals,
     pauseOnCaveIns, extraShellItems, pauseOnWarmDampStone, 
     temperature, aquifers, caveIns, invaders, weather;
 @property (retain) NSString *dwarfCap, *childHardCap,
