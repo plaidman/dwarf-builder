@@ -47,8 +47,8 @@ enum {siTop = 0, siBottom, siDisabled};
 enum {tsDefaultTall = 0, tsIronhand, tsPhoebus, tsJollySquare, tsJollyTall, tsMayday, tsDefaultSquare};
 enum {fDefault = 0, fIronhand, fPhoebus, fMasterwork, fTuffy};
 
--(void)writeSettingsToFile: (NSString*)filename;
--(void)readSettingsFromFile: (NSString*)filename;
+-(void)writeSettingsToFile :(NSString*)filename;
+-(void)readSettingsFromFile :(NSString*)filename;
 
 -(void)setPlaidmanDefaults;
 -(void)setDFDefaults;

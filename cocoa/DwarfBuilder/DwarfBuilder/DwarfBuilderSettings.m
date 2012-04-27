@@ -6,23 +6,19 @@
 @synthesize propertyNames;
 
 /* APPLICATION OPTIONS */
-@synthesize enableSound, extendSoundtk, compressSaves, 
-    pauseOnLoad, pauseOnSave, autoBackupSaves;
+@synthesize enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
 @synthesize volume, keybindings, autosave;
 @synthesize cFPSCap, gFPSCap;
 
 /* VISUAL SETTINGS */
-@synthesize fullscreen, showIntro, showFPS,
-    liquidDepth, creatureGraphics, useFont;
+@synthesize fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont;
 @synthesize windowWidth, windowHeight;
 @synthesize showIdlers, tileset, font;
 
 /* GAMEPLAY SETTINGS */
-@synthesize skillRusting, embarkConfirmation, grazingAnimals,
-    pauseOnCaveIns, extraShellItems, pauseOnWarmDampStone, 
-    temperature, aquifers, caveIns, invaders, weather;
-@synthesize dwarfCap, childHardCap, childPercentageCap,
-    embarkWidth, embarkHeight;
+@synthesize skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems,
+    pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather;
+@synthesize dwarfCap, childHardCap, childPercentageCap, embarkWidth, embarkHeight;
 
 -(id)init {
     self = [super init];
@@ -42,12 +38,12 @@
     return self;
 }
 
--(void)writeSettingsToFile:(NSString *)filename {
+-(void)writeSettingsToFile :(NSString *)filename {
     NSDictionary *dict = [self dictionaryWithValuesForKeys:[self propertyNames]];
     [dict writeToFile:filename atomically:true];
 }
 
--(void)readSettingsFromFile:(NSString *)filename {
+-(void)readSettingsFromFile :(NSString *)filename {
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filename];
     [self setValuesForKeysWithDictionary:dict];
 }

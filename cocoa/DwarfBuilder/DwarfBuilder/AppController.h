@@ -8,4 +8,6 @@
 
 @property DwarfBuilderSettings *settings;
 
+-(void)processInitTxt;
+
 @end
