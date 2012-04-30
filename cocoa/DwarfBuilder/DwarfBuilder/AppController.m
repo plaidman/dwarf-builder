@@ -484,6 +484,7 @@
 
 //juliuspaintings.co.uk/cgi-bin/paint_css/animatedPaint/009-NSSavePanel.pl
 //use nssavepanel
+//switch all files to utf8 with a isolatin1 backup
 
 -(void)constructDwarfTherapist {
     //check if the app memory folder already exists
