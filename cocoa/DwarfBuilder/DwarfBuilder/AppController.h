@@ -12,7 +12,9 @@
 @property NSFileManager *fileManager;
 @property NSString *baseAppDir;
 
--(IBAction)constructAction:(id)sender;
+-(IBAction)constructDFAction:(id)sender;
+-(IBAction)constructDTAction:(id)sender;
+-(IBAction)constructSSAction:(id)sender;
 
 -(NSString*)boolToInit:(bool)optionValue optionName:(NSString*)optionName;
 -(NSString*)intToInit:(int)optionValue optionName:(NSString*)optionName;
@@ -45,5 +47,7 @@
 -(void)addWorldGens;
 -(void)copyEmbarkProfiles;
 -(void)setupDwarfFortressApp;
+-(void)constructDwarfTherapist;
+-(void)constructSoundSense;
 
 @end

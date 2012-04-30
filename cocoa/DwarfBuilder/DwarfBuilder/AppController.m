@@ -15,8 +15,8 @@
         settings = [[DwarfBuilderSettings alloc] init];
         fileManager = [NSFileManager defaultManager];
 #ifdef DEBUG
-        //baseAppDir = @"/Users/jtomsic/Downloads/dwarf-builder";
-        baseAppDir = @"/Users/jrtomsic/devel/dwarf-builder";
+        baseAppDir = @"/Users/jtomsic/Downloads/dwarf-builder";
+        //baseAppDir = @"/Users/jrtomsic/devel/dwarf-builder";
 #else
         //set path to bundle path
 #endif
@@ -25,13 +25,21 @@
     return self;
 }
 
--(IBAction)constructAction:(id)sender {
+-(IBAction)constructDFAction:(id)sender {
     [self constructDwarfFortress];
 }
 
-/* * * * * * * * * * * * *
- * -- HELPER FUNCTIONS -- 
- * * * * * * * * * * * * */
+-(IBAction)constructDTAction:(id)sender {
+    [self constructDwarfTherapist];
+}
+
+-(IBAction)constructSSAction:(id)sender {
+    [self constructSoundSense];
+}
+
+/* * * * * * * * * * * * * * *
+ * -- SERIALIZER FUNCTIONS -- 
+ * * * * * * * * * * * * * * */
 
 -(NSString*)boolToInit:(bool)optionValue optionName:(NSString*)optionName {
     if (optionValue) return [NSString stringWithFormat:@"[%@:YES]", optionName];
@@ -65,6 +73,10 @@
     if (option == siBottom) return @"[IDLERS:BOTTOM]";
     return @"[IDLERS:OFF]";
 }
+
+/* * * * * * * * * * * * *
+ * -- HELPER FUNCTIONS -- 
+ * * * * * * * * * * * * */
 
 -(void)linuxCPFromPath:(NSString*)fromPath toPath:(NSString*)toPath {
     NSEnumerator *itemReader = [fileManager enumeratorAtPath:fromPath];
@@ -137,26 +149,26 @@
     [fileContents insertString:@"\t[SHELL]\r\n" atIndex:range.location];
 }
 
-/* * * * * * * * * * * * * * * *
- * -- CONSTRUCTION FUNCTIONS --
- * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * *
+ * -- DF CONSTRUCTION FUNCTIONS --
+ * * * * * * * * * * * * * * * * * */
 
 -(void)constructDwarfFortress {
     [self copyVanilla];
-//    [self copyTileset];
-//    [self processInitTxt];
-//    [self processDInitTxt];
-//    [self removeAquifers];
-//    [self removeGrazing];
-//    [self disablePausingWarmDampStone];
-//    [self disablePausingCaveIns];
-//    [self updateKeybinds];
-//    [self disableSkillRusting];
-//    [self addExtraShellItems];
-//    [self copySoundtrack];
-//    [self copyFont];
-//    [self addWorldGens];
-//    [self copyEmbarkProfiles];
+    [self copyTileset];
+    [self processInitTxt];
+    [self processDInitTxt];
+    [self removeAquifers];
+    [self removeGrazing];
+    [self disablePausingWarmDampStone];
+    [self disablePausingCaveIns];
+    [self updateKeybinds];
+    [self disableSkillRusting];
+    [self addExtraShellItems];
+    [self copySoundtrack];
+    [self copyFont];
+    [self addWorldGens];
+    [self copyEmbarkProfiles];
     [self setupDwarfFortressApp];
 }
 
@@ -340,7 +352,7 @@
     if ([settings keybindings] == kbLaptop) {
         NSString *keybindFile = [NSString stringWithFormat:@"%@/build/data/init/interface.txt", baseAppDir];
         NSMutableString *fileContents = [NSMutableString stringWithContentsOfFile:keybindFile
-            encoding:NSISOLatin1StringEncoding error:nil];
+            encoding:NSUTF8StringEncoding error:nil];
         
         [self translateKeybinds:fileContents bindLabel:@"SECONDSCROLL_DOWN:REPEAT_SLOW"
             fromKey:@"\\+" toKey:@"="];
@@ -361,7 +373,7 @@
         [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_AMMUNITION_RAISE_AMOUNT_LOTS:REPEAT_NOT"
             fromKey:@"\\*" toKey:@"+"];
         
-        [fileContents writeToFile:keybindFile atomically:true encoding:NSISOLatin1StringEncoding error:nil];
+        [fileContents writeToFile:keybindFile atomically:true encoding:NSUTF8StringEncoding error:nil];
     }
 }
 
@@ -372,7 +384,7 @@
         
         NSMutableString *dwarfFileContents = [NSMutableString stringWithContentsOfFile:dwarfCreatureFile
             encoding:NSISOLatin1StringEncoding error:nil];
-        NSString *rustFileContents = [NSMutableString stringWithContentsOfFile:rustProofFile
+        NSString *rustFileContents = [NSString stringWithContentsOfFile:rustProofFile
             encoding:NSISOLatin1StringEncoding error:nil];
         
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[CREATURE:DWARF\\]"
@@ -442,20 +454,50 @@
         encoding:NSISOLatin1StringEncoding error:nil];
     
     [worldGenFileContents appendString:extraWorldGenFileContents];
-    
     [worldGenFileContents writeToFile:worldGenFile atomically:true encoding:NSISOLatin1StringEncoding error:nil];
 }
 
 -(void)copyEmbarkProfiles {
     NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/embark_profiles.txt", baseAppDir];
-    NSString *pathToItem = [NSMutableString stringWithFormat:@"%@/build/data/init/embark_profiles.txt", baseAppDir];
+    NSString *pathToItem = [NSString stringWithFormat:@"%@/build/data/init/embark_profiles.txt", baseAppDir];
     
     [fileManager removeItemAtPath:pathToItem error:nil];
     [fileManager copyItemAtPath:pathFromItem toPath:pathToItem error:nil];
 }
 
 -(void)setupDwarfFortressApp {
+    NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/DwarfFortress.app", baseAppDir];
+    NSString *pathToItem = [NSString stringWithFormat:@"%@/DwarfFortress.app", baseAppDir];
     
+    //backup saves from existing installation
+    //update save raws
+    
+    [fileManager removeItemAtPath:pathToItem error:nil];
+    [fileManager copyItemAtPath:pathFromItem toPath:pathToItem error:nil];
+    
+    pathFromItem = [NSString stringWithFormat:@"%@/build", baseAppDir];
+    pathToItem = [NSString stringWithFormat:@"%@/DwarfFortress.app/Contents/Resources", baseAppDir];
+    
+    [fileManager removeItemAtPath:pathToItem error:nil];
+    [fileManager moveItemAtPath:pathFromItem toPath:pathToItem error:nil];
+}
+
+//juliuspaintings.co.uk/cgi-bin/paint_css/animatedPaint/009-NSSavePanel.pl
+//use nssavepanel
+
+-(void)constructDwarfTherapist {
+    //check if the app memory folder already exists
+    //  if not, copy the .app
+    //copy the memory locations
+}
+
+-(void)constructSoundSense {
+    //**compile script to remove the ^M characters
+    //**compile script to change permissions to 755
+    
+    //copy the .app
+    //copy stonesense folder into .app/Resources
+    //update configuration.xml <gamelog path>
 }
 
 @end
