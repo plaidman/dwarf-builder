@@ -11,7 +11,7 @@
 @synthesize cFPSCap, gFPSCap;
 
 /* VISUAL SETTINGS */
-@synthesize fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont;
+@synthesize fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable;
 @synthesize windowWidth, windowHeight;
 @synthesize showIdlers, tileset, font;
 
@@ -25,25 +25,24 @@
     
     if (self) {
         propertyNames = [[NSArray alloc] initWithObjects:@"enableSound", @"extendSoundtk", @"compressSaves",
-                             @"pauseOnLoad", @"pauseOnSave", @"autoBackupSaves", @"volume", @"keybindings",
-                             @"autosave", @"cFPSCap", @"gFPSCap", @"fullscreen", @"showIntro", @"showFPS",
-                             @"liquidDepth", @"creatureGraphics", @"useFont",@"windowWidth", @"windowHeight",
-                             @"showIdlers", @"tileset", @"skillRusting", @"embarkConfirmation", @"grazingAnimals",
-                             @"pauseOnCaveIns", @"extraShellItems", @"pauseOnWarmDampStone", @"invaders",
-                             @"temperature", @"font", @"aquifers", @"caveIns", @"weather", @"dwarfCap",
-                             @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight", nil];
-        [self setDFDefaults];
+                @"pauseOnLoad", @"pauseOnSave", @"autoBackupSaves", @"volume", @"keybindings", @"autosave", @"cFPSCap",
+                @"gFPSCap", @"fullscreen", @"showIntro", @"showFPS", @"liquidDepth", @"creatureGraphics", @"useFont",
+                @"windowWidth", @"windowHeight", @"showIdlers", @"tileset", @"skillRusting", @"embarkConfirmation",
+                @"grazingAnimals", @"pauseOnCaveIns", @"extraShellItems", @"pauseOnWarmDampStone", @"invaders",
+                @"temperature", @"font", @"aquifers", @"caveIns", @"weather", @"resizable", @"dwarfCap",
+                @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight", nil];
+        [self setPlaidmanDefaults];
     }
     
     return self;
 }
 
--(void)writeSettingsToFile :(NSString *)filename {
+-(void)writeSettingsToFile:(NSString *)filename {
     NSDictionary *dict = [self dictionaryWithValuesForKeys:[self propertyNames]];
     [dict writeToFile:filename atomically:true];
 }
 
--(void)readSettingsFromFile :(NSString *)filename {
+-(void)readSettingsFromFile:(NSString *)filename {
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filename];
     [self setValuesForKeysWithDictionary:dict];
 }
@@ -59,8 +58,8 @@
                     [NSNumber numberWithInt:kbLaptop], [NSNumber numberWithInt:asSeasonal], @"100", @"50", falseObj,
                     falseObj, trueObj, trueObj, trueObj, falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop],
                     [NSNumber numberWithInt:tsIronhand], falseObj, trueObj, falseObj, trueObj, trueObj, trueObj,
-                    trueObj, trueObj, [NSNumber numberWithInt:fIronhand], falseObj, trueObj, trueObj, @"100", @"15",
-                    @"20", @"3", @"3", nil
+                    trueObj, trueObj, [NSNumber numberWithInt:fIronhand], falseObj, trueObj, trueObj, trueObj, @"100",
+                    @"15", @"20", @"3", @"3", nil
             ]
             forKeys:propertyNames
         ]
@@ -78,8 +77,8 @@
                 [NSNumber numberWithInt:kbDefault], [NSNumber numberWithInt:asDisabled], @"100", @"50", falseObj,
                 trueObj, falseObj, falseObj, falseObj, falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop],
                 [NSNumber numberWithInt:tsDefaultTall], trueObj, falseObj, trueObj, trueObj, falseObj, trueObj,
-                trueObj, trueObj, [NSNumber numberWithInt:fDefault], falseObj, trueObj, trueObj, @"200", @"100",
-                @"1000", @"4", @"4", nil
+                trueObj, trueObj, [NSNumber numberWithInt:fDefault], falseObj, trueObj, trueObj, trueObj, @"200",
+                @"100", @"1000", @"4", @"4", nil
             ]
             forKeys:propertyNames
         ]
