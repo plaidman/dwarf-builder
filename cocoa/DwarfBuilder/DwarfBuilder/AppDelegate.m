@@ -5,10 +5,16 @@
 
 @synthesize window = _window;
 
--(void)applicationDidFinishLaunching:(NSNotification *)aNotification { }
-
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
     return true;
+}
+
+-(void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+
+}
+
+-(void)applicationWillTerminate:(NSNotification *)notification {
+    
 }
 
 @end

@@ -15,12 +15,16 @@
         settings = [[DwarfBuilderSettings alloc] init];
         fileManager = [NSFileManager defaultManager];
 #ifdef DEBUG
-        //baseAppDir = @"/Users/jtomsic/Downloads/dwarf-builder";
-        baseAppDir = @"/Users/jrtomsic/devel/dwarf-builder";
+        baseAppDir = @"/Users/jtomsic/Downloads/dwarf-builder";
+        //baseAppDir = @"/Users/jrtomsic/devel/dwarf-builder";
         [settings setInstallDir:baseAppDir];
 #else
         baseAppDir = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
 #endif
+        NSString *settingsFile = [NSString stringWithFormat:@"%@/Contents/Resources/settings.plist", baseAppDir];
+        if ([fileManager fileExistsAtPath:settingsFile]) {
+            [settings readSettingsFromFile:settingsFile];
+        }
     }
     
     return self;
@@ -46,9 +50,18 @@
 }
 
 -(IBAction)constructDTAction:(id)sender {
-    //check if the app memory folder already exists
-    //  if not, copy the .app
-    //copy the memory locations
+    NSString *pathFromApp = [NSString stringWithFormat:@"%@/extras/DwarfTherapist.app", baseAppDir];
+    NSString *pathToApp = [NSString stringWithFormat:@"%@/DwarfTherapist.app", [settings installDir]];
+    NSString *pathFromMemDir = [NSString stringWithFormat:@"%@/extras/memory_layouts/osx", baseAppDir];
+    NSString *pathToMemDir = [NSString stringWithFormat:@"%@/Contents/MacOS/etc/memory_layouts/osx", pathToApp];
+    
+    if (![fileManager fileExistsAtPath:pathToMemDir]) {
+        [fileManager removeItemAtPath:pathToApp error:nil];
+        [fileManager copyItemAtPath:pathFromApp toPath:pathToApp error:nil];
+    }
+    
+    [fileManager removeItemAtPath:pathToMemDir error:nil];
+    [fileManager copyItemAtPath:pathFromMemDir toPath:pathToMemDir error:nil];
 }
 
 //change translateTextFile
@@ -57,15 +70,17 @@
 //    nsmutablestring fileContents
 //    nsstring fromRegex, toRegex
 
+//save and restore settings on close/open
+//"compile DF" needs to
+//  backup df saves
+//  update raws
+
 //"restore to DF defaults" button
 //"restore to Plaidman defaults" button
 //"save settings" button
 //"load settings" button
 //"backup DF files" button
 //"restore DF files" button
-//"compile DF" needs to
-//  backup df saves
-//  update raws
 
 -(IBAction)constructSSAction:(id)sender {
     NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/SoundSense.app", baseAppDir];
