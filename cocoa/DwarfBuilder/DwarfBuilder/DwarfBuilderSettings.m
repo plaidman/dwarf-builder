@@ -34,7 +34,7 @@
                 @"grazingAnimals", @"pauseOnCaveIns", @"extraShellItems", @"pauseOnWarmDampStone", @"invaders",
                 @"temperature", @"font", @"aquifers", @"caveIns", @"weather", @"resizable", @"dwarfCap",
                 @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight", nil];
-        [self setDFDefaults];
+        [self setPlaidmanDefaults];
         [self setInstallDir:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
     }
     
