@@ -20,6 +20,9 @@
     pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather;
 @synthesize dwarfCap, childHardCap, childPercentageCap, embarkWidth, embarkHeight;
 
+/* FILE SETTINGS */
+@synthesize installDir;
+
 -(id)init {
     self = [super init];
     
@@ -31,7 +34,8 @@
                 @"grazingAnimals", @"pauseOnCaveIns", @"extraShellItems", @"pauseOnWarmDampStone", @"invaders",
                 @"temperature", @"font", @"aquifers", @"caveIns", @"weather", @"resizable", @"dwarfCap",
                 @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight", nil];
-        [self setPlaidmanDefaults];
+        [self setDFDefaults];
+        [self setInstallDir:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
     }
     
     return self;

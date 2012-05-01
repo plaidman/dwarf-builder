@@ -18,6 +18,9 @@
     bool skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems, pauseOnWarmDampStone,
          temperature, aquifers, caveIns, invaders, weather;
     NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
+    
+    /* FILE SETTINGS */
+    NSString *installDir;
 }
 
 @property NSArray *propertyNames;
@@ -37,6 +40,9 @@
     pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather;
 @property NSString *dwarfCap, *childHardCap,
     *childPercentageCap, *embarkWidth, *embarkHeight;
+
+/* FILE SETTINGS */
+@property NSString *installDir;
 
 enum {kbDefault = 0, kbLaptop};
 enum {asDisabled = 0, asSeasonal, asYearly};

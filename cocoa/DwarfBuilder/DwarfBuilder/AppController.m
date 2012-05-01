@@ -15,10 +15,11 @@
         settings = [[DwarfBuilderSettings alloc] init];
         fileManager = [NSFileManager defaultManager];
 #ifdef DEBUG
-        baseAppDir = @"/Users/jtomsic/Downloads/dwarf-builder";
-        //baseAppDir = @"/Users/jrtomsic/devel/dwarf-builder";
+        //baseAppDir = @"/Users/jtomsic/Downloads/dwarf-builder";
+        baseAppDir = @"/Users/jrtomsic/devel/dwarf-builder";
+        [settings setInstallDir:baseAppDir];
 #else
-        //set path to bundle path
+        baseAppDir = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
 #endif
     }
     
@@ -26,15 +27,76 @@
 }
 
 -(IBAction)constructDFAction:(id)sender {
-    [self constructDwarfFortress];
+    [self copyVanilla];
+    [self copyTileset];
+    [self processInitTxt];
+    [self processDInitTxt];
+    [self removeAquifers];
+    [self removeGrazing];
+    [self disablePausingWarmDampStone];
+    [self disablePausingCaveIns];
+    [self updateKeybinds];
+    [self disableSkillRusting];
+    [self addExtraShellItems];
+    [self copySoundtrack];
+    [self copyFont];
+    [self addWorldGens];
+    [self copyEmbarkProfiles];
+    [self setupDwarfFortressApp];
 }
 
 -(IBAction)constructDTAction:(id)sender {
-    [self constructDwarfTherapist];
+    //check if the app memory folder already exists
+    //  if not, copy the .app
+    //copy the memory locations
 }
 
+//change translateTextFile
+//  don't read the file directly
+//  take three arguments
+//    nsmutablestring fileContents
+//    nsstring fromRegex, toRegex
+
+//"restore to DF defaults" button
+//"restore to Plaidman defaults" button
+//"save settings" button
+//"load settings" button
+//"backup DF files" button
+//"restore DF files" button
+//"compile DF" needs to
+//  backup df saves
+//  update raws
+
 -(IBAction)constructSSAction:(id)sender {
-    [self constructSoundSense];
+    NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/SoundSense.app", baseAppDir];
+    NSString *pathToItem = [NSString stringWithFormat:@"%@/SoundSense.app", [settings installDir]];
+    
+    [fileManager removeItemAtPath:pathToItem error:nil];
+    [fileManager copyItemAtPath:pathFromItem toPath:pathToItem error:nil];
+    
+    pathFromItem = [NSString stringWithFormat:@"%@/soundsense", baseAppDir];
+    pathToItem = [NSString stringWithFormat:@"%@/SoundSense.app/Contents/Resources", [settings installDir]];
+    
+    [fileManager removeItemAtPath:pathToItem error:nil];
+    [fileManager copyItemAtPath:pathFromItem toPath:pathToItem error:nil];
+
+    NSString *configurationFile = [NSString stringWithFormat:@"%@/configuration.xml", pathToItem];
+    NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
+        [NSString stringWithFormat:@"<gamelog path=\"%@/DwarfFortress.app/Contents/Resources/gamelog.txt\" />",
+            [settings installDir]],
+        @"<gamelog path=\".*\" />", nil];
+    [self translateTextFile:configurationFile changes:changes];
+}
+
+-(void)setInstallFolderAction:(id)sender {
+    NSOpenPanel *installDir = [NSOpenPanel openPanel];
+    [installDir setCanChooseFiles:false];
+    [installDir setCanChooseDirectories:true];
+    
+    NSInteger result = [installDir runModal];
+    if (result == NSOKButton) {
+        [settings setInstallDir:[[installDir URL] path]];
+    }
 }
 
 /* * * * * * * * * * * * * * *
@@ -102,7 +164,6 @@
 -(void)translateTextFile:(NSString*)textFile changes:(NSDictionary*)changes {
     NSMutableString *fileContents = [NSMutableString stringWithContentsOfFile:textFile
         encoding:NSISOLatin1StringEncoding error:nil];
-    
     NSEnumerator *changeKeys = [changes keyEnumerator];
     NSString *changeKey;
     NSRegularExpression *regex;
@@ -153,25 +214,6 @@
  * -- DF CONSTRUCTION FUNCTIONS --
  * * * * * * * * * * * * * * * * * */
 
--(void)constructDwarfFortress {
-    [self copyVanilla];
-    [self copyTileset];
-    [self processInitTxt];
-    [self processDInitTxt];
-    [self removeAquifers];
-    [self removeGrazing];
-    [self disablePausingWarmDampStone];
-    [self disablePausingCaveIns];
-    [self updateKeybinds];
-    [self disableSkillRusting];
-    [self addExtraShellItems];
-    [self copySoundtrack];
-    [self copyFont];
-    [self addWorldGens];
-    [self copyEmbarkProfiles];
-    [self setupDwarfFortressApp];
-}
-
 -(void)copyVanilla {
     NSString *vanillaFolder = [NSString stringWithFormat:@"%@/vanilla", baseAppDir];
     NSString *buildFolder = [NSString stringWithFormat:@"%@/build", baseAppDir];
@@ -221,7 +263,7 @@
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
-    } else if ([settings tileset] == tsDefaultTall) {
+    } else if ([settings tileset] == tsDefaultSquare) {
         NSString *initTxtFile = [NSString stringWithFormat:@"%@/build/data/init/init.txt", baseAppDir];
         NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
             [self stringToInit:@"curses_square_16x16.png" optionName:@"FONT"], @"\\[FONT:.*\\]",
@@ -231,7 +273,7 @@
             nil];
         
         [self translateTextFile:initTxtFile changes:changes];
-    } else if ([settings tileset] == tsDefaultSquare) {
+    } else if ([settings tileset] == tsDefaultTall) {
         NSString *initTxtFile = [NSString stringWithFormat:@"%@/build/data/init/init.txt", baseAppDir];
         NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
             [self stringToInit:@"curses_800x600.png" optionName:@"FONT"], @"\\[FONT:.*\\]",
@@ -467,7 +509,7 @@
 
 -(void)setupDwarfFortressApp {
     NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/DwarfFortress.app", baseAppDir];
-    NSString *pathToItem = [NSString stringWithFormat:@"%@/DwarfFortress.app", baseAppDir];
+    NSString *pathToItem = [NSString stringWithFormat:@"%@/DwarfFortress.app", [settings installDir]];
     
     //backup saves from existing installation
     //update save raws
@@ -476,29 +518,10 @@
     [fileManager copyItemAtPath:pathFromItem toPath:pathToItem error:nil];
     
     pathFromItem = [NSString stringWithFormat:@"%@/build", baseAppDir];
-    pathToItem = [NSString stringWithFormat:@"%@/DwarfFortress.app/Contents/Resources", baseAppDir];
+    pathToItem = [NSString stringWithFormat:@"%@/DwarfFortress.app/Contents/Resources", [settings installDir]];
     
     [fileManager removeItemAtPath:pathToItem error:nil];
     [fileManager moveItemAtPath:pathFromItem toPath:pathToItem error:nil];
-}
-
-//juliuspaintings.co.uk/cgi-bin/paint_css/animatedPaint/009-NSSavePanel.pl
-//use nssavepanel
-//switch all files to utf8 with a isolatin1 backup
-
--(void)constructDwarfTherapist {
-    //check if the app memory folder already exists
-    //  if not, copy the .app
-    //copy the memory locations
-}
-
--(void)constructSoundSense {
-    //**compile script to remove the ^M characters
-    //**compile script to change permissions to 755
-    
-    //copy the .app
-    //copy stonesense folder into .app/Resources
-    //update configuration.xml <gamelog path>
 }
 
 @end

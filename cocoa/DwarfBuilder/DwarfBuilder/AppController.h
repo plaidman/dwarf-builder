@@ -15,6 +15,7 @@
 -(IBAction)constructDFAction:(id)sender;
 -(IBAction)constructDTAction:(id)sender;
 -(IBAction)constructSSAction:(id)sender;
+-(IBAction)setInstallFolderAction:(id)sender;
 
 -(NSString*)boolToInit:(bool)optionValue optionName:(NSString*)optionName;
 -(NSString*)intToInit:(int)optionValue optionName:(NSString*)optionName;
@@ -30,7 +31,6 @@
     fromKey:(NSString*)fromKey toKey:(NSString*)toKey;
 -(void)addExtraShellItem:(NSMutableString*)fileContents shellItem:(NSString*)shellItem;
 
--(void)constructDwarfFortress;
 -(void)copyVanilla;
 -(void)copyTileset;
 -(void)processInitTxt;
@@ -47,7 +47,5 @@
 -(void)addWorldGens;
 -(void)copyEmbarkProfiles;
 -(void)setupDwarfFortressApp;
--(void)constructDwarfTherapist;
--(void)constructSoundSense;
 
 @end
