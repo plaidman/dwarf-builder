@@ -116,7 +116,7 @@
     [self translateTextFile:configurationFile changes:changes];
 }
 
--(void)setInstallFolderAction:(id)sender {
+-(IBAction)setInstallFolderAction:(id)sender {
     NSOpenPanel *installDir = [NSOpenPanel openPanel];
     [installDir setCanChooseFiles:false];
     [installDir setCanChooseDirectories:true];
