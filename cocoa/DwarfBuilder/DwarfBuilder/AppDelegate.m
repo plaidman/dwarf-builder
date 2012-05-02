@@ -1,5 +1,3 @@
-//update raws function
-
 //stackoverflow.com/questions/4236584/zipping-a-folder-in-objective-c
 
 //"restore to DF defaults" button
@@ -8,6 +6,10 @@
 //"load settings" button
 //"backup DF files" button
 //"restore DF files" button
+//"update DF raws" button
+
+//implement some kind of notification when the operation is complete
+//"about" window
 
 #import "AppDelegate.h"
 #import "DwarfBuilderSettings.h"
@@ -564,7 +566,22 @@
 }
 
 -(void)updateSaveRaws {
-    NSString *saveDir = [NSString stringWithFormat:@"%@/Contents/Resources/data/save", [settings installDir]];
+    NSString *appDir = [NSString stringWithFormat:@"%@/DwarfFortress.app/Contents/Resources", [settings installDir]];
+    NSString *rawDir = [NSString stringWithFormat:@"%@/raw", appDir];
+    NSString *saveDir = [NSString stringWithFormat:@"%@/data/save", appDir];
+    
+    NSEnumerator *itemReader = [fileManager enumeratorAtPath:saveDir];
+    NSString *item, *fullItemPath, *itemType;
+    
+    while (item = [itemReader nextObject]) {
+        fullItemPath = [NSString stringWithFormat:@"%@/%@/raw", saveDir, item];
+        itemType = [[fileManager attributesOfItemAtPath:fullItemPath error:nil] valueForKey:NSFileType];
+        
+        if ([itemType isEqualToString:NSFileTypeDirectory]) {
+            [fileManager removeItemAtPath:fullItemPath error:nil];
+            [fileManager copyItemAtPath:rawDir toPath:fullItemPath error:nil];
+        }
+    }
 }
 
 @end
