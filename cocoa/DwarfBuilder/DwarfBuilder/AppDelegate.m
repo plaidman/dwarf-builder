@@ -8,6 +8,8 @@
 //  backup df saves
 //  update raws
 
+//stackoverflow.com/questions/4236584/zipping-a-folder-in-objective-c
+
 //"restore to DF defaults" button
 //"restore to Plaidman defaults" button
 //"save settings" button
@@ -538,6 +540,11 @@
 -(void)setupDwarfFortressApp {
     NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/DwarfFortress.app", baseAppDir];
     NSString *pathToItem = [NSString stringWithFormat:@"%@/DwarfFortress.app", [settings installDir]];
+    NSString *pathFromSaves = [NSString stringWithFormat:@"%@/Contents/Resources/data/save", [settings installDir]];
+    NSString *pathToSaves = [NSString stringWithFormat:@"%@/Contents/Resources/data/save", [settings installDir]];
+    
+    if ([fileManager fileExistsAtPath:pathFromSaves]) {
+    }
     
     //backup saves from existing installation
     //update save raws
