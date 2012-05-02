@@ -32,8 +32,6 @@
     return true;
 }
 
--(void)applicationDidFinishLaunching:(NSNotification *)aNotification { }
-
 -(void)applicationWillTerminate:(NSNotification *)notification {
     [settings writeSettingsToFile:settingsFile];
 }
@@ -62,6 +60,10 @@
     
     return self;
 }
+
+/* * * * * * * * * * * * * * *
+ *  -- INTERFACE FUNCTIONS --
+ * * * * * * * * * * * * * * */
 
 -(IBAction)constructDFAction:(id)sender {
     [self copyVanilla];
@@ -112,9 +114,8 @@
     
     NSString *configurationFile = [NSString stringWithFormat:@"%@/configuration.xml", pathToItem];
     NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSString stringWithFormat:@"<gamelog path=\"%@/DwarfFortress.app/Contents/Resources/gamelog.txt\" />",
-                              [settings installDir]],
-                             @"<gamelog path=\".*\" />", nil];
+        [NSString stringWithFormat:@"<gamelog path=\"%@/DwarfFortress.app/Contents/Resources/gamelog.txt\" />",
+            [settings installDir]], @"<gamelog path=\".*\" />", nil];
     [self translateTextFile:configurationFile changes:changes];
 }
 
@@ -192,8 +193,16 @@
 }
 
 -(void)translateTextFile:(NSString*)textFile changes:(NSDictionary*)changes {
+    NSStringEncoding encoding = NSUTF8StringEncoding;
+    NSError *error;
     NSMutableString *fileContents = [NSMutableString stringWithContentsOfFile:textFile
-                                                                     encoding:NSISOLatin1StringEncoding error:nil];
+        encoding:encoding error:&error];
+    
+    if (error) {
+        encoding = NSISOLatin1StringEncoding;
+        fileContents = [NSMutableString stringWithContentsOfFile:textFile encoding:encoding error:nil];
+    }
+    
     NSEnumerator *changeKeys = [changes keyEnumerator];
     NSString *changeKey;
     NSRegularExpression *regex;
@@ -204,7 +213,9 @@
                          withTemplate:[changes valueForKey:changeKey]];
     }
     
-    [fileContents writeToFile:textFile atomically:true encoding:NSISOLatin1StringEncoding error:nil];
+    
+    
+    [fileContents writeToFile:textFile atomically:true encoding:encoding error:nil];
 }
 
 -(void)translateKeybinds:(NSMutableString*)fileContents bindLabel:(NSString*)bindLabel fromKey:(NSString*)fromKey toKey:(NSString*)toKey {
@@ -241,7 +252,7 @@
 }
 
 /* * * * * * * * * * * * * * * * * *
- * -- DF CONSTRUCTION FUNCTIONS --
+ *  -- DF CONSTRUCTION FUNCTIONS --
  * * * * * * * * * * * * * * * * * */
 
 -(void)copyVanilla {
@@ -254,7 +265,7 @@
     NSString *dfScriptFile = [NSString stringWithFormat:@"%@/%@", buildFolder, @"df"];
     
     NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-                             @"dwarfort.exe& > stdout.txt 2> stderr.txt", @"dwarfort\\.exe", nil];
+        @"dwarfort.exe& > stdout.txt 2> stderr.txt", @"dwarfort\\.exe", nil];
     
     [self translateTextFile:dfScriptFile changes:changes];
 }
@@ -296,21 +307,21 @@
     } else if ([settings tileset] == tsDefaultSquare) {
         NSString *initTxtFile = [NSString stringWithFormat:@"%@/build/data/init/init.txt", baseAppDir];
         NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 [self stringToInit:@"curses_square_16x16.png" optionName:@"FONT"], @"\\[FONT:.*\\]",
-                                 [self stringToInit:@"curses_square_16x16.png" optionName:@"FULLFONT"], @"\\[FULLFONT:.*\\]",
-                                 [self stringToInit:@"curses_square_16x16.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
-                                 [self stringToInit:@"curses_square_16x16.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
-                                 nil];
+            [self stringToInit:@"curses_square_16x16.png" optionName:@"FONT"], @"\\[FONT:.*\\]",
+            [self stringToInit:@"curses_square_16x16.png" optionName:@"FULLFONT"], @"\\[FULLFONT:.*\\]",
+            [self stringToInit:@"curses_square_16x16.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
+            [self stringToInit:@"curses_square_16x16.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
+            nil];
         
         [self translateTextFile:initTxtFile changes:changes];
     } else if ([settings tileset] == tsDefaultTall) {
         NSString *initTxtFile = [NSString stringWithFormat:@"%@/build/data/init/init.txt", baseAppDir];
         NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 [self stringToInit:@"curses_800x600.png" optionName:@"FONT"], @"\\[FONT:.*\\]",
-                                 [self stringToInit:@"curses_800x600.png" optionName:@"FULLFONT"], @"\\[FULLFONT:.*\\]",
-                                 [self stringToInit:@"curses_800x600.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
-                                 [self stringToInit:@"curses_800x600.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
-                                 nil];
+            [self stringToInit:@"curses_800x600.png" optionName:@"FONT"], @"\\[FONT:.*\\]",
+            [self stringToInit:@"curses_800x600.png" optionName:@"FULLFONT"], @"\\[FULLFONT:.*\\]",
+            [self stringToInit:@"curses_800x600.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
+            [self stringToInit:@"curses_800x600.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
+            nil];
         
         [self translateTextFile:initTxtFile changes:changes];
     }
@@ -319,22 +330,22 @@
 -(void)processInitTxt {
     NSString *initTxtFile = [NSString stringWithFormat:@"%@/build/data/init/init.txt", baseAppDir];
     NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [self boolToInit:[settings enableSound] optionName:@"SOUND"], @"\\[SOUND:.*\\]",
-                             [self intToInit:[settings volume] optionName:@"VOLUME"], @"\\[VOLUME:.*\\]",
-                             [self boolToInit:[settings showIntro] optionName:@"INTRO"], @"\\[INTRO:.*\\]",
-                             [self boolToInit:![settings fullscreen] optionName:@"WINDOWED"], @"\\[WINDOWED:.*\\]",
-                             [self boolToInit:[settings resizable] optionName:@"RESIZABLE"], @"\\[RESIZABLE:.*\\]",
-                             [self stringToInit:[settings windowWidth] optionName:@"WINDOWEDX"], @"\\[WINDOWEDX:.*\\]",
-                             [self stringToInit:[settings windowHeight] optionName:@"WINDOWEDY"], @"\\[WINDOWEDY:.*\\]",
-                             [self stringToInit:[settings windowWidth] optionName:@"GRAPHICS_WINDOWEDX"], @"\\[GRAPHICS_WINDOWEDX:.*\\]",
-                             [self stringToInit:[settings windowHeight] optionName:@"GRAPHICS_WINDOWEDY"], @"\\[GRAPHICS_WINDOWEDY:.*\\]",
-                             [self boolToInit:[settings creatureGraphics] optionName:@"GRAPHICS"], @"\\[GRAPHICS:.*\\]",
-                             [self boolToInit:[settings useFont] optionName:@"TRUETYPE"], @"\\[TRUETYPE:.*\\]",
-                             [self boolToInit:[settings showFPS] optionName:@"FPS"], @"\\[FPS:.*\\]",
-                             [self stringToInit:[settings cFPSCap] optionName:@"FPS_CAP"], @"\\[FPS_CAP:.*\\]",
-                             [self stringToInit:[settings gFPSCap] optionName:@"G_FPS_CAP"], @"\\[G_FPS_CAP:.*\\]",
-                             [self boolToInit:[settings compressSaves] optionName:@"COMPRESSED_SAVES"], @"\\[COMPRESSED_SAVES:.*\\]",
-                             nil];
+        [self boolToInit:[settings enableSound] optionName:@"SOUND"], @"\\[SOUND:.*\\]",
+        [self intToInit:[settings volume] optionName:@"VOLUME"], @"\\[VOLUME:.*\\]",
+        [self boolToInit:[settings showIntro] optionName:@"INTRO"], @"\\[INTRO:.*\\]",
+        [self boolToInit:![settings fullscreen] optionName:@"WINDOWED"], @"\\[WINDOWED:.*\\]",
+        [self boolToInit:[settings resizable] optionName:@"RESIZABLE"], @"\\[RESIZABLE:.*\\]",
+        [self stringToInit:[settings windowWidth] optionName:@"WINDOWEDX"], @"\\[WINDOWEDX:.*\\]",
+        [self stringToInit:[settings windowHeight] optionName:@"WINDOWEDY"], @"\\[WINDOWEDY:.*\\]",
+        [self stringToInit:[settings windowWidth] optionName:@"GRAPHICS_WINDOWEDX"], @"\\[GRAPHICS_WINDOWEDX:.*\\]",
+        [self stringToInit:[settings windowHeight] optionName:@"GRAPHICS_WINDOWEDY"], @"\\[GRAPHICS_WINDOWEDY:.*\\]",
+        [self boolToInit:[settings creatureGraphics] optionName:@"GRAPHICS"], @"\\[GRAPHICS:.*\\]",
+        [self boolToInit:[settings useFont] optionName:@"TRUETYPE"], @"\\[TRUETYPE:.*\\]",
+        [self boolToInit:[settings showFPS] optionName:@"FPS"], @"\\[FPS:.*\\]",
+        [self stringToInit:[settings cFPSCap] optionName:@"FPS_CAP"], @"\\[FPS_CAP:.*\\]",
+        [self stringToInit:[settings gFPSCap] optionName:@"G_FPS_CAP"], @"\\[G_FPS_CAP:.*\\]",
+        [self boolToInit:[settings compressSaves] optionName:@"COMPRESSED_SAVES"], @"\\[COMPRESSED_SAVES:.*\\]",
+        nil];
     
     [self translateTextFile:initTxtFile changes:changes];
 }
@@ -342,21 +353,21 @@
 -(void)processDInitTxt {
     NSString *dInitTxtFile = [NSString stringWithFormat:@"%@/build/data/init/d_init.txt", baseAppDir];
     NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [self autosaveToInit:[settings autosave]], @"\\[AUTOSAVE:.*\\]",
-                             [self boolToInit:[settings autoBackupSaves] optionName:@"AUTOBACKUP"], @"\\[AUTOBACKUP:.*\\]",
-                             [self boolToInit:[settings pauseOnSave] optionName:@"AUTOSAVE_PAUSE"], @"\\[AUTOSAVE_PAUSE:.*\\]",
-                             [self boolToInit:[settings pauseOnLoad] optionName:@"PAUSE_ON_LOAD"], @"\\[PAUSE_ON_LOAD:.*\\]",
-                             [self boolToInit:[settings temperature] optionName:@"TEMPERATURE"], @"\\[TEMPERATURE:.*\\]",
-                             [self boolToInit:[settings weather] optionName:@"WEATHER"], @"\\[WEATHER:.*\\]",
-                             [self boolToInit:[settings invaders] optionName:@"INVADERS"], @"\\[INVADERS:.*\\]",
-                             [self boolToInit:[settings caveIns] optionName:@"CAVEINS"], @"\\[CAVEINS:.*\\]",
-                             [self embarkToInit:[settings embarkWidth] height:[settings embarkHeight]], @"\\[EMBARK_RECTANGLE:.*\\]",
-                             [self idlersToInit:[settings showIdlers]], @"\\[IDLERS:.*\\]",
-                             [self stringToInit:[settings dwarfCap] optionName:@"POPULATION_CAP"], @"\\[POPULATION_CAP:.*\\]",
-                             [self childToInit:[settings childHardCap] percentage:[settings childPercentageCap]], @"\\[BABY_CHILD_CAP:.*\\]",
-                             [self boolToInit:[settings liquidDepth] optionName:@"SHOW_FLOW_AMOUNTS"], @"\\[SHOW_FLOW_AMOUNTS:.*\\]",
-                             [self boolToInit:[settings embarkConfirmation] optionName:@"EMBARK_WARNING_ALWAYS"],
-                             @"\\[EMBARK_WARNING_ALWAYS:.*\\]", nil];
+        [self autosaveToInit:[settings autosave]], @"\\[AUTOSAVE:.*\\]",
+        [self boolToInit:[settings autoBackupSaves] optionName:@"AUTOBACKUP"], @"\\[AUTOBACKUP:.*\\]",
+        [self boolToInit:[settings pauseOnSave] optionName:@"AUTOSAVE_PAUSE"], @"\\[AUTOSAVE_PAUSE:.*\\]",
+        [self boolToInit:[settings pauseOnLoad] optionName:@"PAUSE_ON_LOAD"], @"\\[PAUSE_ON_LOAD:.*\\]",
+        [self boolToInit:[settings temperature] optionName:@"TEMPERATURE"], @"\\[TEMPERATURE:.*\\]",
+        [self boolToInit:[settings weather] optionName:@"WEATHER"], @"\\[WEATHER:.*\\]",
+        [self boolToInit:[settings invaders] optionName:@"INVADERS"], @"\\[INVADERS:.*\\]",
+        [self boolToInit:[settings caveIns] optionName:@"CAVEINS"], @"\\[CAVEINS:.*\\]",
+        [self embarkToInit:[settings embarkWidth] height:[settings embarkHeight]], @"\\[EMBARK_RECTANGLE:.*\\]",
+        [self idlersToInit:[settings showIdlers]], @"\\[IDLERS:.*\\]",
+        [self stringToInit:[settings dwarfCap] optionName:@"POPULATION_CAP"], @"\\[POPULATION_CAP:.*\\]",
+        [self childToInit:[settings childHardCap] percentage:[settings childPercentageCap]], @"\\[BABY_CHILD_CAP:.*\\]",
+        [self boolToInit:[settings liquidDepth] optionName:@"SHOW_FLOW_AMOUNTS"], @"\\[SHOW_FLOW_AMOUNTS:.*\\]",
+        [self boolToInit:[settings embarkConfirmation] optionName:@"EMBARK_WARNING_ALWAYS"],
+        @"\\[EMBARK_WARNING_ALWAYS:.*\\]", nil];
     
     [self translateTextFile:dInitTxtFile changes:changes];
 }
@@ -403,8 +414,8 @@
     if (![settings pauseOnWarmDampStone]) {
         NSString *initTxtFile = [NSString stringWithFormat:@"%@/build/data/init/announcements.txt", baseAppDir];
         NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 @"[DIG_CANCEL_WARM:A_D:D_D]", @"\\[DIG_CANCEL_WARM:.*\\]",
-                                 @"[DIG_CANCEL_DAMP:A_D:D_D]", @"\\[DIG_CANCEL_DAMP:.*\\]", nil];
+            @"[DIG_CANCEL_WARM:A_D:D_D]", @"\\[DIG_CANCEL_WARM:.*\\]",
+            @"[DIG_CANCEL_DAMP:A_D:D_D]", @"\\[DIG_CANCEL_DAMP:.*\\]", nil];
         
         [self translateTextFile:initTxtFile changes:changes];
     }
@@ -414,7 +425,7 @@
     if (![settings pauseOnCaveIns]) {
         NSString *initTxtFile = [NSString stringWithFormat:@"%@/build/data/init/announcements.txt", baseAppDir];
         NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                 @"[CAVE_COLLAPSE:A_D:D_D]", @"\\[CAVE_COLLAPSE:.*\\]", nil];
+            @"[CAVE_COLLAPSE:A_D:D_D]", @"\\[CAVE_COLLAPSE:.*\\]", nil];
         
         [self translateTextFile:initTxtFile changes:changes];
     }
@@ -427,23 +438,23 @@
                                                                          encoding:NSUTF8StringEncoding error:nil];
         
         [self translateKeybinds:fileContents bindLabel:@"SECONDSCROLL_DOWN:REPEAT_SLOW"
-                        fromKey:@"\\+" toKey:@"="];
+            fromKey:@"\\+" toKey:@"="];
         [self translateKeybinds:fileContents bindLabel:@"SECONDSCROLL_PAGEUP:REPEAT_SLOW"
-                        fromKey:@"/" toKey:@"_"];
+            fromKey:@"/" toKey:@"_"];
         [self translateKeybinds:fileContents bindLabel:@"SECONDSCROLL_PAGEDOWN:REPEAT_SLOW"
-                        fromKey:@"\\*" toKey:@"+"];
+            fromKey:@"\\*" toKey:@"+"];
         [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_SUPPLIES_WATER_UP:REPEAT_NOT"
-                        fromKey:@"\\+" toKey:@"="];
+            fromKey:@"\\+" toKey:@"="];
         [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_SUPPLIES_FOOD_DOWN:REPEAT_NOT"
-                        fromKey:@"/" toKey:@"_"];
+            fromKey:@"/" toKey:@"_"];
         [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_SUPPLIES_FOOD_UP:REPEAT_NOT"
-                        fromKey:@"\\*" toKey:@"+"];
+            fromKey:@"\\*" toKey:@"+"];
         [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_AMMUNITION_RAISE_AMOUNT:REPEAT_NOT"
-                        fromKey:@"\\+" toKey:@"="];
+            fromKey:@"\\+" toKey:@"="];
         [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_AMMUNITION_LOWER_AMOUNT_LOTS:REPEAT_NOT"
-                        fromKey:@"/" toKey:@"_"];
+            fromKey:@"/" toKey:@"_"];
         [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_AMMUNITION_RAISE_AMOUNT_LOTS:REPEAT_NOT"
-                        fromKey:@"\\*" toKey:@"+"];
+            fromKey:@"\\*" toKey:@"+"];
         
         [fileContents writeToFile:keybindFile atomically:true encoding:NSUTF8StringEncoding error:nil];
     }
@@ -455,21 +466,21 @@
         NSString *rustProofFile = [NSString stringWithFormat:@"%@/extras/rust_proof.txt", baseAppDir];
         
         NSMutableString *dwarfFileContents = [NSMutableString stringWithContentsOfFile:dwarfCreatureFile
-                                                                              encoding:NSISOLatin1StringEncoding error:nil];
+            encoding:NSUTF8StringEncoding error:nil];
         NSString *rustFileContents = [NSString stringWithContentsOfFile:rustProofFile
-                                                               encoding:NSISOLatin1StringEncoding error:nil];
+            encoding:NSUTF8StringEncoding error:nil];
         
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[CREATURE:DWARF\\]"
-                                                                               options:0 error:nil];
+            options:0 error:nil];
         NSRange range = [regex rangeOfFirstMatchInString:dwarfFileContents 
-                                                 options:0 range:NSMakeRange(0, [dwarfFileContents length])];
+            options:0 range:NSMakeRange(0, [dwarfFileContents length])];
         range.length = [dwarfFileContents length] - range.location;
         
         regex = [NSRegularExpression regularExpressionWithPattern:@"\\s*\\[PHYS_ATT_RANGE:" options:0 error:nil];
         range = [regex rangeOfFirstMatchInString:dwarfFileContents options:0 range:range];
         
         [dwarfFileContents insertString:rustFileContents atIndex:range.location];
-        [dwarfFileContents writeToFile:dwarfCreatureFile atomically:true encoding:NSISOLatin1StringEncoding error:nil];
+        [dwarfFileContents writeToFile:dwarfCreatureFile atomically:true encoding:NSUTF8StringEncoding error:nil];
     }
 }
 
@@ -477,14 +488,14 @@
     if ([settings extraShellItems]) {
         NSString *materialFile = [NSString stringWithFormat:@"%@/build/raw/objects/material_template_default.txt", baseAppDir];
         NSMutableString *materialFileContents = [NSMutableString stringWithContentsOfFile:materialFile
-                                                                                 encoding:NSISOLatin1StringEncoding error:nil];
+            encoding:NSUTF8StringEncoding error:nil];
         
         [self addExtraShellItem:materialFileContents shellItem:@"SCALE_TEMPLATE"];
         [self addExtraShellItem:materialFileContents shellItem:@"HORN_TEMPLATE"];
         [self addExtraShellItem:materialFileContents shellItem:@"HOOF_TEMPLATE"];
         [self addExtraShellItem:materialFileContents shellItem:@"CHITIN_TEMPLATE"];
         
-        [materialFileContents writeToFile:materialFile atomically:true encoding:NSISOLatin1StringEncoding error:nil];
+        [materialFileContents writeToFile:materialFile atomically:true encoding:NSUTF8StringEncoding error:nil];
     }
 }
 
@@ -521,12 +532,12 @@
     NSString *extraWorldGenFile = [NSString stringWithFormat:@"%@/extras/extra_world_gen.txt", baseAppDir];
     
     NSMutableString *worldGenFileContents = [NSMutableString stringWithContentsOfFile:worldGenFile
-                                                                             encoding:NSISOLatin1StringEncoding error:nil];
+        encoding:NSUTF8StringEncoding error:nil];
     NSString *extraWorldGenFileContents = [NSString stringWithContentsOfFile:extraWorldGenFile
-                                                                    encoding:NSISOLatin1StringEncoding error:nil];
+        encoding:NSUTF8StringEncoding error:nil];
     
     [worldGenFileContents appendString:extraWorldGenFileContents];
-    [worldGenFileContents writeToFile:worldGenFile atomically:true encoding:NSISOLatin1StringEncoding error:nil];
+    [worldGenFileContents writeToFile:worldGenFile atomically:true encoding:NSUTF8StringEncoding error:nil];
 }
 
 -(void)copyEmbarkProfiles {
@@ -538,16 +549,17 @@
 }
 
 -(void)setupDwarfFortressApp {
-    NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/DwarfFortress.app", baseAppDir];
-    NSString *pathToItem = [NSString stringWithFormat:@"%@/DwarfFortress.app", [settings installDir]];
     NSString *pathFromSaves = [NSString stringWithFormat:@"%@/Contents/Resources/data/save", [settings installDir]];
-    NSString *pathToSaves = [NSString stringWithFormat:@"%@/Contents/Resources/data/save", [settings installDir]];
+    NSString *pathToSaves = [NSString stringWithFormat:@"%@/Contents/Resources/cons_backup", baseAppDir];
     
     if ([fileManager fileExistsAtPath:pathFromSaves]) {
+        //backup saves from existing installation
+        //update save raws
+        //restore into new DF app
     }
     
-    //backup saves from existing installation
-    //update save raws
+    NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/DwarfFortress.app", baseAppDir];
+    NSString *pathToItem = [NSString stringWithFormat:@"%@/DwarfFortress.app", [settings installDir]];
     
     [fileManager removeItemAtPath:pathToItem error:nil];
     [fileManager copyItemAtPath:pathFromItem toPath:pathToItem error:nil];
