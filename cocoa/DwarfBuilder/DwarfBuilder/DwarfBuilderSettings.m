@@ -21,7 +21,7 @@
 @synthesize dwarfCap, childHardCap, childPercentageCap, embarkWidth, embarkHeight;
 
 /* FILE SETTINGS */
-@synthesize installDir;
+@synthesize installDir, installDirString;
 
 -(id)init {
     self = [super init];
@@ -35,18 +35,28 @@
                 @"temperature", @"font", @"aquifers", @"caveIns", @"weather", @"resizable", @"dwarfCap",
                 @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight", nil];
         [self setDFDefaults];
-        [self setInstallDir:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
+        [self updateInstallDir:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
     }
     
     return self;
 }
 
--(void)writeSettingsToFile:(NSString *)filename {
+-(void)updateInstallDir:(NSString*)directory {
+    [self setInstallDir:directory];
+    [self setInstallDirString:directory];
+    
+    if ([installDirString length] > 50) {
+        [self setInstallDirString:[NSString stringWithFormat:@"...%@",
+            [directory substringWithRange:NSMakeRange([directory length]-47, 47)]]];
+    }
+}
+
+-(void)writeSettingsToFile:(NSString*)filename {
     NSDictionary *dict = [self dictionaryWithValuesForKeys:[self propertyNames]];
     [dict writeToFile:filename atomically:true];
 }
 
--(void)readSettingsFromFile:(NSString *)filename {
+-(void)readSettingsFromFile:(NSString*)filename {
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filename];
     [self setValuesForKeysWithDictionary:dict];
 }

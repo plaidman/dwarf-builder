@@ -36,7 +36,7 @@
 #ifdef DEBUG
         dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
         //dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
-        [settings setInstallDir:dbResources];
+        [settings updateInstallDir:dbResources];
 #else
         dbResources = [NSString stringWithFormat:@"%@/Contents/Resources", [[NSBundle mainBundle] bundlePath]];
 #endif
@@ -115,7 +115,7 @@
     
     NSInteger result = [installDirOpenPanel runModal];
     if (result == NSOKButton) {
-        [settings setInstallDir:[[installDirOpenPanel URL] path]];
+        [settings updateInstallDir:[[installDirOpenPanel URL] path]];
     }
 }
 
@@ -152,11 +152,9 @@
 }
 
 -(IBAction)backupDFFilesAction:(id)sender {
-    
 }
 
 -(IBAction)restoreDFFilesAction:(id)sender {
-    
 }
 
 

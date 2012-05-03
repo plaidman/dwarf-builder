@@ -20,7 +20,7 @@
     NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
     
     /* FILE SETTINGS */
-    NSString *installDir;
+    NSString *installDir, *installDirString;
 }
 
 @property NSArray *propertyNames;
@@ -41,13 +41,15 @@
 @property NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
 
 /* FILE SETTINGS */
-@property NSString *installDir;
+@property NSString *installDir, *installDirString;
 
 enum {kbDefault = 0, kbLaptop};
 enum {asDisabled = 0, asSeasonal, asYearly};
 enum {siTop = 0, siBottom, siDisabled};
 enum {tsDefaultTall = 0, tsIronhand, tsPhoebus, tsJollySquare, tsJollyTall, tsMayday, tsDefaultSquare};
 enum {fDefault = 0, fIronhand, fPhoebus, fMasterwork, fTuffy};
+
+-(void)updateInstallDir:(NSString*)directory;
 
 -(void)writeSettingsToFile:(NSString*)filename;
 -(void)readSettingsFromFile:(NSString*)filename;
