@@ -14,6 +14,12 @@
 -(IBAction)constructDTAction:(id)sender;
 -(IBAction)constructSSAction:(id)sender;
 -(IBAction)setInstallFolderAction:(id)sender;
+-(IBAction)saveSettingsAction:(id)sender;
+-(IBAction)loadSettingsAction:(id)sender;
+-(IBAction)plaidmanSettingsAction:(id)sender;
+-(IBAction)defaultSettingsAction:(id)sender;
+-(IBAction)backupDFFilesAction:(id)sender;
+-(IBAction)restoreDFFilesAction:(id)sender;
 
 -(NSString*)boolToInit:(bool)optionValue optionName:(NSString*)optionName;
 -(NSString*)intToInit:(int)optionValue optionName:(NSString*)optionName;

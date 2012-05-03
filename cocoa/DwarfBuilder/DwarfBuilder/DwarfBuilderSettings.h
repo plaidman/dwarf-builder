@@ -15,8 +15,8 @@
     int showIdlers, tileset, font;
     
     /* GAMEPLAY SETTINGS */
-    bool skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems, pauseOnWarmDampStone,
-         temperature, aquifers, caveIns, invaders, weather;
+    bool skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems,
+        pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather;
     NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
     
     /* FILE SETTINGS */
@@ -38,8 +38,7 @@
 /* GAMEPLAY SETTINGS */
 @property bool skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems,
     pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather;
-@property NSString *dwarfCap, *childHardCap,
-    *childPercentageCap, *embarkWidth, *embarkHeight;
+@property NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
 
 /* FILE SETTINGS */
 @property NSString *installDir;

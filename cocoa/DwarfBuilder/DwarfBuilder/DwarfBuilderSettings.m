@@ -34,7 +34,7 @@
                 @"grazingAnimals", @"pauseOnCaveIns", @"extraShellItems", @"pauseOnWarmDampStone", @"invaders",
                 @"temperature", @"font", @"aquifers", @"caveIns", @"weather", @"resizable", @"dwarfCap",
                 @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight", nil];
-        [self setPlaidmanDefaults];
+        [self setDFDefaults];
         [self setInstallDir:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
     }
     
@@ -81,7 +81,7 @@
                 [NSNumber numberWithInt:kbDefault], [NSNumber numberWithInt:asDisabled], @"100", @"50", falseObj,
                 trueObj, falseObj, falseObj, falseObj, falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop],
                 [NSNumber numberWithInt:tsDefaultTall], trueObj, falseObj, trueObj, trueObj, falseObj, trueObj,
-                trueObj, trueObj, [NSNumber numberWithInt:fDefault], falseObj, trueObj, trueObj, trueObj, @"200",
+                trueObj, trueObj, [NSNumber numberWithInt:fDefault], trueObj, trueObj, trueObj, trueObj, @"200",
                 @"100", @"1000", @"4", @"4", nil
             ]
             forKeys:propertyNames

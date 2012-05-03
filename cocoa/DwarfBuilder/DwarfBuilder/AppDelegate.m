@@ -1,9 +1,5 @@
 //stackoverflow.com/questions/4236584/zipping-a-folder-in-objective-c
 
-//"restore to DF defaults" button
-//"restore to Plaidman defaults" button
-//"save settings" button
-//"load settings" button
 //"backup DF files" button
 //"restore DF files" button
 //"update DF raws" button
@@ -53,6 +49,7 @@
     
     return self;
 }
+
 
 /* * * * * * * * * * * * * * *
  *  -- INTERFACE FUNCTIONS --
@@ -111,15 +108,57 @@
 }
 
 -(IBAction)setInstallFolderAction:(id)sender {
-    NSOpenPanel *installDir = [NSOpenPanel openPanel];
-    [installDir setCanChooseFiles:false];
-    [installDir setCanChooseDirectories:true];
+    NSOpenPanel *installDirOpenPanel = [NSOpenPanel openPanel];
+    [installDirOpenPanel setCanChooseFiles:false];
+    [installDirOpenPanel setCanChooseDirectories:true];
+    [installDirOpenPanel setTitle:@"Dwarf Fortress Installation Folder"];
     
-    NSInteger result = [installDir runModal];
+    NSInteger result = [installDirOpenPanel runModal];
     if (result == NSOKButton) {
-        [settings setInstallDir:[[installDir URL] path]];
+        [settings setInstallDir:[[installDirOpenPanel URL] path]];
     }
 }
+
+-(IBAction)saveSettingsAction:(id)sender {
+    NSSavePanel *settingsSavePanel = [NSSavePanel savePanel];
+    [settingsSavePanel setTitle:@"Save Dwarf Builder Settings"];
+    [settingsSavePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"dbs", nil]];
+    [settingsSavePanel setAllowsOtherFileTypes:false];
+    
+    NSInteger result = [settingsSavePanel runModal];
+    if (result == NSOKButton) {
+        [settings writeSettingsToFile:[[settingsSavePanel URL] path]];
+    }
+}
+
+-(IBAction)loadSettingsAction:(id)sender {
+    NSOpenPanel *settingsOpenPanel = [NSOpenPanel openPanel];
+    [settingsOpenPanel setCanChooseFiles:true];
+    [settingsOpenPanel setCanChooseDirectories:false];
+    [settingsOpenPanel setTitle:@"Load Dwarf Builder Settings"];
+    
+    NSInteger result = [settingsOpenPanel runModal];
+    if (result == NSOKButton) {
+        [settings readSettingsFromFile:[[settingsOpenPanel URL] path]];
+    }
+}
+
+-(IBAction)plaidmanSettingsAction:(id)sender {
+    [settings setPlaidmanDefaults];
+}
+
+-(IBAction)defaultSettingsAction:(id)sender {
+    [settings setDFDefaults];
+}
+
+-(IBAction)backupDFFilesAction:(id)sender {
+    
+}
+
+-(IBAction)restoreDFFilesAction:(id)sender {
+    
+}
+
 
 /* * * * * * * * * * * * * * *
  * -- SERIALIZER FUNCTIONS -- 
@@ -157,6 +196,7 @@
     if (option == siBottom) return @"[IDLERS:BOTTOM]";
     return @"[IDLERS:OFF]";
 }
+
 
 /* * * * * * * * * * * * *
  * -- HELPER FUNCTIONS -- 
@@ -241,6 +281,7 @@
     
     [fileContents insertString:@"\t[SHELL]\r\n" atIndex:range.location];
 }
+
 
 /* * * * * * * * * * * * * * * * * *
  *  -- DF CONSTRUCTION FUNCTIONS --
