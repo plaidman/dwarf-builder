@@ -16,6 +16,7 @@
 
 @synthesize settings;
 @synthesize fileManager;
+@synthesize aboutWindow;
 @synthesize settingsFile, dbResources;
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
@@ -155,6 +156,13 @@
 }
 
 -(IBAction)restoreDFFilesAction:(id)sender {
+}
+
+-(IBAction)aboutMenuAction:(id)sender {
+    if (!aboutWindow) {
+        aboutWindow = [[NSWindowController alloc] initWithWindowNibName:@"About"];
+    }
+    [aboutWindow showWindow:nil];
 }
 
 

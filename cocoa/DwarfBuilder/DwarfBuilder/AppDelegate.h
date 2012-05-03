@@ -8,6 +8,7 @@
 
 @property DwarfBuilderSettings *settings;
 @property NSFileManager *fileManager;
+@property NSWindowController *aboutWindow;
 @property NSString *settingsFile, *dbResources;
 
 -(IBAction)constructDFAction:(id)sender;
@@ -20,6 +21,7 @@
 -(IBAction)defaultSettingsAction:(id)sender;
 -(IBAction)backupDFFilesAction:(id)sender;
 -(IBAction)restoreDFFilesAction:(id)sender;
+-(IBAction)aboutMenuAction:(id)sender;
 
 -(NSString*)boolToInit:(bool)optionValue optionName:(NSString*)optionName;
 -(NSString*)intToInit:(int)optionValue optionName:(NSString*)optionName;
@@ -32,7 +34,7 @@
 -(void)linuxCPFromPath:(NSString*)fromPath toPath:(NSString*)toPath;
 -(void)translateTextFile:(NSString*)textFile changes:(NSDictionary*)changes;
 -(void)translateKeybinds:(NSMutableString*)fileContents bindLabel:(NSString*)bindLabel
-                 fromKey:(NSString*)fromKey toKey:(NSString*)toKey;
+    fromKey:(NSString*)fromKey toKey:(NSString*)toKey;
 -(void)addExtraShellItem:(NSMutableString*)fileContents shellItem:(NSString*)shellItem;
 
 -(void)copyVanilla;

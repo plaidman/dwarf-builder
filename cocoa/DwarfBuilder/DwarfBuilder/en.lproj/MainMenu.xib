@@ -197,7 +197,7 @@
 				<string key="NSName">_NSMainMenu</string>
 			</object>
 			<object class="NSWindowTemplate" id="972006081">
-				<int key="NSWindowStyleMask">15</int>
+				<int key="NSWindowStyleMask">7</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{233, 207}, {462, 466}}</string>
 				<int key="NSWTFlags">1954021376</int>
@@ -215,7 +215,6 @@
 							<string key="NSFrame">{{13, 6}, {436, 450}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="1058526017"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="490504002">
@@ -395,7 +394,6 @@
 												<int key="NSvFlags">268</int>
 												<string key="NSFrame">{{64, 17}, {100, 18}}</string>
 												<reference key="NSSuperview" ref="177100874"/>
-												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:1505</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="1001798411">
@@ -3083,7 +3081,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 														<string key="NSReuseIdentifierKey">_NS:11</string>
 													</object>
 												</array>
-												<string key="NSFrame">{{6, 287}, {404, 61}}</string>
+												<string key="NSFrame">{{6, 289}, {404, 61}}</string>
 												<reference key="NSSuperview" ref="1058526017"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="1033425115"/>
@@ -3218,7 +3216,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 														<string key="NSReuseIdentifierKey">_NS:11</string>
 													</object>
 												</array>
-												<string key="NSFrame">{{6, 142}, {404, 121}}</string>
+												<string key="NSFrame">{{6, 137}, {404, 121}}</string>
 												<reference key="NSSuperview" ref="1058526017"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="454893135"/>
@@ -3255,7 +3253,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<string key="NSFrame">{{222, 19}, {168, 32}}</string>
 																<reference key="NSSuperview" ref="719018485"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSButtonCell" key="NSCell" id="739948884">
@@ -3305,7 +3302,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 														<string key="NSReuseIdentifierKey">_NS:11</string>
 													</object>
 												</array>
-												<string key="NSFrame">{{6, 36}, {404, 88}}</string>
+												<string key="NSFrame">{{6, 21}, {404, 88}}</string>
 												<reference key="NSSuperview" ref="1058526017"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="719018485"/>
@@ -3377,14 +3374,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="destination" ref="632727374"/>
 					</object>
 					<int key="connectionID">449</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">orderFrontStandardAboutPanel:</string>
-						<reference key="source" ref="1021"/>
-						<reference key="destination" ref="238522557"/>
-					</object>
-					<int key="connectionID">142</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -3529,6 +3518,14 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="destination" ref="52085688"/>
 					</object>
 					<int key="connectionID">1844</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">aboutMenuAction:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="238522557"/>
+					</object>
+					<int key="connectionID">1845</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -4353,9 +4350,9 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<reference key="object" ref="1058526017"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="140155893"/>
-							<reference ref="1066650914"/>
-							<reference ref="648582497"/>
 							<reference ref="157776165"/>
+							<reference ref="648582497"/>
+							<reference ref="1066650914"/>
 						</array>
 						<reference key="parent" ref="360011306"/>
 					</object>
@@ -5946,7 +5943,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1844</int>
+			<int key="maxID">1845</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5954,6 +5951,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string key="className">AppDelegate</string>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="aboutMenuAction:">id</string>
 						<string key="backupDFFilesAction:">id</string>
 						<string key="constructDFAction:">id</string>
 						<string key="constructDTAction:">id</string>
@@ -5966,6 +5964,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						<string key="setInstallFolderAction:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="aboutMenuAction:">
+							<string key="name">aboutMenuAction:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="backupDFFilesAction:">
 							<string key="name">backupDFFilesAction:</string>
 							<string key="candidateClassName">id</string>
