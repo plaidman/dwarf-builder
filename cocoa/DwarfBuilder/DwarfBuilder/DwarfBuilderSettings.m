@@ -21,7 +21,7 @@
 @synthesize dwarfCap, childHardCap, childPercentageCap, embarkWidth, embarkHeight;
 
 /* FILE SETTINGS */
-@synthesize installDir, installDirString;
+@synthesize installDir;
 
 -(id)init {
     self = [super init];
@@ -35,20 +35,9 @@
                 @"temperature", @"font", @"aquifers", @"caveIns", @"weather", @"resizable", @"dwarfCap",
                 @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight", nil];
         [self setDFDefaults];
-        [self updateInstallDir:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
     }
     
     return self;
-}
-
--(void)updateInstallDir:(NSString*)directory {
-    [self setInstallDir:directory];
-    [self setInstallDirString:directory];
-    
-    if ([installDirString length] > 50) {
-        [self setInstallDirString:[NSString stringWithFormat:@"...%@",
-            [directory substringWithRange:NSMakeRange([directory length]-47, 47)]]];
-    }
 }
 
 -(void)writeSettingsToFile:(NSString*)filename {

@@ -9,7 +9,7 @@
 @property DwarfBuilderSettings *settings;
 @property NSFileManager *fileManager;
 @property NSWindowController *aboutWindow;
-@property NSString *settingsFile, *dbResources;
+@property NSString *settingsFile, *dbResources, *installDirString;
 
 -(IBAction)constructDFAction:(id)sender;
 -(IBAction)constructDTAction:(id)sender;
@@ -53,6 +53,8 @@
 -(void)addWorldGens;
 -(void)copyEmbarkProfiles;
 -(void)setupDwarfFortressApp;
+
+-(void)updateInstallDir:(NSString*)directory;
 -(void)updateSaveRaws;
 
 @end

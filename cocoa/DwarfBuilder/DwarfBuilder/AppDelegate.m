@@ -17,7 +17,7 @@
 @synthesize settings;
 @synthesize fileManager;
 @synthesize aboutWindow;
-@synthesize settingsFile, dbResources;
+@synthesize settingsFile, dbResources, installDirString;
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
     return true;
@@ -37,9 +37,10 @@
 #ifdef DEBUG
         dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
         //dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
-        [settings updateInstallDir:dbResources];
+        [self updateInstallDir:dbResources];
 #else
         dbResources = [NSString stringWithFormat:@"%@/Contents/Resources", [[NSBundle mainBundle] bundlePath]];
+        [self updateInstallDir:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
 #endif
         settingsFile = [NSString stringWithFormat:@"%@/settings.plist", dbResources];
 
@@ -116,7 +117,7 @@
     
     NSInteger result = [installDirOpenPanel runModal];
     if (result == NSOKButton) {
-        [settings updateInstallDir:[[installDirOpenPanel URL] path]];
+        [self updateInstallDir:[[installDirOpenPanel URL] path]];
     }
 }
 
@@ -609,6 +610,21 @@
         [fileManager copyItemAtPath:pathToSaves toPath:pathFromSaves error:nil];
         [fileManager removeItemAtPath:pathToSaves error:nil];
         [self updateSaveRaws];
+    }
+}
+
+
+/* * * * * * * * * * * * * * * * * * * 
+ *  -- BEHIND THE SCENES FUNCTIONS --
+ * * * * * * * * * * * * * * * * * * */
+
+-(void)updateInstallDir:(NSString*)directory {
+    [settings setInstallDir:directory];
+    [self setInstallDirString:directory];
+    
+    if ([installDirString length] > 50) {
+        [self setInstallDirString:[NSString stringWithFormat:@"...%@",
+            [directory substringWithRange:NSMakeRange([directory length]-47, 47)]]];
     }
 }
 
