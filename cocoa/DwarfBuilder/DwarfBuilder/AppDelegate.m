@@ -5,7 +5,15 @@
 //"update DF raws" button
 
 //implement some kind of notification when the operation is complete
-//"about" window
+//  multi-thread or modal window
+//error messages if required files are not found
+//"overwrite" messages
+//  backup df files
+//  construct df - existing app
+//  construct df - overwrite interface, embark, worldgen from backup
+//  soundsense
+//functions (even in dwarfbuildersettings) throw errors
+//catch thrown errors and display a message
 
 #import "AppDelegate.h"
 #import "DwarfBuilderSettings.h"
@@ -18,6 +26,7 @@
 @synthesize fileManager;
 @synthesize aboutWindow;
 @synthesize settingsFile, dbResources, installDirString;
+@synthesize spinner;
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
     return true;
@@ -35,14 +44,15 @@
         fileManager = [NSFileManager defaultManager];
         
 #ifdef DEBUG
-        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
-        //dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
+        //dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
+        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
         [self updateInstallDir:dbResources];
 #else
         dbResources = [NSString stringWithFormat:@"%@/Contents/Resources", [[NSBundle mainBundle] bundlePath]];
         [self updateInstallDir:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
 #endif
         settingsFile = [NSString stringWithFormat:@"%@/settings.plist", dbResources];
+        spinner = false;
 
         if ([fileManager fileExistsAtPath:settingsFile]) {
             [settings readSettingsFromFile:settingsFile];
@@ -58,6 +68,8 @@
  * * * * * * * * * * * * * * */
 
 -(IBAction)constructDFAction:(id)sender {
+    [self setSpinner:true];
+    
     [self copyVanilla];
     [self copyTileset];
     [self processInitTxt];
@@ -74,6 +86,8 @@
     [self addWorldGens];
     [self copyEmbarkProfiles];
     [self setupDwarfFortressApp];
+    
+    [self setSpinner:false];
 }
 
 -(IBAction)constructDTAction:(id)sender {
@@ -154,9 +168,11 @@
 }
 
 -(IBAction)backupDFFilesAction:(id)sender {
+    [self setSpinner:true];
 }
 
 -(IBAction)restoreDFFilesAction:(id)sender {
+    [self setSpinner:false];
 }
 
 -(IBAction)aboutMenuAction:(id)sender {
@@ -633,6 +649,9 @@
     NSString *rawDir = [NSString stringWithFormat:@"%@/raw", appDir];
     NSString *saveDir = [NSString stringWithFormat:@"%@/data/save", appDir];
     
+    //if file not exists at savedir
+    //  message: no save found
+    
     NSEnumerator *itemReader = [fileManager enumeratorAtPath:saveDir];
     NSString *item, *fullItemPath, *itemType;
     
@@ -645,6 +664,35 @@
             [fileManager copyItemAtPath:rawDir toPath:fullItemPath error:nil];
         }
     }
+}
+
+-(void)backupDFFiles {
+    NSString *pathFromSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
+        @"DwarfFortress.app/Contents/Resources/data/save"];
+    NSString *pathToSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
+    
+    if ([fileManager fileExistsAtPath:pathFromSaves]) {
+        //if file exists at pathtosaves
+        //  message: overwrite current backed up save?
+        [fileManager removeItemAtPath:pathToSaves error:nil];
+        [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
+    } else {
+        //message: save not found in DF
+    }
+}
+
+-(void)restoreDFFiles {
+//    if [ -d dfsave_backup ]
+//        then
+//        echo "Restoring Game..."
+//        
+//        rm -rf "${DF_BUILT_APP}/${DF_SAVE_DIR}"
+//        cp -rp dfsave_backup "${DF_BUILT_APP}/${DF_SAVE_DIR}"
+//        
+//        echo "Finished..."
+//        else
+//            echo "Save not found..."
+//            fi
 }
 
 @end
