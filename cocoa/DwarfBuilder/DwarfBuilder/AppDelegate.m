@@ -1,19 +1,3 @@
-//stackoverflow.com/questions/4236584/zipping-a-folder-in-objective-c
-
-//"backup DF files" button
-//"restore DF files" button
-//"update DF raws" button
-
-//implement some kind of notification when the operation is complete
-//  multi-thread or modal window
-//error messages if required files are not found
-//"overwrite" messages
-//  backup df files
-//  construct df - existing app
-//  construct df - overwrite interface, embark, worldgen from backup
-//  soundsense
-//functions (even in dwarfbuildersettings) throw errors
-//catch thrown errors and display a message
 
 #import "AppDelegate.h"
 #import "DwarfBuilderSettings.h"
@@ -26,7 +10,6 @@
 @synthesize fileManager;
 @synthesize aboutWindow;
 @synthesize settingsFile, dbResources, installDirString;
-@synthesize spinner;
 
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender {
     return true;
@@ -44,15 +27,14 @@
         fileManager = [NSFileManager defaultManager];
         
 #ifdef DEBUG
-        //dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
-        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
+        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
+        //dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
         [self updateInstallDir:dbResources];
 #else
         dbResources = [NSString stringWithFormat:@"%@/Contents/Resources", [[NSBundle mainBundle] bundlePath]];
         [self updateInstallDir:[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]];
 #endif
         settingsFile = [NSString stringWithFormat:@"%@/settings.plist", dbResources];
-        spinner = false;
 
         if ([fileManager fileExistsAtPath:settingsFile]) {
             [settings readSettingsFromFile:settingsFile];
@@ -68,8 +50,6 @@
  * * * * * * * * * * * * * * */
 
 -(IBAction)constructDFAction:(id)sender {
-    [self setSpinner:true];
-    
     [self copyVanilla];
     [self copyTileset];
     [self processInitTxt];
@@ -86,8 +66,6 @@
     [self addWorldGens];
     [self copyEmbarkProfiles];
     [self setupDwarfFortressApp];
-    
-    [self setSpinner:false];
 }
 
 -(IBAction)constructDTAction:(id)sender {
@@ -168,11 +146,33 @@
 }
 
 -(IBAction)backupDFFilesAction:(id)sender {
-    [self setSpinner:true];
+    NSString *pathFromSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
+        @"DwarfFortress.app/Contents/Resources/data/save"];
+    NSString *pathToSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
+    
+    if ([fileManager fileExistsAtPath:pathFromSaves]) {
+        //if file exists at pathtosaves
+        //  message: overwrite current backed up save?
+        [fileManager removeItemAtPath:pathToSaves error:nil];
+        [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
+    } else {
+        //message: save not found in DF
+    }
 }
 
 -(IBAction)restoreDFFilesAction:(id)sender {
-    [self setSpinner:false];
+    NSString *pathFromSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
+    NSString *pathToSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
+        @"DwarfFortress.app/Contents/Resources/data/save"];
+    
+    if ([fileManager fileExistsAtPath:pathFromSaves]) {
+        //if file exists at pathtosaves
+        //  message: overwrite current backed up save?
+        [fileManager removeItemAtPath:pathToSaves error:nil];
+        [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
+    } else {
+        //message: save not found in DF
+    }
 }
 
 -(IBAction)aboutMenuAction:(id)sender {
@@ -272,7 +272,8 @@
     [fileContents writeToFile:textFile atomically:true encoding:encoding error:nil];
 }
 
--(void)translateKeybinds:(NSMutableString*)fileContents bindLabel:(NSString*)bindLabel fromKey:(NSString*)fromKey toKey:(NSString*)toKey {
+-(void)translateKeybinds:(NSMutableString*)fileContents bindLabel:(NSString*)bindLabel
+        fromKey:(NSString*)fromKey toKey:(NSString*)toKey {
     NSRange keysRange;
     NSString *bindLabelRegex = [NSString stringWithFormat:@"\\[BIND:%@\\]", bindLabel];
     NSString *fromKeyRegex = [NSString stringWithFormat:@"\\[KEY:%@\\]", fromKey];
@@ -364,8 +365,10 @@
         NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
             [self stringToInit:@"curses_square_16x16.png" optionName:@"FONT"], @"\\[FONT:.*\\]",
             [self stringToInit:@"curses_square_16x16.png" optionName:@"FULLFONT"], @"\\[FULLFONT:.*\\]",
-            [self stringToInit:@"curses_square_16x16.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
-            [self stringToInit:@"curses_square_16x16.png" optionName:@"GRAPHICS_FULLFONT"], @"\\[GRAPHICS_FULLFONT:.*\\]",
+            [self stringToInit:@"curses_square_16x16.png" optionName:@"GRAPHICS_FULLFONT"],
+                @"\\[GRAPHICS_FULLFONT:.*\\]",
+            [self stringToInit:@"curses_square_16x16.png" optionName:@"GRAPHICS_FULLFONT"],
+                @"\\[GRAPHICS_FULLFONT:.*\\]",
             nil];
         
         [self translateTextFile:initTxtFile changes:changes];
@@ -517,7 +520,8 @@
 
 -(void)disableSkillRusting {
     if (![settings skillRusting]) {
-        NSString *dwarfCreatureFile = [NSString stringWithFormat:@"%@/build/raw/objects/creature_standard.txt", dbResources];
+        NSString *dwarfCreatureFile = [NSString stringWithFormat:@"%@/%@", dbResources,
+            @"build/raw/objects/creature_standard.txt"];
         NSString *rustProofFile = [NSString stringWithFormat:@"%@/extras/rust_proof.txt", dbResources];
         
         NSMutableString *dwarfFileContents = [NSMutableString stringWithContentsOfFile:dwarfCreatureFile
@@ -645,7 +649,8 @@
 }
 
 -(void)updateSaveRaws {
-    NSString *appDir = [NSString stringWithFormat:@"%@/DwarfFortress.app/Contents/Resources", [settings installDir]];
+    NSString *appDir = [NSString stringWithFormat:@"%@/%@", [settings installDir],
+        @"DwarfFortress.app/Contents/Resources"];
     NSString *rawDir = [NSString stringWithFormat:@"%@/raw", appDir];
     NSString *saveDir = [NSString stringWithFormat:@"%@/data/save", appDir];
     
@@ -666,33 +671,21 @@
     }
 }
 
--(void)backupDFFiles {
-    NSString *pathFromSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
-        @"DwarfFortress.app/Contents/Resources/data/save"];
-    NSString *pathToSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
+-(bool)confirmDialog:(NSString*)alert message:(NSString*)message {
+    NSAlert *confirm = [NSAlert alertWithMessageText:alert defaultButton:@"YES" alternateButton:@"NO"
+        otherButton:nil informativeTextWithFormat:message];
     
-    if ([fileManager fileExistsAtPath:pathFromSaves]) {
-        //if file exists at pathtosaves
-        //  message: overwrite current backed up save?
-        [fileManager removeItemAtPath:pathToSaves error:nil];
-        [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
-    } else {
-        //message: save not found in DF
+    NSInteger result = [confirm runModal];
+    if (result == NSOKButton) {
+        return true;
     }
+    return false;
 }
 
--(void)restoreDFFiles {
-//    if [ -d dfsave_backup ]
-//        then
-//        echo "Restoring Game..."
-//        
-//        rm -rf "${DF_BUILT_APP}/${DF_SAVE_DIR}"
-//        cp -rp dfsave_backup "${DF_BUILT_APP}/${DF_SAVE_DIR}"
-//        
-//        echo "Finished..."
-//        else
-//            echo "Save not found..."
-//            fi
+-(void)errorDialog:(NSString *)alert message:(NSString *)message {
+    NSAlert *confirm = [NSAlert alertWithMessageText:alert defaultButton:@"OK" alternateButton:nil
+        otherButton:nil informativeTextWithFormat:message];
+    [confirm runModal];
 }
 
 @end

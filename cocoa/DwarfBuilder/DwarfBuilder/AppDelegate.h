@@ -10,7 +10,6 @@
 @property NSFileManager *fileManager;
 @property NSWindowController *aboutWindow;
 @property NSString *settingsFile, *dbResources, *installDirString;
-@property BOOL spinner;
 
 -(IBAction)constructDFAction:(id)sender;
 -(IBAction)constructDTAction:(id)sender;
@@ -57,7 +56,7 @@
 
 -(void)updateInstallDir:(NSString*)directory;
 -(void)updateSaveRaws;
--(void)backupDFFiles;
--(void)restoreDFFiles;
+-(bool)confirmDialog:(NSString*)alert message:(NSString*)message;
+-(void)errorDialog:(NSString*)alert message:(NSString*)message;
 
 @end
