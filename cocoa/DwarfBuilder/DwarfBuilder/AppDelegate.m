@@ -89,6 +89,13 @@
     NSString *pathFromResources = [NSString stringWithFormat:@"%@/soundsense", dbResources];
     NSString *pathToResources = [NSString stringWithFormat:@"%@/Contents/Resources", pathToApp];
     
+    if ([fileManager fileExistsAtPath:pathToApp]) {
+        if (![self confirmDialog:@"SoundSense.app detected. Overwrite it?" 
+                message:@"You may lose your downloaded audio files."]) {
+            return;
+        }
+    }
+    
     [fileManager removeItemAtPath:pathToApp error:nil];
     [fileManager copyItemAtPath:pathFromApp toPath:pathToApp error:nil];
     [fileManager removeItemAtPath:pathToResources error:nil];
@@ -108,9 +115,9 @@
     [installDirOpenPanel setTitle:@"Dwarf Fortress Installation Folder"];
     
     NSInteger result = [installDirOpenPanel runModal];
-    if (result == NSOKButton) {
-        [self updateInstallDir:[[installDirOpenPanel URL] path]];
-    }
+    if (result != NSOKButton) return;
+
+    [self updateInstallDir:[[installDirOpenPanel URL] path]];
 }
 
 -(IBAction)saveSettingsAction:(id)sender {
@@ -120,21 +127,23 @@
     [settingsSavePanel setAllowsOtherFileTypes:false];
     
     NSInteger result = [settingsSavePanel runModal];
-    if (result == NSOKButton) {
-        [settings writeSettingsToFile:[[settingsSavePanel URL] path]];
-    }
+    if (result != NSOKButton) return;
+    
+    [settings writeSettingsToFile:[[settingsSavePanel URL] path]];
 }
 
 -(IBAction)loadSettingsAction:(id)sender {
     NSOpenPanel *settingsOpenPanel = [NSOpenPanel openPanel];
     [settingsOpenPanel setCanChooseFiles:true];
     [settingsOpenPanel setCanChooseDirectories:false];
+    [settingsOpenPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"dbs", nil]];
+    [settingsOpenPanel setAllowsOtherFileTypes:false];
     [settingsOpenPanel setTitle:@"Load Dwarf Builder Settings"];
     
     NSInteger result = [settingsOpenPanel runModal];
-    if (result == NSOKButton) {
-        [settings readSettingsFromFile:[[settingsOpenPanel URL] path]];
-    }
+    if (result != NSOKButton) return;
+    
+    [settings readSettingsFromFile:[[settingsOpenPanel URL] path]];
 }
 
 -(IBAction)plaidmanSettingsAction:(id)sender {
@@ -151,12 +160,16 @@
     NSString *pathToSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
     
     if ([fileManager fileExistsAtPath:pathFromSaves]) {
-        //if file exists at pathtosaves
-        //  message: overwrite current backed up save?
+        if ([fileManager fileExistsAtPath:pathToSaves]) {
+            if (![self confirmDialog:@"There is currently a backup saved. Overwrite it?" message:nil]) {
+                return;
+            }
+        }
+
         [fileManager removeItemAtPath:pathToSaves error:nil];
         [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
     } else {
-        //message: save not found in DF
+        [self errorDialog:@"There doesn't seem to be any files to back up." message:nil];
     }
 }
 
@@ -171,7 +184,7 @@
         [fileManager removeItemAtPath:pathToSaves error:nil];
         [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
     } else {
-        //message: save not found in DF
+        [self errorDialog:@"You have not backed up any files." message:nil];
     }
 }
 
@@ -642,7 +655,7 @@
     [settings setInstallDir:directory];
     [self setInstallDirString:directory];
     
-    if ([installDirString length] > 50) {
+    if ([directory length] > 50) {
         [self setInstallDirString:[NSString stringWithFormat:@"...%@",
             [directory substringWithRange:NSMakeRange([directory length]-47, 47)]]];
     }
@@ -654,8 +667,10 @@
     NSString *rawDir = [NSString stringWithFormat:@"%@/raw", appDir];
     NSString *saveDir = [NSString stringWithFormat:@"%@/data/save", appDir];
     
-    //if file not exists at savedir
-    //  message: no save found
+    if (![fileManager fileExistsAtPath:saveDir]) {
+        [self errorDialog:@"You don't seem to have any saved regions." message:nil];
+        return;
+    }
     
     NSEnumerator *itemReader = [fileManager enumeratorAtPath:saveDir];
     NSString *item, *fullItemPath, *itemType;
