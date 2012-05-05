@@ -95,24 +95,23 @@
     NSString *pathFromResources = [NSString stringWithFormat:@"%@/soundsense", dbResources];
     NSString *pathToResources = [NSString stringWithFormat:@"%@/Contents/Resources", pathToApp];
     
-    if ([fileManager fileExistsAtPath:pathToApp]) {
-        if (![self confirmDialog:@"SoundSense.app detected."
-                message:@"Would you like me to overwrite it?\nYou may lose your downloaded audio files."]) {
-            return;
-        }
-    }
-    
-    [fileManager removeItemAtPath:pathToApp error:nil];
-    [fileManager copyItemAtPath:pathFromApp toPath:pathToApp error:nil];
-    [fileManager removeItemAtPath:pathToResources error:nil];
-    [fileManager copyItemAtPath:pathFromResources toPath:pathToResources error:nil];
-    
+    NSString *configurationFile = [NSString stringWithFormat:@"%@/configuration.xml", pathToResources];
+    NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
+        [NSString stringWithFormat:@"<gamelog path=\"%@/DwarfFortress.app/Contents/Resources/gamelog.txt\" />",
+            [settings installDir]], @"<gamelog path=\".*\" />", nil];
     @try {
-        NSString *configurationFile = [NSString stringWithFormat:@"%@/configuration.xml", pathToResources];
-        NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-            [NSString stringWithFormat:@"<gamelog path=\"%@/DwarfFortress.app/Contents/Resources/gamelog.txt\" />",
-                [settings installDir]], @"<gamelog path=\".*\" />", nil];
-        
+        if ([fileManager fileExistsAtPath:pathToApp]) {
+            if (![self confirmDialog:@"SoundSense.app detected."
+                    message:@"Would you like me to overwrite it?\nYou may lose your downloaded audio files."]) {
+                return;
+            }
+        }
+    
+        [fileManager removeItemAtPath:pathToApp error:nil];
+        [fileManager copyItemAtPath:pathFromApp toPath:pathToApp error:nil];
+        [fileManager removeItemAtPath:pathToResources error:nil];
+        [fileManager copyItemAtPath:pathFromResources toPath:pathToResources error:nil];
+    
         [self translateTextFile:configurationFile changes:changes];
         
         [[NSWorkspace sharedWorkspace] setIcon:[[NSImage alloc]
@@ -187,7 +186,7 @@
         [fileManager removeItemAtPath:pathToSaves error:nil];
         [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
     } else {
-        [self errorDialog:@"I couldn't find any files to back up." message:nil];
+        [self errorDialog:@"I couldn't find any files to back up." message:@""];
     }
 }
 
@@ -207,7 +206,7 @@
         [fileManager removeItemAtPath:pathToSaves error:nil];
         [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
     } else {
-        [self errorDialog:@"You have not backed up any files to restore." message:nil];
+        [self errorDialog:@"You have not backed up any files to restore." message:@""];
     }
 }
 
@@ -218,11 +217,22 @@
     [aboutWindow showWindow:nil];
 }
 
--(IBAction)testButton:(id)sender {
+-(IBAction)openDFAppAction:(id)sender {
     NSString *dfDir = [NSString stringWithFormat:@"%@/%@", [settings installDir],
         @"DwarfFortress.app/Contents/Resources"];
+    
+    if (![fileManager fileExistsAtPath:dfDir]) {
+        [self errorDialog:@"Sorry, I couldn't find your Dwarf Fortress app." message:@""];
+        return;
+    }
+    
     [[NSWorkspace sharedWorkspace] openFile:dfDir];
 }
+
+-(IBAction)updateDFRawsAction:(id)sender {
+    [self updateSaveRaws];
+}
+
 
 /* * * * * * * * * * * * * * *
  * -- SERIALIZER FUNCTIONS -- 
@@ -729,7 +739,7 @@
     NSString *saveDir = [NSString stringWithFormat:@"%@/data/save", appDir];
     
     if (![fileManager fileExistsAtPath:saveDir]) {
-        [self errorDialog:@"I couldn't find any saved regions." message:nil];
+        [self errorDialog:@"I couldn't find any saved regions." message:@""];
         return;
     }
     

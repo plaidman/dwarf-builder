@@ -22,8 +22,8 @@
 -(IBAction)backupDFFilesAction:(id)sender;
 -(IBAction)restoreDFFilesAction:(id)sender;
 -(IBAction)aboutMenuAction:(id)sender;
-
--(IBAction)testButton:(id)sender;
+-(IBAction)openDFAppAction:(id)sender;
+-(IBAction)updateDFRawsAction:(id)sender;
 
 -(NSString*)boolToInit:(bool)optionValue optionName:(NSString*)optionName;
 -(NSString*)intToInit:(int)optionValue optionName:(NSString*)optionName;
