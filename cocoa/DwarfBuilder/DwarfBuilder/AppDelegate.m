@@ -129,6 +129,7 @@
     [installDirOpenPanel setCanChooseFiles:false];
     [installDirOpenPanel setCanChooseDirectories:true];
     [installDirOpenPanel setTitle:@"Dwarf Fortress Installation Folder"];
+    [installDirOpenPanel setDirectoryURL:[NSURL fileURLWithPath:[settings installDir]]];
     
     NSInteger result = [installDirOpenPanel runModal];
     if (result != NSOKButton) return;
