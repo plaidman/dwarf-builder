@@ -3,10 +3,11 @@
 
 @interface DwarfBuilderSettings : NSObject {
     NSArray *propertyNames;
+    NSString *dbVersionNumber;
     
     /* APPLICATION OPTIONS */
     bool enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
-    NSString *cFPSCap, *gFPSCap;
+    NSString *pFPSCap, *gFPSCap;
     int volume, keybindings, autosave;
     
     /* VISUAL SETTINGS */
@@ -24,10 +25,11 @@
 }
 
 @property NSArray *propertyNames;
+@property NSString *dbVersionNumber;
 
 /* APPLICATION OPTIONS */
 @property bool enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
-@property NSString *cFPSCap, *gFPSCap;
+@property NSString *pFPSCap, *gFPSCap;
 @property int volume, keybindings, autosave;
 
 /* VISUAL SETTINGS */

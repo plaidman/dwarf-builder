@@ -461,7 +461,7 @@
         [self boolToInit:[settings creatureGraphics] optionName:@"GRAPHICS"], @"\\[GRAPHICS:.*\\]",
         [self boolToInit:[settings useFont] optionName:@"TRUETYPE"], @"\\[TRUETYPE:.*\\]",
         [self boolToInit:[settings showFPS] optionName:@"FPS"], @"\\[FPS:.*\\]",
-        [self stringToInit:[settings cFPSCap] optionName:@"FPS_CAP"], @"\\[FPS_CAP:.*\\]",
+        [self stringToInit:[settings pFPSCap] optionName:@"FPS_CAP"], @"\\[FPS_CAP:.*\\]",
         [self stringToInit:[settings gFPSCap] optionName:@"G_FPS_CAP"], @"\\[G_FPS_CAP:.*\\]",
         [self boolToInit:[settings compressSaves] optionName:@"COMPRESSED_SAVES"], @"\\[COMPRESSED_SAVES:.*\\]",
         nil];

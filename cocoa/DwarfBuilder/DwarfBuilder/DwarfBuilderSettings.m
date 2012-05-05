@@ -4,11 +4,12 @@
 @implementation DwarfBuilderSettings
 
 @synthesize propertyNames;
+@synthesize dbVersionNumber;
 
 /* APPLICATION OPTIONS */
 @synthesize enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
 @synthesize volume, keybindings, autosave;
-@synthesize cFPSCap, gFPSCap;
+@synthesize pFPSCap, gFPSCap;
 
 /* VISUAL SETTINGS */
 @synthesize fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable;
@@ -27,8 +28,8 @@
     self = [super init];
     
     if (self) {
-        propertyNames = [[NSArray alloc] initWithObjects:@"enableSound", @"extendSoundtk", @"compressSaves",
-                @"pauseOnLoad", @"pauseOnSave", @"autoBackupSaves", @"volume", @"keybindings", @"autosave", @"cFPSCap",
+        propertyNames = [[NSArray alloc] initWithObjects:@"dbVersionNumber", @"enableSound", @"extendSoundtk", @"compressSaves",
+                @"pauseOnLoad", @"pauseOnSave", @"autoBackupSaves", @"volume", @"keybindings", @"autosave", @"pFPSCap",
                 @"gFPSCap", @"fullscreen", @"showIntro", @"showFPS", @"liquidDepth", @"creatureGraphics", @"useFont",
                 @"windowWidth", @"windowHeight", @"showIdlers", @"tileset", @"skillRusting", @"embarkConfirmation",
                 @"grazingAnimals", @"pauseOnCaveIns", @"extraShellItems", @"pauseOnWarmDampStone", @"invaders",
@@ -57,7 +58,7 @@
     [self
         setValuesForKeysWithDictionary:[NSDictionary
             dictionaryWithObjects:[NSArray
-                arrayWithObjects:falseObj, falseObj, trueObj, trueObj, trueObj, falseObj, [NSNumber numberWithInt:0],
+                arrayWithObjects:@"7", falseObj, falseObj, trueObj, trueObj, trueObj, falseObj, [NSNumber numberWithInt:0],
                     [NSNumber numberWithInt:kbLaptop], [NSNumber numberWithInt:asSeasonal], @"100", @"50", falseObj,
                     falseObj, trueObj, trueObj, trueObj, falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop],
                     [NSNumber numberWithInt:tsIronhand], falseObj, trueObj, falseObj, trueObj, trueObj, trueObj,
@@ -76,7 +77,7 @@
     [self
         setValuesForKeysWithDictionary:[NSDictionary
             dictionaryWithObjects:[NSArray
-                arrayWithObjects:trueObj, falseObj, trueObj, trueObj, falseObj, falseObj, [NSNumber numberWithInt:255],
+                arrayWithObjects:@"7", trueObj, falseObj, trueObj, trueObj, falseObj, falseObj, [NSNumber numberWithInt:255],
                 [NSNumber numberWithInt:kbDefault], [NSNumber numberWithInt:asDisabled], @"100", @"50", falseObj,
                 trueObj, falseObj, falseObj, falseObj, falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop],
                 [NSNumber numberWithInt:tsDefaultTall], trueObj, falseObj, trueObj, trueObj, falseObj, trueObj,
