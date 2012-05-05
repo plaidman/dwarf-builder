@@ -142,6 +142,7 @@
     [settingsSavePanel setTitle:@"Save Dwarf Builder Settings"];
     [settingsSavePanel setAllowedFileTypes:[NSArray arrayWithObjects:@"dbs", nil]];
     [settingsSavePanel setAllowsOtherFileTypes:false];
+    [settingsSavePanel setDirectoryURL:[NSURL fileURLWithPath:[settings installDir]]];
     
     NSInteger result = [settingsSavePanel runModal];
     if (result != NSOKButton) return;
@@ -156,6 +157,7 @@
     [settingsOpenPanel setAllowedFileTypes:[NSArray arrayWithObjects:@"dbs", nil]];
     [settingsOpenPanel setAllowsOtherFileTypes:false];
     [settingsOpenPanel setTitle:@"Load Dwarf Builder Settings"];
+    [settingsOpenPanel setDirectoryURL:[NSURL fileURLWithPath:[settings installDir]]];
     
     NSInteger result = [settingsOpenPanel runModal];
     if (result != NSOKButton) return;
