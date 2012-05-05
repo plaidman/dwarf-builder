@@ -114,6 +114,10 @@
                 [settings installDir]], @"<gamelog path=\".*\" />", nil];
         
         [self translateTextFile:configurationFile changes:changes];
+        
+        [[NSWorkspace sharedWorkspace] setIcon:[[NSImage alloc]
+            initByReferencingFile:[NSString stringWithFormat:@"%@/%@", dbResources, @"SoundSense.png"]]
+            forFile:pathToApp options:0];
     }
     @catch (NSException *exception) {
         [fileManager removeItemAtPath:pathToApp error:nil];
@@ -214,6 +218,11 @@
     [aboutWindow showWindow:nil];
 }
 
+-(IBAction)testButton:(id)sender {
+    NSString *dfDir = [NSString stringWithFormat:@"%@/%@", [settings installDir],
+        @"DwarfFortress.app/Contents/Resources"];
+    [[NSWorkspace sharedWorkspace] openFile:dfDir];
+}
 
 /* * * * * * * * * * * * * * *
  * -- SERIALIZER FUNCTIONS -- 
@@ -672,9 +681,9 @@
     NSString *pathToSaves = [NSString stringWithFormat:@"%@/cons_backup", dbResources];
     
     if ([fileManager fileExistsAtPath:pathFromSaves]) {
+        [fileManager removeItemAtPath:pathToSaves error:nil];
         if ([self confirmDialog:@"Found a save in the exiting DF.app."
                 message:@"Would you like me to transfer it to the new app for you?"]) {
-            [fileManager removeItemAtPath:pathToSaves error:nil];
             [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
         }
     }
@@ -689,6 +698,13 @@
         [fileManager removeItemAtPath:pathToSaves error:nil];
         [self updateSaveRaws];
     }
+    
+    [[NSWorkspace sharedWorkspace] setIcon:[[NSImage alloc]
+        initByReferencingFile:[NSString stringWithFormat:@"%@/%@", dbResources, @"DwarfFortress.png"]]
+        forFile:pathToApp options:0];
+    [[NSWorkspace sharedWorkspace] setIcon:[[NSImage alloc]
+        initByReferencingFile:[NSString stringWithFormat:@"%@/%@", dbResources, @"DwarfFortress.png"]]
+        forFile:[NSString stringWithFormat:@"%@/%@", pathToResources, @"dwarfort.exe"] options:0];
 }
 
 

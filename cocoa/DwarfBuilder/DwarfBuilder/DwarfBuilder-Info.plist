@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIconFile</key>
-	<string>DwarfBuilder.png</string>
+	<string>DwarfBuilder.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.plaidsoft.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>

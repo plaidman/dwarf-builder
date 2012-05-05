@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9634AED615557D94000F5DB1 /* DwarfBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9634AED515557D94000F5DB1 /* DwarfBuilder.icns */; };
 		96719D621555104A003B8035 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96719D611555104A003B8035 /* About.xib */; };
-		96D8F467154F812C005E7B7F /* DwarfBuilder.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BC6154F05FB00FEF791 /* DwarfBuilder.png */; };
 		E49E8BC1154F059300FEF791 /* DwarfFortress.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BBD154F059300FEF791 /* DwarfFortress.png */; };
 		E49E8BC2154F059300FEF791 /* DwarfTherapist.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BBE154F059300FEF791 /* DwarfTherapist.png */; };
 		E49E8BC3154F059300FEF791 /* SoundSense.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BBF154F059300FEF791 /* SoundSense.png */; };
@@ -21,11 +21,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9634AED515557D94000F5DB1 /* DwarfBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = DwarfBuilder.icns; path = ../../DwarfBuilder.icns; sourceTree = "<group>"; };
 		96719D611555104A003B8035 /* About.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
 		E49E8BBD154F059300FEF791 /* DwarfFortress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DwarfFortress.png; sourceTree = "<group>"; };
 		E49E8BBE154F059300FEF791 /* DwarfTherapist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DwarfTherapist.png; sourceTree = "<group>"; };
 		E49E8BBF154F059300FEF791 /* SoundSense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundSense.png; sourceTree = "<group>"; };
-		E49E8BC6154F05FB00FEF791 /* DwarfBuilder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DwarfBuilder.png; path = ../../DwarfBuilder.png; sourceTree = "<group>"; };
 		E4A56EFE15484E0B00A33D23 /* DwarfBuilderSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DwarfBuilderSettings.h; sourceTree = "<group>"; };
 		E4A56EFF15484E0B00A33D23 /* DwarfBuilderSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DwarfBuilderSettings.m; sourceTree = "<group>"; };
 		E4A607ED1545F4E100C51D98 /* DwarfBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DwarfBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,7 +57,7 @@
 		E49E8BBB154F059300FEF791 /* icons */ = {
 			isa = PBXGroup;
 			children = (
-				E49E8BC6154F05FB00FEF791 /* DwarfBuilder.png */,
+				9634AED515557D94000F5DB1 /* DwarfBuilder.icns */,
 				E49E8BBD154F059300FEF791 /* DwarfFortress.png */,
 				E49E8BBE154F059300FEF791 /* DwarfTherapist.png */,
 				E49E8BBF154F059300FEF791 /* SoundSense.png */,
@@ -182,8 +182,8 @@
 				E49E8BC1154F059300FEF791 /* DwarfFortress.png in Resources */,
 				E49E8BC2154F059300FEF791 /* DwarfTherapist.png in Resources */,
 				E49E8BC3154F059300FEF791 /* SoundSense.png in Resources */,
-				96D8F467154F812C005E7B7F /* DwarfBuilder.png in Resources */,
 				96719D621555104A003B8035 /* About.xib in Resources */,
+				9634AED615557D94000F5DB1 /* DwarfBuilder.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
