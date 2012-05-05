@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96719D621555104A003B8035 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96719D611555104A003B8035 /* About.xib */; };
 		96D8F467154F812C005E7B7F /* DwarfBuilder.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BC6154F05FB00FEF791 /* DwarfBuilder.png */; };
 		E49E8BC1154F059300FEF791 /* DwarfFortress.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BBD154F059300FEF791 /* DwarfFortress.png */; };
 		E49E8BC2154F059300FEF791 /* DwarfTherapist.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BBE154F059300FEF791 /* DwarfTherapist.png */; };
@@ -15,13 +16,12 @@
 		E4A607F21545F4E100C51D98 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A607F11545F4E100C51D98 /* Cocoa.framework */; };
 		E4A607FC1545F4E100C51D98 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E4A607FA1545F4E100C51D98 /* InfoPlist.strings */; };
 		E4A607FE1545F4E100C51D98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A607FD1545F4E100C51D98 /* main.m */; };
-		E4A608021545F4E100C51D98 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = E4A608001545F4E100C51D98 /* Credits.rtf */; };
 		E4A608051545F4E100C51D98 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A608041545F4E100C51D98 /* AppDelegate.m */; };
 		E4A608081545F4E100C51D98 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4A608061545F4E100C51D98 /* MainMenu.xib */; };
-		E4B0A2CD1553301700385D10 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B0A2CC1553301700385D10 /* About.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		96719D611555104A003B8035 /* About.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
 		E49E8BBD154F059300FEF791 /* DwarfFortress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DwarfFortress.png; sourceTree = "<group>"; };
 		E49E8BBE154F059300FEF791 /* DwarfTherapist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DwarfTherapist.png; sourceTree = "<group>"; };
 		E49E8BBF154F059300FEF791 /* SoundSense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundSense.png; sourceTree = "<group>"; };
@@ -37,11 +37,9 @@
 		E4A607FB1545F4E100C51D98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E4A607FD1545F4E100C51D98 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E4A607FF1545F4E100C51D98 /* DwarfBuilder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DwarfBuilder-Prefix.pch"; sourceTree = "<group>"; };
-		E4A608011545F4E100C51D98 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		E4A608031545F4E100C51D98 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E4A608041545F4E100C51D98 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E4A608071545F4E100C51D98 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		E4B0A2CC1553301700385D10 /* About.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = About.xib; path = ../About.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +110,7 @@
 				E4A608031545F4E100C51D98 /* AppDelegate.h */,
 				E4A608041545F4E100C51D98 /* AppDelegate.m */,
 				E4A608061545F4E100C51D98 /* MainMenu.xib */,
-				E4B0A2CC1553301700385D10 /* About.xib */,
+				96719D611555104A003B8035 /* About.xib */,
 				E4A607F81545F4E100C51D98 /* Supporting Files */,
 			);
 			path = DwarfBuilder;
@@ -125,7 +123,6 @@
 				E4A607FA1545F4E100C51D98 /* InfoPlist.strings */,
 				E4A607FD1545F4E100C51D98 /* main.m */,
 				E4A607FF1545F4E100C51D98 /* DwarfBuilder-Prefix.pch */,
-				E4A608001545F4E100C51D98 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -181,13 +178,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4A607FC1545F4E100C51D98 /* InfoPlist.strings in Resources */,
-				E4A608021545F4E100C51D98 /* Credits.rtf in Resources */,
 				E4A608081545F4E100C51D98 /* MainMenu.xib in Resources */,
 				E49E8BC1154F059300FEF791 /* DwarfFortress.png in Resources */,
 				E49E8BC2154F059300FEF791 /* DwarfTherapist.png in Resources */,
 				E49E8BC3154F059300FEF791 /* SoundSense.png in Resources */,
 				96D8F467154F812C005E7B7F /* DwarfBuilder.png in Resources */,
-				E4B0A2CD1553301700385D10 /* About.xib in Resources */,
+				96719D621555104A003B8035 /* About.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,14 +209,6 @@
 				E4A607FB1545F4E100C51D98 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E4A608001545F4E100C51D98 /* Credits.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E4A608011545F4E100C51D98 /* en */,
-			);
-			name = Credits.rtf;
 			sourceTree = "<group>";
 		};
 		E4A608061545F4E100C51D98 /* MainMenu.xib */ = {

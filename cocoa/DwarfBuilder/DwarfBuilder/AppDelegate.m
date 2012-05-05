@@ -27,8 +27,8 @@
         fileManager = [NSFileManager defaultManager];
         
 #ifdef DEBUG
-        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
-        //dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
+        //dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
+        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
         [self updateInstallDir:dbResources];
 #else
         dbResources = [NSString stringWithFormat:@"%@/Contents/Resources", [[NSBundle mainBundle] bundlePath]];
@@ -50,22 +50,28 @@
  * * * * * * * * * * * * * * */
 
 -(IBAction)constructDFAction:(id)sender {
-    [self copyVanilla];
-    [self copyTileset];
-    [self processInitTxt];
-    [self processDInitTxt];
-    [self removeAquifers];
-    [self removeGrazing];
-    [self disablePausingWarmDampStone];
-    [self disablePausingCaveIns];
-    [self updateKeybinds];
-    [self disableSkillRusting];
-    [self addExtraShellItems];
-    [self copySoundtrack];
-    [self copyFont];
-    [self addWorldGens];
-    [self copyEmbarkProfiles];
-    [self setupDwarfFortressApp];
+    @try {
+        [self copyVanilla];
+        [self copyTileset];
+        [self processInitTxt];
+        [self processDInitTxt];
+        [self removeAquifers];
+        [self removeGrazing];
+        [self disablePausingWarmDampStone];
+        [self disablePausingCaveIns];
+        [self updateKeybinds];
+        [self disableSkillRusting];
+        [self addExtraShellItems];
+        [self copySoundtrack];
+        [self copyFont];
+        [self addWorldGens];
+        [self copyEmbarkProfiles];
+        [self setupDwarfFortressApp];
+    }
+    @catch (NSException *exception) {
+        [fileManager removeItemAtPath:[NSString stringWithFormat:@"%@/build", dbResources] error:nil];
+        [self errorDialog:[exception name] message:[exception reason]];
+    }
 }
 
 -(IBAction)constructDTAction:(id)sender {
@@ -90,8 +96,8 @@
     NSString *pathToResources = [NSString stringWithFormat:@"%@/Contents/Resources", pathToApp];
     
     if ([fileManager fileExistsAtPath:pathToApp]) {
-        if (![self confirmDialog:@"SoundSense.app detected. Overwrite it?" 
-                message:@"You may lose your downloaded audio files."]) {
+        if (![self confirmDialog:@"SoundSense.app detected."
+                message:@"Would you like me to overwrite it?\nYou may lose your downloaded audio files."]) {
             return;
         }
     }
@@ -101,11 +107,18 @@
     [fileManager removeItemAtPath:pathToResources error:nil];
     [fileManager copyItemAtPath:pathFromResources toPath:pathToResources error:nil];
     
-    NSString *configurationFile = [NSString stringWithFormat:@"%@/configuration.xml", pathToResources];
-    NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-        [NSString stringWithFormat:@"<gamelog path=\"%@/DwarfFortress.app/Contents/Resources/gamelog.txt\" />",
-            [settings installDir]], @"<gamelog path=\".*\" />", nil];
-    [self translateTextFile:configurationFile changes:changes];
+    @try {
+        NSString *configurationFile = [NSString stringWithFormat:@"%@/configuration.xml", pathToResources];
+        NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
+            [NSString stringWithFormat:@"<gamelog path=\"%@/DwarfFortress.app/Contents/Resources/gamelog.txt\" />",
+                [settings installDir]], @"<gamelog path=\".*\" />", nil];
+        
+        [self translateTextFile:configurationFile changes:changes];
+    }
+    @catch (NSException *exception) {
+        [fileManager removeItemAtPath:pathToApp error:nil];
+        [self errorDialog:[exception name] message:[exception reason]];
+    }
 }
 
 -(IBAction)setInstallFolderAction:(id)sender {
@@ -161,7 +174,8 @@
     
     if ([fileManager fileExistsAtPath:pathFromSaves]) {
         if ([fileManager fileExistsAtPath:pathToSaves]) {
-            if (![self confirmDialog:@"There is currently a backup saved. Overwrite it?" message:nil]) {
+            if (![self confirmDialog:@"There is currently a backup saved."
+                    message:@"Would you like me to overwrite it?"]) {
                 return;
             }
         }
@@ -169,7 +183,7 @@
         [fileManager removeItemAtPath:pathToSaves error:nil];
         [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
     } else {
-        [self errorDialog:@"There doesn't seem to be any files to back up." message:nil];
+        [self errorDialog:@"I couldn't find any files to back up." message:nil];
     }
 }
 
@@ -179,12 +193,17 @@
         @"DwarfFortress.app/Contents/Resources/data/save"];
     
     if ([fileManager fileExistsAtPath:pathFromSaves]) {
-        //if file exists at pathtosaves
-        //  message: overwrite current backed up save?
+        if ([fileManager fileExistsAtPath:pathToSaves]) {
+            if (![self confirmDialog:@"There is already a save game here."
+                    message:@"Would you like me to overwrite it?"]) {
+                return;
+            }
+        }
+        
         [fileManager removeItemAtPath:pathToSaves error:nil];
         [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
     } else {
-        [self errorDialog:@"You have not backed up any files." message:nil];
+        [self errorDialog:@"You have not backed up any files to restore." message:nil];
     }
 }
 
@@ -245,10 +264,12 @@
     while (item = [itemReader nextObject]) {
         pathFromItem = [NSString stringWithFormat:@"%@/%@", fromPath, item];
         pathToItem = [NSString stringWithFormat:@"%@/%@", toPath, item];
-        itemType = [[fileManager attributesOfItemAtPath:pathFromItem error:nil] valueForKey:NSFileType];
+        itemType = [[fileManager attributesOfItemAtPath:pathFromItem error:nil]
+            valueForKey:NSFileType];
         
         if ([NSFileTypeDirectory isEqualToString:itemType]) {
-            [fileManager createDirectoryAtPath:pathToItem withIntermediateDirectories:true attributes:nil error:nil];
+            [fileManager createDirectoryAtPath:pathToItem withIntermediateDirectories:true
+                attributes:nil error:nil];
         } else {
             if ([fileManager fileExistsAtPath:pathToItem]) {
                 [fileManager removeItemAtPath:pathToItem error:nil];
@@ -266,8 +287,11 @@
         encoding:encoding error:&error];
     
     if (error) {
+        error = nil;
         encoding = NSISOLatin1StringEncoding;
-        fileContents = [NSMutableString stringWithContentsOfFile:textFile encoding:encoding error:nil];
+        fileContents = [NSMutableString stringWithContentsOfFile:textFile encoding:encoding error:&error];
+        if (error) @throw [NSException exceptionWithName:@"Something went terribly wrong."
+            reason:[NSString stringWithFormat:@"Failed opening %@", textFile] userInfo:nil];
     }
     
     NSEnumerator *changeKeys = [changes keyEnumerator];
@@ -277,10 +301,8 @@
     while (changeKey = [changeKeys nextObject]) {
         regex = [NSRegularExpression regularExpressionWithPattern:changeKey options:0 error:nil];
         [regex replaceMatchesInString:fileContents options:0 range:NSMakeRange(0, [fileContents length])
-                         withTemplate:[changes valueForKey:changeKey]];
+            withTemplate:[changes valueForKey:changeKey]];
     }
-    
-    
     
     [fileContents writeToFile:textFile atomically:true encoding:encoding error:nil];
 }
@@ -292,8 +314,10 @@
     NSString *fromKeyRegex = [NSString stringWithFormat:@"\\[KEY:%@\\]", fromKey];
     NSString *toKeyTag = [NSString stringWithFormat:@"[KEY:%@]", toKey];
     
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:bindLabelRegex options:0 error:nil];
-    NSRange range = [regex rangeOfFirstMatchInString:fileContents options:0 range:NSMakeRange(0, [fileContents length])];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:bindLabelRegex
+        options:0 error:nil];
+    NSRange range = [regex rangeOfFirstMatchInString:fileContents options:0
+        range:NSMakeRange(0, [fileContents length])];
     keysRange.location = range.location;
     range.location += 6;
     range.length = [fileContents length] - range.location;
@@ -308,12 +332,14 @@
 
 -(void)addExtraShellItem:(NSMutableString *)fileContents shellItem:(NSString *)shellItem {
     NSString *shellItemRegex = [NSString stringWithFormat:@"\\[MATERIAL_TEMPLATE:%@\\]", shellItem];
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:shellItemRegex options:0 error:nil];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:shellItemRegex
+        options:0 error:nil];
     NSRange range = [regex rangeOfFirstMatchInString:fileContents
-                                             options:0 range:NSMakeRange(0, [fileContents length])];
+        options:0 range:NSMakeRange(0, [fileContents length])];
     range.length = [fileContents length] - range.location;
     
-    regex = [NSRegularExpression regularExpressionWithPattern:@"^\\s*$" options:NSRegularExpressionAnchorsMatchLines error:nil];
+    regex = [NSRegularExpression regularExpressionWithPattern:@"^\\s*$"
+        options:NSRegularExpressionAnchorsMatchLines error:nil];
     range = [regex rangeOfFirstMatchInString:fileContents options:NSRegularExpressionAnchorsMatchLines range:range];
     
     [fileContents insertString:@"\t[SHELL]\r\n" atIndex:range.location];
@@ -504,9 +530,12 @@
 
 -(void)updateKeybinds {
     if ([settings keybindings] == kbLaptop) {
+        NSError *error;
         NSString *keybindFile = [NSString stringWithFormat:@"%@/build/data/init/interface.txt", dbResources];
         NSMutableString *fileContents = [NSMutableString stringWithContentsOfFile:keybindFile
-            encoding:NSUTF8StringEncoding error:nil];
+            encoding:NSUTF8StringEncoding error:&error];
+        if (error) @throw [NSException exceptionWithName:@"Something went terribly wrong."
+            reason:[NSString stringWithFormat:@"Failed opening %@", keybindFile] userInfo:nil];
         
         [self translateKeybinds:fileContents bindLabel:@"SECONDSCROLL_DOWN:REPEAT_SLOW"
             fromKey:@"\\+" toKey:@"="];
@@ -537,10 +566,15 @@
             @"build/raw/objects/creature_standard.txt"];
         NSString *rustProofFile = [NSString stringWithFormat:@"%@/extras/rust_proof.txt", dbResources];
         
+        NSError *error;
         NSMutableString *dwarfFileContents = [NSMutableString stringWithContentsOfFile:dwarfCreatureFile
-            encoding:NSUTF8StringEncoding error:nil];
+            encoding:NSUTF8StringEncoding error:&error];
+        if (error) @throw [NSException exceptionWithName:@"Something went terribly wrong."
+            reason:[NSString stringWithFormat:@"Failed opening %@", dwarfCreatureFile] userInfo:nil];
         NSString *rustFileContents = [NSString stringWithContentsOfFile:rustProofFile
-            encoding:NSUTF8StringEncoding error:nil];
+            encoding:NSUTF8StringEncoding error:&error];
+        if (error) @throw [NSException exceptionWithName:@"Something went terribly wrong."
+            reason:[NSString stringWithFormat:@"Failed opening %@", rustProofFile] userInfo:nil];
         
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[CREATURE:DWARF\\]"
             options:0 error:nil];
@@ -558,9 +592,13 @@
 
 -(void)addExtraShellItems {
     if ([settings extraShellItems]) {
-        NSString *materialFile = [NSString stringWithFormat:@"%@/build/raw/objects/material_template_default.txt", dbResources];
+        NSError *error;
+        NSString *materialFile = [NSString stringWithFormat:@"%@/build/raw/objects/material_template_default.txt",
+            dbResources];
         NSMutableString *materialFileContents = [NSMutableString stringWithContentsOfFile:materialFile
-            encoding:NSUTF8StringEncoding error:nil];
+            encoding:NSUTF8StringEncoding error:&error];
+        if (error) @throw [NSException exceptionWithName:@"Something went terribly wrong."
+            reason:[NSString stringWithFormat:@"Failed opening %@", materialFile] userInfo:nil];
         
         [self addExtraShellItem:materialFileContents shellItem:@"SCALE_TEMPLATE"];
         [self addExtraShellItem:materialFileContents shellItem:@"HORN_TEMPLATE"];
@@ -603,10 +641,15 @@
     NSString *worldGenFile = [NSString stringWithFormat:@"%@/build/data/init/world_gen.txt", dbResources];
     NSString *extraWorldGenFile = [NSString stringWithFormat:@"%@/extras/extra_world_gen.txt", dbResources];
     
+    NSError *error;
     NSMutableString *worldGenFileContents = [NSMutableString stringWithContentsOfFile:worldGenFile
-        encoding:NSUTF8StringEncoding error:nil];
+        encoding:NSUTF8StringEncoding error:&error];
+    if (error) @throw [NSException exceptionWithName:@"Something went terribly wrong."
+        reason:[NSString stringWithFormat:@"Failed opening %@", worldGenFile] userInfo:nil];
     NSString *extraWorldGenFileContents = [NSString stringWithContentsOfFile:extraWorldGenFile
-        encoding:NSUTF8StringEncoding error:nil];
+        encoding:NSUTF8StringEncoding error:&error];
+    if (error) @throw [NSException exceptionWithName:@"Something went terribly wrong."
+        reason:[NSString stringWithFormat:@"Failed opening %@", extraWorldGenFile] userInfo:nil];
     
     [worldGenFileContents appendString:extraWorldGenFileContents];
     [worldGenFileContents writeToFile:worldGenFile atomically:true encoding:NSUTF8StringEncoding error:nil];
@@ -628,10 +671,12 @@
     NSString *pathFromSaves = [NSString stringWithFormat:@"%@/data/save", pathToResources];
     NSString *pathToSaves = [NSString stringWithFormat:@"%@/cons_backup", dbResources];
     
-    
     if ([fileManager fileExistsAtPath:pathFromSaves]) {
-        [fileManager removeItemAtPath:pathToSaves error:nil];
-        [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
+        if ([self confirmDialog:@"Found a save in the exiting DF.app."
+                message:@"Would you like me to transfer it to the new app for you?"]) {
+            [fileManager removeItemAtPath:pathToSaves error:nil];
+            [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
+        }
     }
     
     [fileManager removeItemAtPath:pathToApp error:nil];
@@ -668,7 +713,7 @@
     NSString *saveDir = [NSString stringWithFormat:@"%@/data/save", appDir];
     
     if (![fileManager fileExistsAtPath:saveDir]) {
-        [self errorDialog:@"You don't seem to have any saved regions." message:nil];
+        [self errorDialog:@"I couldn't find any saved regions." message:nil];
         return;
     }
     
