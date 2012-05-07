@@ -1,22 +1,23 @@
 [center]
 [size=36pt][b]Dwarf Builder[/b][/size]
 [size=18pt][b]For Mac OSX[/b][/size]
-[b]0.34.07v7[/b]
-[url=https://github.com/downloads/plaidman/dwarf-builder/DwarfBuilder.03407v7.zip]Download Here[/url]
+[b]0.34.07v8[/b]
+[url=https://github.com/downloads/plaidman/dwarf-builder/DwarfBuilder.03407v8.zip]Download Here[/url]
 [url=https://github.com/downloads/plaidman/dwarf-builder/manual.pdf]PDF Manual[/url]
 [/center]
 
 [color=yellow][size=14pt][b]Description[/b][/size][/color]:
-[color=orange]Now even easier to use!![/color]This mac app will guide you through Dwarf Fortress configuration options and allow you to "[i]roll your own[/i]" native mac app for Dwarf Fortress featuring the config options and tileset you chose. No need to deal with copying folders or editing init files. Basically it's an app which creates your very own customized Dwarf Fortress app. Easy Peasy!
+[color=orange]Now even easier to use!![/color] This mac app will guide you through Dwarf Fortress configuration options and allow you to "[i]roll your own[/i]" native mac app for Dwarf Fortress featuring the config options and tileset you chose. No need to deal with copying folders or editing init files. Basically it's an app which creates your very own customized Dwarf Fortress app. Easy Peasy!
 
 [color=yellow][size=14pt][b]How To Use It[/b][/size][/color]:
-This mod will open a window for the various config option categories. Click category names at the top of the window to see all the various options. When you're comfortable with the options, go back to the main menu and choose 'Construct DF'. The script will apply the settings and create a shiny new customized DwarfFortress.app in the directory of your choosing (defaults to the same directory as DwarfBuilder.app).
+Click category names at the top of the window to see and change all the various options. When you're comfortable with the options, go back to the main menu and choose 'Construct DF'. The script will apply the settings and create a shiny new customized DwarfFortress.app in the directory of your choosing (defaults to the same directory as DwarfBuilder.app, or you may choose a different directory in the File tab).
 
 [color=yellow][size=14pt][b]This is NOT "Lazy Newb Pack for Macs"[/b][/size][/color]:
-If you're someone who frequently fiddles with configuration options, I recommend you use [url=http://www.bay12forums.com/smf/index.php?topic=106790.0]MacNewbie Pack from iXen[/url]. Dwarf Builder is more of a "set it and forget it" kind of mod. You set your options once, then it rolls up a separate DF app for you to use day to day. Once this is done, I [i]don't want[/i] you to use DB anymore. In fact, I [b]want[/b] you to use DB as [b]little[/b] as possible; only when a new version of your favorite tileset or a new version of DF comes out.
+If you're someone who frequently fiddles with config options, I recommend you use [url=http://www.bay12forums.com/smf/index.php?topic=106790.0]MacNewbie Pack from iXen[/url]. Dwarf Builder is more of a "set it and forget it" kind of mod. You set your options once, then it rolls up a separate DF app for you to use day to day. Once this is done, I [i]don't want[/i] you to use DB anymore. In fact, I [b]want[/b] you to use DB as [b]little[/b] as possible; only when a new version of your favorite tileset or a new version of DF comes out.
 
 [color=yellow][size=14pt][b]Featured Options[/b][/size][/color]:
-[spoiler]Native support for Dwarf Therapist and Sound Sense (both are included in this package)
+[spoiler]Native Mac OSX App
+Native support for Dwarf Therapist and Sound Sense (both are included in this package)
 Tilesets
   Ironhand
   Phoebus
