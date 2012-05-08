@@ -1,6 +1,7 @@
 
 #import "AppDelegate.h"
 #import "DwarfBuilderSettings.h"
+#import "RegexKitLite.h"
 
 @implementation AppDelegate
 
@@ -27,8 +28,8 @@
         fileManager = [NSFileManager defaultManager];
         
 #ifdef DEBUG
-        //dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
-        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
+        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
+//        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
         [self updateInstallDir:dbResources];
 #else
         dbResources = [NSString stringWithFormat:@"%@/Contents/Resources", [[NSBundle mainBundle] bundlePath]];
@@ -318,12 +319,9 @@
     
     NSEnumerator *changeKeys = [changes keyEnumerator];
     NSString *changeKey;
-    NSRegularExpression *regex;
     
     while (changeKey = [changeKeys nextObject]) {
-        regex = [NSRegularExpression regularExpressionWithPattern:changeKey options:0 error:nil];
-        [regex replaceMatchesInString:fileContents options:0 range:NSMakeRange(0, [fileContents length])
-            withTemplate:[changes valueForKey:changeKey]];
+        [fileContents replaceOccurrencesOfRegex:changeKey withString:[changes valueForKey:changeKey]];
     }
     
     [fileContents writeToFile:textFile atomically:true encoding:encoding error:nil];
@@ -331,40 +329,26 @@
 
 -(void)translateKeybinds:(NSMutableString*)fileContents bindLabel:(NSString*)bindLabel
         fromKey:(NSString*)fromKey toKey:(NSString*)toKey {
-    NSRange keysRange;
-    NSString *bindLabelRegex = [NSString stringWithFormat:@"\\[BIND:%@\\]", bindLabel];
+    NSString *bindLabelRegex = [NSString stringWithFormat:@"\\[BIND:%@\\](.|\\r|\\n)*?\\[BIND", bindLabel];
     NSString *fromKeyRegex = [NSString stringWithFormat:@"\\[KEY:%@\\]", fromKey];
     NSString *toKeyTag = [NSString stringWithFormat:@"[KEY:%@]", toKey];
     
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:bindLabelRegex
-        options:0 error:nil];
-    NSRange range = [regex rangeOfFirstMatchInString:fileContents options:0
-        range:NSMakeRange(0, [fileContents length])];
-    keysRange.location = range.location;
-    range.location += 6;
-    range.length = [fileContents length] - range.location;
-    
-    regex = [NSRegularExpression regularExpressionWithPattern:@"\\[BIND" options:0 error:nil];
-    range = [regex rangeOfFirstMatchInString:fileContents options:0 range:range];
-    keysRange.length = range.location - keysRange.location;
-    
-    regex = [NSRegularExpression regularExpressionWithPattern:fromKeyRegex options:0 error:nil];
-    [regex replaceMatchesInString:fileContents options:0 range:keysRange withTemplate:toKeyTag];
+    NSRange keysRange = [fileContents rangeOfRegex:bindLabelRegex];
+    [fileContents replaceOccurrencesOfRegex:fromKeyRegex withString:toKeyTag range:keysRange];
 }
 
 -(void)addExtraShellItem:(NSMutableString *)fileContents shellItem:(NSString *)shellItem {
-    NSString *shellItemRegex = [NSString stringWithFormat:@"\\[MATERIAL_TEMPLATE:%@\\]", shellItem];
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:shellItemRegex
-        options:0 error:nil];
-    NSRange range = [regex rangeOfFirstMatchInString:fileContents
-        options:0 range:NSMakeRange(0, [fileContents length])];
-    range.length = [fileContents length] - range.location;
+    NSString *shellItemRegex = [NSString stringWithFormat:@"\\[MATERIAL_TEMPLATE:%@\\]%@",
+        shellItem, @"(.|\\r|\\n)*?\\[MATERIAL_TEMPLATE"];
     
-    regex = [NSRegularExpression regularExpressionWithPattern:@"^\\s*$"
-        options:NSRegularExpressionAnchorsMatchLines error:nil];
-    range = [regex rangeOfFirstMatchInString:fileContents options:NSRegularExpressionAnchorsMatchLines range:range];
+    NSRange range = [fileContents rangeOfRegex:shellItemRegex];
+    range.location = (range.location + range.length - 25);
+    range.length = 1;
     
-    [fileContents insertString:@"\t[SHELL]\r\n" atIndex:range.location];
+    while (![[fileContents substringWithRange:range] isEqualToString:@"]"]) range.location++;
+    range.location++;
+    
+    [fileContents insertString:@"\r\n\t[SHELL]" atIndex:range.location];
 }
 
 
@@ -598,16 +582,14 @@
         if (error) @throw [NSException exceptionWithName:@"Something went terribly wrong."
             reason:[NSString stringWithFormat:@"Failed opening %@", rustProofFile] userInfo:nil];
         
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\[CREATURE:DWARF\\]"
-            options:0 error:nil];
-        NSRange range = [regex rangeOfFirstMatchInString:dwarfFileContents 
-            options:0 range:NSMakeRange(0, [dwarfFileContents length])];
-        range.length = [dwarfFileContents length] - range.location;
+        NSRange range = [dwarfFileContents rangeOfRegex:@"\\[CREATURE:DWARF\\](.|\\r|\\n)*?\\[PHYS_ATT_RANGE:"];
+        range.location = (range.location + range.length - 25);
+        range.length = 1;
         
-        regex = [NSRegularExpression regularExpressionWithPattern:@"\\s*\\[PHYS_ATT_RANGE:" options:0 error:nil];
-        range = [regex rangeOfFirstMatchInString:dwarfFileContents options:0 range:range];
+        while (![[dwarfFileContents substringWithRange:range] isEqualToString:@"."]) range.location++;
+        range.location++;
         
-        [dwarfFileContents insertString:rustFileContents atIndex:range.location];
+        [dwarfFileContents insertString:[NSString stringWithFormat:@"\r\n\r\n\r\n%@", rustFileContents] atIndex:range.location];
         [dwarfFileContents writeToFile:dwarfCreatureFile atomically:true encoding:NSUTF8StringEncoding error:nil];
     }
 }

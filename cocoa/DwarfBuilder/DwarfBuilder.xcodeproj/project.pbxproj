@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9634AED615557D94000F5DB1 /* DwarfBuilder.icns in Resources */ = {isa = PBXBuildFile; fileRef = 9634AED515557D94000F5DB1 /* DwarfBuilder.icns */; };
 		96719D621555104A003B8035 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96719D611555104A003B8035 /* About.xib */; };
+		E487F7C515584542000C488B /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = E487F7C415584542000C488B /* RegexKitLite.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E49E8BC1154F059300FEF791 /* DwarfFortress.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BBD154F059300FEF791 /* DwarfFortress.png */; };
 		E49E8BC2154F059300FEF791 /* DwarfTherapist.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BBE154F059300FEF791 /* DwarfTherapist.png */; };
 		E49E8BC3154F059300FEF791 /* SoundSense.png in Resources */ = {isa = PBXBuildFile; fileRef = E49E8BBF154F059300FEF791 /* SoundSense.png */; };
@@ -23,6 +24,8 @@
 /* Begin PBXFileReference section */
 		9634AED515557D94000F5DB1 /* DwarfBuilder.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = DwarfBuilder.icns; path = ../../DwarfBuilder.icns; sourceTree = "<group>"; };
 		96719D611555104A003B8035 /* About.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
+		E487F7C315584542000C488B /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
+		E487F7C415584542000C488B /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		E49E8BBD154F059300FEF791 /* DwarfFortress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DwarfFortress.png; sourceTree = "<group>"; };
 		E49E8BBE154F059300FEF791 /* DwarfTherapist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DwarfTherapist.png; sourceTree = "<group>"; };
 		E49E8BBF154F059300FEF791 /* SoundSense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundSense.png; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 		E4A607F71545F4E100C51D98 /* DwarfBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				E487F7C315584542000C488B /* RegexKitLite.h */,
+				E487F7C415584542000C488B /* RegexKitLite.m */,
 				E49E8BBB154F059300FEF791 /* icons */,
 				E4A56EFE15484E0B00A33D23 /* DwarfBuilderSettings.h */,
 				E4A56EFF15484E0B00A33D23 /* DwarfBuilderSettings.m */,
@@ -197,6 +202,7 @@
 				E4A607FE1545F4E100C51D98 /* main.m in Sources */,
 				E4A608051545F4E100C51D98 /* AppDelegate.m in Sources */,
 				E4A56F0015484E0B00A33D23 /* DwarfBuilderSettings.m in Sources */,
+				E487F7C515584542000C488B /* RegexKitLite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +284,7 @@
 				GCC_PREFIX_HEADER = "DwarfBuilder/DwarfBuilder-Prefix.pch";
 				INFOPLIST_FILE = "DwarfBuilder/DwarfBuilder-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -293,6 +300,7 @@
 				GCC_PREFIX_HEADER = "DwarfBuilder/DwarfBuilder-Prefix.pch";
 				INFOPLIST_FILE = "DwarfBuilder/DwarfBuilder-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;

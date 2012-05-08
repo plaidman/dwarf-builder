@@ -131,7 +131,7 @@
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
-							<string key="NSFrame">{{17, 390}, {446, 113}}</string>
+							<string key="NSFrame">{{17, 399}, {446, 113}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="263965298"/>
@@ -203,7 +203,7 @@
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
-							<string key="NSFrame">{{17, 250}, {446, 113}}</string>
+							<string key="NSFrame">{{17, 265}, {446, 113}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="581834156"/>
@@ -237,7 +237,7 @@
 										<object class="NSTextField" id="386480866">
 											<reference key="NSNextResponder" ref="326724721"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{15, 14}, {414, 126}}</string>
+											<string key="NSFrame">{{15, 14}, {414, 144}}</string>
 											<reference key="NSSuperview" ref="326724721"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="464939864"/>
@@ -247,7 +247,13 @@
 											<object class="NSTextFieldCell" key="NSCell" id="728062871">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4456448</int>
-												<string key="NSContents">Everyone above Meph for masterwork font, soundtrack, and ideas Cap'n duck for embark profiles and tutorials LucasUP for LazyNewbPack inspiration  Tarn "Toady" Adams and Zach "ThreeToe" Adams   again, for this crazy fun game.</string>
+												<object class="NSMutableString" key="NSContents">
+													<bytes key="NS.bytes">RXZlcnlvbmUgYWJvdmXigKhNYW5kbGVicm90IGZvciBoZWxwaW5nIHRlc3QgaW4gU25vdyBMZW9wYXJk
+4oCoTWVwaCBmb3IgbWFzdGVyd29yayBmb250LCBzb3VuZHRyYWNrLCBhbmQgaWRlYXPigKhDYXAnbiBk
+dWNrIGZvciBlbWJhcmsgcHJvZmlsZXMgYW5kIHR1dG9yaWFsc+KAqEx1Y2FzVVAgZm9yIExhenlOZXdi
+UGFjayBpbnNwaXJhdGlvbuKAqOKAqFRhcm4gIlRvYWR5IiBBZGFtcyBhbmQgWmFjaCAiVGhyZWVUb2Ui
+IEFkYW1z4oCoICBhZ2FpbiwgZm9yIHRoaXMgY3JhenkgZnVuIGdhbWUuA</bytes>
+												</object>
 												<reference key="NSSupport" ref="1000906468"/>
 												<string key="NSCellIdentifier">_NS:9</string>
 												<reference key="NSControlView" ref="386480866"/>
@@ -256,14 +262,14 @@
 											</object>
 										</object>
 									</array>
-									<string key="NSFrame">{{1, 1}, {444, 150}}</string>
+									<string key="NSFrame">{{1, 1}, {444, 168}}</string>
 									<reference key="NSSuperview" ref="375558207"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="386480866"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
-							<string key="NSFrame">{{17, 56}, {446, 167}}</string>
+							<string key="NSFrame">{{17, 53}, {446, 185}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="326724721"/>
@@ -381,8 +387,8 @@
 							<reference ref="487886638"/>
 							<reference ref="464939864"/>
 							<reference ref="375558207"/>
-							<reference ref="196264297"/>
 							<reference ref="701703585"/>
+							<reference ref="196264297"/>
 						</array>
 						<reference key="parent" ref="1005"/>
 					</object>

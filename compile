@@ -19,16 +19,15 @@ cp -rp phoebus "${RESOURCES_DIR}/"
 echo "Reticulating splines..."
 cp -rp vanilla "${RESOURCES_DIR}/"
 
-sed -e "s///;" \
-    -i".bak" soundsense/soundSense.sh
-rm soundsense/soundSense.sh.bak
-chmod 755 soundsense/soundSense.sh
 cp -rp soundsense "${RESOURCES_DIR}/"
 
+sed -e "s///;" \
+    -i".bak" "${RESOURCES_DIR}/soundsense/soundSense.sh"
+rm "${RESOURCES_DIR}/soundsense/soundSense.sh.bak"
+chmod 755 "${RESOURCES_DIR}/soundsense/soundSense.sh"
+
 echo "Cleaning up..."
-rm -rf "${RESOURCES_DIR}/extras/DwarfBuilder.app"
 rm -rf "${RESOURCES_DIR}/extras/menu"
-rm -rf "${RESOURCES_DIR}/extras/memory_layouts"
 
 echo ""
 echo "Finished! Don't forget to follow the checklist:"

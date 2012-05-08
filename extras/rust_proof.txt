@@ -1,5 +1,3 @@
-
-
 	Hack to remove stat and skill rusting
 
 	[PHYS_ATT_RATES:STRENGTH:100:NONE:NONE:NONE]
