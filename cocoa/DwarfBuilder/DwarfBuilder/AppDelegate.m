@@ -28,8 +28,8 @@
         fileManager = [NSFileManager defaultManager];
         
 #ifdef DEBUG
-        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
-//        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
+//        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
+        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
         [self updateInstallDir:dbResources];
 #else
         dbResources = [NSString stringWithFormat:@"%@/Contents/Resources", [[NSBundle mainBundle] bundlePath]];
@@ -76,7 +76,7 @@
 }
 
 -(IBAction)constructDTAction:(id)sender {
-    NSString *pathFromApp = [NSString stringWithFormat:@"%@/extras/DwarfTherapist.app", dbResources];
+    NSString *pathFromApp = [NSString stringWithFormat:@"%@/extras/shells/DwarfTherapist.app", dbResources];
     NSString *pathToApp = [NSString stringWithFormat:@"%@/DwarfTherapist.app", [settings installDir]];
     NSString *pathFromMemDir = [NSString stringWithFormat:@"%@/extras/memory_layouts/osx", dbResources];
     NSString *pathToMemDir = [NSString stringWithFormat:@"%@/Contents/MacOS/etc/memory_layouts/osx", pathToApp];
@@ -91,7 +91,7 @@
 }
 
 -(IBAction)constructSSAction:(id)sender {
-    NSString *pathFromApp = [NSString stringWithFormat:@"%@/extras/SoundSense.app", dbResources];
+    NSString *pathFromApp = [NSString stringWithFormat:@"%@/extras/shells/SoundSense.app", dbResources];
     NSString *pathToApp = [NSString stringWithFormat:@"%@/SoundSense.app", [settings installDir]];
     NSString *pathFromResources = [NSString stringWithFormat:@"%@/soundsense", dbResources];
     NSString *pathToResources = [NSString stringWithFormat:@"%@/Contents/Resources", pathToApp];
@@ -357,7 +357,7 @@
  * * * * * * * * * * * * * * * * * */
 
 -(void)copyVanilla {
-    NSString *vanillaFolder = [NSString stringWithFormat:@"%@/vanilla", dbResources];
+    NSString *vanillaFolder = [NSString stringWithFormat:@"%@/dwarfort", dbResources];
     NSString *buildFolder = [NSString stringWithFormat:@"%@/build", dbResources];
     
     [fileManager removeItemAtPath:buildFolder error:nil];
@@ -376,32 +376,32 @@
     NSString *buildRawFolder = [NSMutableString stringWithFormat:@"%@/build/raw", dbResources];
     
     if ([settings tileset] == tsIronhand) {
-        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/ironhand/data", dbResources];
-        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/ironhand/raw", dbResources];
+        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/ironhand/data", dbResources];
+        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/ironhand/raw", dbResources];
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
     } else if ([settings tileset] == tsPhoebus) {
-        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/phoebus/data", dbResources];
-        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/phoebus/raw", dbResources];
+        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/phoebus/data", dbResources];
+        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/phoebus/raw", dbResources];
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
     } else if ([settings tileset] == tsJollyTall) {
-        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/jolly/9x12 (recommended)/data", dbResources];
-        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/jolly/9x12 (recommended)/raw", dbResources];
+        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_tall/data", dbResources];
+        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_tall/raw", dbResources];
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
     } else if ([settings tileset] == tsJollySquare) {
-        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/jolly/12x12/data", dbResources];
-        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/jolly/12x12/raw", dbResources];
+        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_square/data", dbResources];
+        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_square/raw", dbResources];
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
     } else if ([settings tileset] == tsMayday) {
-        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/mayday/data", dbResources];
-        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/mayday/raw", dbResources];
+        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/mayday/data", dbResources];
+        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/mayday/raw", dbResources];
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
@@ -589,7 +589,8 @@
         while (![[dwarfFileContents substringWithRange:range] isEqualToString:@"."]) range.location++;
         range.location++;
         
-        [dwarfFileContents insertString:[NSString stringWithFormat:@"\r\n\r\n\r\n%@", rustFileContents] atIndex:range.location];
+        [dwarfFileContents insertString:[NSString stringWithFormat:@"\r\n\r\n\r\n%@", rustFileContents]
+            atIndex:range.location];
         [dwarfFileContents writeToFile:dwarfCreatureFile atomically:true encoding:NSUTF8StringEncoding error:nil];
     }
 }
@@ -624,17 +625,17 @@
 }
 
 -(void)copyFont {
-    NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/default.ttf", dbResources];
+    NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/fonts/default.ttf", dbResources];
     NSString *pathToItem = [NSMutableString stringWithFormat:@"%@/build/data/art/font.ttf", dbResources];
     
     if ([settings font] == fIronhand) {
-        pathFromItem = [NSString stringWithFormat:@"%@/extras/ironhand.ttf", dbResources];
+        pathFromItem = [NSString stringWithFormat:@"%@/extras/fonts/ironhand.ttf", dbResources];
     } else if ([settings font] == fPhoebus) {
-        pathFromItem = [NSString stringWithFormat:@"%@/extras/phoebus.ttf", dbResources];
+        pathFromItem = [NSString stringWithFormat:@"%@/extras/fonts/phoebus.ttf", dbResources];
     } else if ([settings font] == fTuffy) {
-        pathFromItem = [NSString stringWithFormat:@"%@/extras/tuffy.ttf", dbResources];
+        pathFromItem = [NSString stringWithFormat:@"%@/extras/fonts/tuffy.ttf", dbResources];
     } else if ([settings font] == fMasterwork) {
-        pathFromItem = [NSString stringWithFormat:@"%@/extras/masterwork.ttf", dbResources];
+        pathFromItem = [NSString stringWithFormat:@"%@/extras/fonts/masterwork.ttf", dbResources];
     }
     
     [fileManager removeItemAtPath:pathToItem error:nil];
@@ -668,7 +669,7 @@
 }
 
 -(void)setupDwarfFortressApp {
-    NSString *pathFromApp = [NSString stringWithFormat:@"%@/extras/DwarfFortress.app", dbResources];
+    NSString *pathFromApp = [NSString stringWithFormat:@"%@/extras/shells/DwarfFortress.app", dbResources];
     NSString *pathToApp = [NSString stringWithFormat:@"%@/DwarfFortress.app", [settings installDir]];
     NSString *pathFromResources = [NSString stringWithFormat:@"%@/build", dbResources];
     NSString *pathToResources = [NSString stringWithFormat:@"%@/Contents/Resources", pathToApp];

@@ -10,24 +10,17 @@ echo ""
 echo "Populating materials..."
 cp -rp extras "${RESOURCES_DIR}/"
 
-echo "Adding tilesets..."
-cp -rp ironhand "${RESOURCES_DIR}/"
-cp -rp jolly "${RESOURCES_DIR}/"
-cp -rp mayday "${RESOURCES_DIR}/"
-cp -rp phoebus "${RESOURCES_DIR}/"
-
 echo "Reticulating splines..."
-cp -rp vanilla "${RESOURCES_DIR}/"
-
+cp -rp dwarfort "${RESOURCES_DIR}/"
 cp -rp soundsense "${RESOURCES_DIR}/"
+
+echo "Cleaning up..."
+rm -rf "${RESOURCES_DIR}/extras/menu"
 
 sed -e "s///;" \
     -i".bak" "${RESOURCES_DIR}/soundsense/soundSense.sh"
 rm "${RESOURCES_DIR}/soundsense/soundSense.sh.bak"
 chmod 755 "${RESOURCES_DIR}/soundsense/soundSense.sh"
-
-echo "Cleaning up..."
-rm -rf "${RESOURCES_DIR}/extras/menu"
 
 echo ""
 echo "Finished! Don't forget to follow the checklist:"
