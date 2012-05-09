@@ -1,7 +1,6 @@
 //if an app is already compiled, give the user the option to start the app or recompile
-//vherid tileset
-//tilesets to a dropdown
-//shorter number translation function in DBS
+//test dropdown for tilesets
+//pick a good colorset for vherid
 
 #import "AppDelegate.h"
 #import "DwarfBuilderSettings.h"
@@ -401,6 +400,12 @@
     } else if ([settings tileset] == tsJollySquare) {
         NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_square/data", dbResources];
         NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_square/raw", dbResources];
+        
+        [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
+        [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
+    } else if ([settings tileset] == tsVherid) {
+        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/vherid/data", dbResources];
+        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/vherid/raw", dbResources];
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
