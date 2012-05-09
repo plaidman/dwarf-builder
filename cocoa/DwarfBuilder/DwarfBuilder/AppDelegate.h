@@ -52,6 +52,7 @@
 -(void)addExtraShellItems;
 -(void)copySoundtrack;
 -(void)copyFont;
+-(void)copyColors;
 -(void)addWorldGens;
 -(void)copyEmbarkProfiles;
 -(void)setupDwarfFortressApp;

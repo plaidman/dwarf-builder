@@ -11,9 +11,9 @@
     int volume, keybindings, autosave;
     
     /* VISUAL SETTINGS */
-    bool fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable;
+    bool fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable, useTilesetColors;
     NSString *windowWidth, *windowHeight;
-    int showIdlers, tileset, font;
+    int showIdlers, tileset, font, colors;
     
     /* GAMEPLAY SETTINGS */
     bool skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems,
@@ -33,9 +33,9 @@
 @property int volume, keybindings, autosave;
 
 /* VISUAL SETTINGS */
-@property bool fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable;
+@property bool fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable, useTilesetColors;
 @property NSString *windowWidth, *windowHeight;
-@property int showIdlers, tileset, font;
+@property int showIdlers, tileset, font, colors;
 
 /* GAMEPLAY SETTINGS */
 @property bool skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems,
@@ -50,6 +50,8 @@ enum {asDisabled = 0, asSeasonal, asYearly};
 enum {siTop = 0, siBottom, siDisabled};
 enum {tsDefaultTall = 0, tsIronhand, tsPhoebus, tsJollySquare, tsJollyTall, tsMayday, tsDefaultSquare};
 enum {fDefault = 0, fIronhand, fPhoebus, fMasterwork, fTuffy};
+enum {cDefault = 0, cNatural, cPlagueWarm, cWarm, cWasteland, cDefaultPlus, cJolly, cJollyWarm, cMatrix, cKremlin,
+    cNES, cMayday, cIronhand, cPhoebus};
 
 -(void)writeSettingsToFile:(NSString*)filename;
 -(void)readSettingsFromFile:(NSString*)filename;

@@ -1,3 +1,7 @@
+//if an app is already compiled, give the user the option to start the app or recompile
+//vherid tileset
+//tilesets to a dropdown
+//shorter number translation function in DBS
 
 #import "AppDelegate.h"
 #import "DwarfBuilderSettings.h"
@@ -65,6 +69,7 @@
         [self addExtraShellItems];
         [self copySoundtrack];
         [self copyFont];
+        [self copyColors];
         [self addWorldGens];
         [self copyEmbarkProfiles];
         [self setupDwarfFortressApp];
@@ -388,8 +393,8 @@
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
     } else if ([settings tileset] == tsJollyTall) {
-        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_tall/data", dbResources];
-        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_tall/raw", dbResources];
+        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/vherid/data", dbResources];
+        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/vherid/raw", dbResources];
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
@@ -640,6 +645,44 @@
     
     [fileManager removeItemAtPath:pathToItem error:nil];
     [fileManager copyItemAtPath:pathFromItem toPath:pathToItem error:nil];
+}
+
+-(void)copyColors {
+    if (![settings useTilesetColors]) {
+        NSString *pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/default.txt", dbResources];
+        NSString *pathToItem = [NSMutableString stringWithFormat:@"%@/build/data/init/colors.txt", dbResources];
+        
+        if ([settings colors] == cIronhand) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/ironhand.txt", dbResources];
+        } else if ([settings colors] == cPhoebus) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/phoebus.txt", dbResources];
+        } else if ([settings colors] == cMayday) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/mayday.txt", dbResources];
+        } else if ([settings colors] == cJolly) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/jolly.txt", dbResources];
+        } else if ([settings colors] == cDefaultPlus) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/default+.txt", dbResources];
+        } else if ([settings colors] == cJollyWarm) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/jolly_warm.txt", dbResources];
+        } else if ([settings colors] == cKremlin) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/kremlin.txt", dbResources];
+        } else if ([settings colors] == cMatrix) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/matrix.txt", dbResources];
+        } else if ([settings colors] == cNatural) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/natural.txt", dbResources];
+        } else if ([settings colors] == cNES) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/nes.txt", dbResources];
+        } else if ([settings colors] == cPlagueWarm) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/plague_warm.txt", dbResources];
+        } else if ([settings colors] == cWarm) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/warm.txt", dbResources];
+        } else if ([settings colors] == cWasteland) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/wasteland.txt", dbResources];
+        }
+        
+        [fileManager removeItemAtPath:pathToItem error:nil];
+        [fileManager copyItemAtPath:pathFromItem toPath:pathToItem error:nil];
+    }
 }
 
 -(void)addWorldGens {
