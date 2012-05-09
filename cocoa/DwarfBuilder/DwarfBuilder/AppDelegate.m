@@ -393,8 +393,8 @@
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
     } else if ([settings tileset] == tsJollyTall) {
-        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/vherid/data", dbResources];
-        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/vherid/raw", dbResources];
+        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_tall/data", dbResources];
+        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_tall/raw", dbResources];
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
