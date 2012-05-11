@@ -4,9 +4,9 @@
 @implementation DwarfBuilderSettings
 
 @synthesize propertyNames;
-@synthesize dbVersionNumber;
+@synthesize dbSettingsVersion, dbCurrentVersion, dfCurrentVersion;
 
-/* APPLICATION OPTIONS */
+/* APPLICATION SETTINGS */
 @synthesize enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
 @synthesize volume, keybindings, autosave;
 @synthesize pFPSCap, gFPSCap;
@@ -28,7 +28,9 @@
     self = [super init];
     
     if (self) {
-        propertyNames = [[NSArray alloc] initWithObjects:@"dbVersionNumber", @"enableSound", @"extendSoundtk",
+        dbCurrentVersion = @"10";
+        dfCurrentVersion = @"0.34.07";
+        propertyNames = [[NSArray alloc] initWithObjects:@"dbSettingsVersion", @"enableSound", @"extendSoundtk",
             @"compressSaves", @"pauseOnLoad", @"pauseOnSave", @"autoBackupSaves", @"volume", @"keybindings",
             @"autosave", @"pFPSCap", @"gFPSCap", @"fullscreen", @"showIntro", @"showFPS", @"liquidDepth",
             @"creatureGraphics", @"useFont", @"windowWidth", @"windowHeight", @"showIdlers", @"tileset",
@@ -48,15 +50,14 @@
 }
 
 -(void)readSettingsFromFile:(NSString*)filename {
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filename];
+    NSMutableDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filename];
     
-    if ([[dict valueForKey:@"dbVersionNumber"] isEqualToString:@"10"]) {
+    if ([[dict valueForKey:@"dbSettingsVersion"] isEqualToString:dbCurrentVersion]) {
         [self setValuesForKeysWithDictionary:dict];
-        return;
     } else if ([[dict valueForKey:@"dbVersionNumber"] isEqualToString:@"7"]) {
+        [dict removeObjectForKey:@"dbVersionNumber"];
         [self setValuesForKeysWithDictionary:dict];
-        [self setDbVersionNumber:@"10"];
-        return;
+        [self setDbSettingsVersion:@"10"];
     }
 }
 
@@ -66,8 +67,8 @@
     
     [self
         setValuesForKeysWithDictionary:[NSDictionary
-            dictionaryWithObjects:[NSArray arrayWithObjects:@"10", falseObj, falseObj, trueObj, trueObj, trueObj,
-                falseObj, [NSNumber numberWithInt:0], [NSNumber numberWithInt:kbLaptop],
+            dictionaryWithObjects:[NSArray arrayWithObjects:dbCurrentVersion, falseObj, falseObj, trueObj, trueObj,
+                trueObj, falseObj, [NSNumber numberWithInt:0], [NSNumber numberWithInt:kbLaptop],
                 [NSNumber numberWithInt:asSeasonal], @"100", @"50", falseObj, falseObj, trueObj, trueObj, trueObj,
                 falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop], [NSNumber numberWithInt:tsIronhand],
                 falseObj, trueObj, falseObj, trueObj, trueObj, trueObj, trueObj, trueObj,
@@ -85,10 +86,10 @@
     
     [self
         setValuesForKeysWithDictionary:[NSDictionary
-            dictionaryWithObjects:[NSArray arrayWithObjects:@"10", trueObj, falseObj, trueObj, trueObj, falseObj,
-                falseObj, [NSNumber numberWithInt:255], [NSNumber numberWithInt:kbDefault],
+            dictionaryWithObjects:[NSArray arrayWithObjects:dbCurrentVersion, trueObj, falseObj, trueObj, trueObj,
+                falseObj, falseObj, [NSNumber numberWithInt:255], [NSNumber numberWithInt:kbDefault],
                 [NSNumber numberWithInt:asDisabled], @"100", @"50", falseObj, trueObj, falseObj, falseObj, falseObj,
-                falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop], [NSNumber numberWithInt:tsDefaultTall],
+                falseObj, @"80", @"25", [NSNumber numberWithInt:siTop], [NSNumber numberWithInt:tsDefaultTall],
                 trueObj, falseObj, trueObj, trueObj, falseObj, trueObj, trueObj, trueObj,
                 [NSNumber numberWithInt:fDefault], trueObj, trueObj, trueObj, trueObj, @"200", @"100", @"1000", @"4",
                 @"4", [NSNumber numberWithInt:cDefault], trueObj, nil

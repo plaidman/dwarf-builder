@@ -3,9 +3,9 @@
 
 @interface DwarfBuilderSettings : NSObject {
     NSArray *propertyNames;
-    NSString *dbVersionNumber;
+    NSString *dbSettingsVersion, *dbCurrentVersion, *dfCurrentVersion;
     
-    /* APPLICATION OPTIONS */
+    /* APPLICATION SETTINGS */
     bool enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
     NSString *pFPSCap, *gFPSCap;
     int volume, keybindings, autosave;
@@ -25,9 +25,9 @@
 }
 
 @property NSArray *propertyNames;
-@property NSString *dbVersionNumber;
+@property NSString *dbSettingsVersion, *dbCurrentVersion, *dfCurrentVersion;
 
-/* APPLICATION OPTIONS */
+/* APPLICATION SETTINGS */
 @property bool enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
 @property NSString *pFPSCap, *gFPSCap;
 @property int volume, keybindings, autosave;
@@ -48,7 +48,7 @@
 enum {kbDefault = 0, kbLaptop};
 enum {asDisabled = 0, asSeasonal, asYearly};
 enum {siTop = 0, siBottom, siDisabled};
-enum {tsDefaultTall = 0, tsDefaultSquare, tsIronhand, tsJollySquare, tsJollyTall, tsMayday, tsPhoebus, tsVherid};
+enum {tsDefaultTall = 0, tsIronhand, tsPhoebus, tsJollySquare, tsJollyTall, tsMayday, tsDefaultSquare, tsVherid};
 enum {fDefault = 0, fIronhand, fPhoebus, fMasterwork, fTuffy};
 enum {cDefault = 0, cDefaultPlus, cIronhand, cJolly, cJollyWarm, cKremlin, cMatrix, cMayday, cNatural, cNES, cPhoebus,
     cPlagueWarm, cWarm, cWasteland};

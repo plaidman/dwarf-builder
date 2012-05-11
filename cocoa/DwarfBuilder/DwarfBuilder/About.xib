@@ -177,7 +177,7 @@
 										<object class="NSTextField" id="949644915">
 											<reference key="NSNextResponder" ref="581834156"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{15, 14}, {414, 72}}</string>
+											<string key="NSFrame">{{15, 14}, {414, 90}}</string>
 											<reference key="NSSuperview" ref="581834156"/>
 											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="375558207"/>
@@ -187,7 +187,13 @@
 											<object class="NSTextFieldCell" key="NSCell" id="763035734">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4456448</int>
-												<string key="NSContents">Ironhand ............ 0.68 ............... Ironhand Phoebus ............. v00 ................. Phoebus Jolly Bastion ....... v3 ........... AlexanderOcias Mayday .............. 07a ............. Mike Mayday</string>
+												<object class="NSMutableString" key="NSContents">
+													<bytes key="NS.bytes">SXJvbmhhbmQgLi4uLi4uLi4uLi4uIDAuNjggLi4uLi4uLi4uLi4uLi4uIElyb25oYW5k4oCoUGhvZWJ1
+cyAuLi4uLi4uLi4uLi4uIHYwMCAuLi4uLi4uLi4uLi4uLi4uLiBQaG9lYnVz4oCoSm9sbHkgQmFzdGlv
+biAuLi4uLi4uIHYzIC4uLi4uLi4uLi4uIEFsZXhhbmRlck9jaWFz4oCoTWF5ZGF5IC4uLi4uLi4uLi4u
+Li4uIDA3YSAuLi4uLi4uLi4uLi4uIE1pa2UgTWF5ZGF54oCoVmhlcmlkIC4uLi4uLi4uLi4uLi4uIHYy
+IC4uLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
+												</object>
 												<reference key="NSSupport" ref="1000906468"/>
 												<string key="NSCellIdentifier">_NS:9</string>
 												<reference key="NSControlView" ref="949644915"/>
@@ -196,14 +202,14 @@
 											</object>
 										</object>
 									</array>
-									<string key="NSFrame">{{1, 1}, {444, 96}}</string>
+									<string key="NSFrame">{{1, 1}, {444, 114}}</string>
 									<reference key="NSSuperview" ref="196264297"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="949644915"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
-							<string key="NSFrame">{{17, 265}, {446, 113}}</string>
+							<string key="NSFrame">{{17, 249}, {446, 131}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="581834156"/>
@@ -247,13 +253,7 @@
 											<object class="NSTextFieldCell" key="NSCell" id="728062871">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4456448</int>
-												<object class="NSMutableString" key="NSContents">
-													<bytes key="NS.bytes">RXZlcnlvbmUgYWJvdmXigKhNYW5kbGVicm90IGZvciBoZWxwaW5nIHRlc3QgaW4gU25vdyBMZW9wYXJk
-4oCoTWVwaCBmb3IgbWFzdGVyd29yayBmb250LCBzb3VuZHRyYWNrLCBhbmQgaWRlYXPigKhDYXAnbiBk
-dWNrIGZvciBlbWJhcmsgcHJvZmlsZXMgYW5kIHR1dG9yaWFsc+KAqEx1Y2FzVVAgZm9yIExhenlOZXdi
-UGFjayBpbnNwaXJhdGlvbuKAqOKAqFRhcm4gIlRvYWR5IiBBZGFtcyBhbmQgWmFjaCAiVGhyZWVUb2Ui
-IEFkYW1z4oCoICBhZ2FpbiwgZm9yIHRoaXMgY3JhenkgZnVuIGdhbWUuA</bytes>
-												</object>
+												<string key="NSContents">Everyone above Mandlebrot for helping test in Snow Leopard Meph for masterwork font, soundtrack, and ideas Cap'n duck for embark profiles and tutorials LucasUP for ideas  Tarn "Toady" Adams and Zach "ThreeToe" Adams   again, for this crazy fun game.</string>
 												<reference key="NSSupport" ref="1000906468"/>
 												<string key="NSCellIdentifier">_NS:9</string>
 												<reference key="NSControlView" ref="386480866"/>
@@ -269,7 +269,7 @@ IEFkYW1z4oCoICBhZ2FpbiwgZm9yIHRoaXMgY3JhenkgZnVuIGdhbWUuA</bytes>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
-							<string key="NSFrame">{{17, 53}, {446, 185}}</string>
+							<string key="NSFrame">{{17, 43}, {446, 185}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="326724721"/>
@@ -295,7 +295,7 @@ IEFkYW1z4oCoICBhZ2FpbiwgZm9yIHRoaXMgY3JhenkgZnVuIGdhbWUuA</bytes>
 						<object class="NSButton" id="464939864">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{407, 12}, {59, 32}}</string>
+							<string key="NSFrame">{{407, 5}, {59, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -384,9 +384,9 @@ IEFkYW1z4oCoICBhZ2FpbiwgZm9yIHRoaXMgY3JhenkgZnVuIGdhbWUuA</bytes>
 						<reference key="object" ref="1006"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="487886638"/>
-							<reference ref="464939864"/>
-							<reference ref="375558207"/>
 							<reference ref="701703585"/>
+							<reference ref="375558207"/>
+							<reference ref="464939864"/>
 							<reference ref="196264297"/>
 						</array>
 						<reference key="parent" ref="1005"/>

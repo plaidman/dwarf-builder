@@ -1,6 +1,6 @@
 //if an app is already compiled, give the user the option to start the app or recompile
-//test dropdown for tilesets
-//pick a good colorset for vherid
+//maybe use linux cp for raw updates
+//update manual.pdf
 
 #import "AppDelegate.h"
 #import "DwarfBuilderSettings.h"
@@ -104,6 +104,7 @@
     NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
         [NSString stringWithFormat:@"<gamelog path=\"%@/DwarfFortress.app/Contents/Resources/gamelog.txt\" />",
             [settings installDir]], @"<gamelog path=\".*\" />", nil];
+    
     @try {
         if ([fileManager fileExistsAtPath:pathToApp]) {
             if (![self confirmDialog:@"SoundSense.app detected."
@@ -723,19 +724,37 @@
     NSString *pathToResources = [NSString stringWithFormat:@"%@/Contents/Resources", pathToApp];
     NSString *pathFromSaves = [NSString stringWithFormat:@"%@/data/save", pathToResources];
     NSString *pathToSaves = [NSString stringWithFormat:@"%@/cons_backup", dbResources];
+    NSString *pathToAppVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToResources];
+    NSString *pathToSavedVersionFile = [NSString stringWithFormat:@"%@/cons_backup/df_version", dbResources];
+    bool savesTransferred = false;
     
     if ([fileManager fileExistsAtPath:pathFromSaves]) {
         [fileManager removeItemAtPath:pathToSaves error:nil];
         if ([self confirmDialog:@"Found a save in the exiting DF.app."
                 message:@"Would you like me to transfer it to the new app for you?"]) {
             [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
+            savesTransferred = true;
         }
+    }
+    
+    if (savesTransferred) {
+        if ([fileManager fileExistsAtPath:pathToAppVersionFile]) {
+            [fileManager copyItemAtPath:pathToAppVersionFile toPath:pathToSavedVersionFile error:nil];
+        } else {
+            [@"0.34.07" writeToFile:pathToSavedVersionFile atomically:true
+                encoding:NSUTF8StringEncoding error:nil];
+        }
+    } else {
+        [[settings dfCurrentVersion] writeToFile:pathToSavedVersionFile atomically:true
+            encoding:NSUTF8StringEncoding error:nil];
     }
     
     [fileManager removeItemAtPath:pathToApp error:nil];
     [fileManager copyItemAtPath:pathFromApp toPath:pathToApp error:nil];
     [fileManager removeItemAtPath:pathToResources error:nil];
     [fileManager moveItemAtPath:pathFromResources toPath:pathToResources error:nil];
+    
+    [fileManager copyItemAtPath:pathToSavedVersionFile toPath:pathToAppVersionFile error:nil];
     
     if ([fileManager fileExistsAtPath:pathToSaves]) {
         [fileManager copyItemAtPath:pathToSaves toPath:pathFromSaves error:nil];
@@ -771,9 +790,25 @@
         @"DwarfFortress.app/Contents/Resources"];
     NSString *rawDir = [NSString stringWithFormat:@"%@/raw", appDir];
     NSString *saveDir = [NSString stringWithFormat:@"%@/data/save", appDir];
+    NSString *versionFile = [NSString stringWithFormat:@"%@/df_version", appDir];
+    NSString *dfSaveVersion;
     
     if (![fileManager fileExistsAtPath:saveDir]) {
         [self errorDialog:@"I couldn't find any saved regions." message:@""];
+        return;
+    }
+    
+    if ([fileManager fileExistsAtPath:versionFile]) {
+        dfSaveVersion = [NSString stringWithContentsOfFile:versionFile
+            encoding:NSUTF8StringEncoding error:nil];
+    } else {
+        dfSaveVersion = @"0.34.07";
+    }
+    
+    NSLog(@"%@", dfSaveVersion);
+    
+    if (![dfSaveVersion isEqualToString:[settings dfCurrentVersion]]) {
+        [self errorDialog:@"Sorry, I can't translate raws between versions." message:@""];
         return;
     }
     
