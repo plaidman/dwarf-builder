@@ -201,7 +201,7 @@
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{233, 207}, {462, 466}}</string>
 				<int key="NSWTFlags">1954021376</int>
-				<string key="NSWindowTitle">Dwarf Builder v11</string>
+				<string key="NSWindowTitle">Dwarf Builder v12</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
@@ -215,6 +215,7 @@
 							<string key="NSFrame">{{13, 10}, {436, 450}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="1044868590"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="490504002">
@@ -1381,7 +1382,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 																<string key="NSFrame">{{15, 10}, {160, 26}}</string>
 																<reference key="NSSuperview" ref="921450138"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="271490091"/>
+																<reference key="NSNextKeyView"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSPopUpButtonCell" key="NSCell" id="514793410">
