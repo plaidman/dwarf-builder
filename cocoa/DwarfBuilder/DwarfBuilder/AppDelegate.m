@@ -744,9 +744,6 @@
             [@"0.34.07" writeToFile:pathToSavedVersionFile atomically:true
                 encoding:NSUTF8StringEncoding error:nil];
         }
-    } else {
-        [[settings dfCurrentVersion] writeToFile:pathToSavedVersionFile atomically:true
-            encoding:NSUTF8StringEncoding error:nil];
     }
     
     [fileManager removeItemAtPath:pathToApp error:nil];
@@ -754,7 +751,12 @@
     [fileManager removeItemAtPath:pathToResources error:nil];
     [fileManager moveItemAtPath:pathFromResources toPath:pathToResources error:nil];
     
-    [fileManager copyItemAtPath:pathToSavedVersionFile toPath:pathToAppVersionFile error:nil];
+    if ([fileManager fileExistsAtPath:pathToSavedVersionFile]) {
+        [fileManager copyItemAtPath:pathToSavedVersionFile toPath:pathToAppVersionFile error:nil];
+    } else {
+        [[settings dfCurrentVersion] writeToFile:pathToAppVersionFile atomically:true
+            encoding:NSUTF8StringEncoding error:nil];
+    }
     
     if ([fileManager fileExistsAtPath:pathToSaves]) {
         [fileManager copyItemAtPath:pathToSaves toPath:pathFromSaves error:nil];

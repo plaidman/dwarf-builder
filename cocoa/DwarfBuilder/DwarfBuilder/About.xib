@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11D50</string>
+		<string key="IBDocument.SystemVersion">11E53</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.32</string>
-		<string key="IBDocument.HIToolboxVersion">568.00</string>
+		<string key="IBDocument.AppKitVersion">1138.47</string>
+		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2182</string>
@@ -111,7 +111,7 @@
 											<object class="NSTextFieldCell" key="NSCell" id="608117426">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4456448</int>
-												<string key="NSContents">Dwarf Fortress ...... 0.34.07 .... Toady &amp; Threetoe Dwarf Builder ....... v10 ................ Plaidman Dwarf Therapist ..... 0.6.12b5 ...... DwarfEngineer Sound Sense ......... r34 .................... Zwei</string>
+												<string key="NSContents">Dwarf Fortress ...... 0.34.08 .... Toady &amp; Threetoe Dwarf Builder ....... v11 ................ Plaidman Dwarf Therapist ..... 0.6.12b5 ...... DwarfEngineer Sound Sense ......... r34 .................... Zwei</string>
 												<object class="NSFont" key="NSSupport" id="1000906468">
 													<string key="NSName">AnonymousPro</string>
 													<double key="NSSize">14</double>
@@ -188,11 +188,11 @@
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4456448</int>
 												<object class="NSMutableString" key="NSContents">
-													<bytes key="NS.bytes">SXJvbmhhbmQgLi4uLi4uLi4uLi4uIDAuNjggLi4uLi4uLi4uLi4uLi4uIElyb25oYW5k4oCoUGhvZWJ1
+													<bytes key="NS.bytes">SXJvbmhhbmQgLi4uLi4uLi4uLi4uICowLjY4IC4uLi4uLi4uLi4uLi4uIElyb25oYW5k4oCoUGhvZWJ1
 cyAuLi4uLi4uLi4uLi4uIHYwMCAuLi4uLi4uLi4uLi4uLi4uLiBQaG9lYnVz4oCoSm9sbHkgQmFzdGlv
-biAuLi4uLi4uIHYzIC4uLi4uLi4uLi4uIEFsZXhhbmRlck9jaWFz4oCoTWF5ZGF5IC4uLi4uLi4uLi4u
-Li4uIDA3YSAuLi4uLi4uLi4uLi4uIE1pa2UgTWF5ZGF54oCoVmhlcmlkIC4uLi4uLi4uLi4uLi4uIHYy
-IC4uLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
+biAuLi4uLi4uICp2MyAuLi4uLi4uLi4uIEFsZXhhbmRlck9jaWFz4oCoTWF5ZGF5IC4uLi4uLi4uLi4u
+Li4uICowN2EgLi4uLi4uLi4uLi4uIE1pa2UgTWF5ZGF54oCoVmhlcmlkIC4uLi4uLi4uLi4uLi4uICp2
+MiAuLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
 												</object>
 												<reference key="NSSupport" ref="1000906468"/>
 												<string key="NSCellIdentifier">_NS:9</string>

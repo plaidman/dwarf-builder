@@ -1,13 +1,13 @@
 [center]
 [size=36pt][b]Dwarf Builder[/b][/size]
 [size=18pt][b]For Mac OSX[/b][/size]
-[b]0.34.07v8[/b]
-[url=https://github.com/downloads/plaidman/dwarf-builder/DwarfBuilder.03407v8.zip]Download Here[/url]
+[b]0.34.08v10[/b]
+[url=https://github.com/downloads/plaidman/dwarf-builder/DwarfBuilder.03408v10.zip]Download Here[/url]
 [url=https://github.com/downloads/plaidman/dwarf-builder/manual.pdf]PDF Manual[/url]
 [/center]
 
 [color=yellow][size=14pt][b]Description[/b][/size][/color]:
-[color=orange]Now even easier to use!![/color] This mac app will guide you through Dwarf Fortress configuration options and allow you to "[i]roll your own[/i]" native mac app for Dwarf Fortress featuring the config options and tileset you chose. No need to deal with copying folders or editing init files. Basically it's an app which creates your very own customized Dwarf Fortress app. Easy Peasy!
+This mac app will guide you through Dwarf Fortress configuration options and allow you to "[i]roll your own[/i]" native mac app for Dwarf Fortress featuring the config options and tileset you chose. No need to deal with copying folders or editing init files. Basically it's an app which creates your very own customized Dwarf Fortress app. Easy Peasy!
 
 [color=yellow][size=14pt][b]How To Use It[/b][/size][/color]:
 Click category names at the top of the window to see and change all the various options. When you're comfortable with the options, go back to the main menu and choose 'Construct DF'. The script will apply the settings and create a shiny new customized DwarfFortress.app in the directory of your choosing (defaults to the same directory as DwarfBuilder.app, or you may choose a different directory in the File tab).
@@ -20,14 +20,20 @@ If you're someone who frequently fiddles with config options, I recommend you us
 Native support for Dwarf Therapist and Sound Sense (both are included in this package)
 Tilesets
   Ironhand
-  Phoebus
   Jolly Bastion
   Mayday
+  Phoebus
+  Vherid
 Fonts (can be mixed/matched with tilesets)
   Ironhand
+  Masterwork
   Phoebus
   Tuffy
-  Masterwork
+Colorsets
+  Wasteland
+  Natural
+  NES
+  And More...
 Extended Soundtrack
 Laptop Keybindings
 Embark Profiles
@@ -42,6 +48,14 @@ Save DB Custom Settings
 and several other popular options (from packages like LNP and Masterwork)[/spoiler]
 
 [color=yellow][size=14pt][b]History[/b][/size][/color]:
+0.34.08v10
+  Updated to DF 0.34.08.
+  Updated Phoebus to 08v00
+  Added a colorset picker.
+[spoiler]0.34.07v9
+  Bugfix release for Snow Leopard users.
+0.34.07v8
+  Bugfix release for Dwarf Therapist.
 0.34.07v7
   COCOA APP!
   Added new "shell" items.
@@ -50,7 +64,7 @@ and several other popular options (from packages like LNP and Masterwork)[/spoil
   Revert to DF or Plaidman defaults.
   Open DF directory from DB.
   Extra world gen profiles.
-[spoiler]0.34.07v6
+0.34.07v6
   Support for Sound Sense.
   Toggle pause on warm/damp stone.
   Toggle pause on cave-ins.
@@ -88,6 +102,7 @@ mod options
 [url=http://www.bay12forums.com/smf/index.php?topic=104261.0]AlexanderOcias[/url] (Jolly Bastion)
 [url=http://www.bay12forums.com/smf/index.php?topic=98196.0]Meph[/url] (Masterwork Font, Extended Soundtrack)
 [url=http://www.bay12forums.com/smf/index.php?topic=53649.0]Mike Mayday[/url] (Tileset, Embark Profile)
+Vherid (Tileset)
 
 [url=http://linkdragon.deviantart.com/art/Dwarf-Fortress-Icon-113316213]Linkdragon[/url] (DF Icon)
 [url=http://miksminis.blogspot.com/2008/03/blog-post.html]MIK[/url] (DB Icon)

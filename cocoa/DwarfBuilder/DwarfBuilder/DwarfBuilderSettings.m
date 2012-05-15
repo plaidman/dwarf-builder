@@ -29,7 +29,7 @@
     
     if (self) {
         dbCurrentVersion = @"10";
-        dfCurrentVersion = @"0.34.07";
+        dfCurrentVersion = @"0.34.08";
         propertyNames = [[NSArray alloc] initWithObjects:@"dbSettingsVersion", @"enableSound", @"extendSoundtk",
             @"compressSaves", @"pauseOnLoad", @"pauseOnSave", @"autoBackupSaves", @"volume", @"keybindings",
             @"autosave", @"pFPSCap", @"gFPSCap", @"fullscreen", @"showIntro", @"showFPS", @"liquidDepth",
@@ -70,10 +70,10 @@
             dictionaryWithObjects:[NSArray arrayWithObjects:dbCurrentVersion, falseObj, falseObj, trueObj, trueObj,
                 trueObj, falseObj, [NSNumber numberWithInt:0], [NSNumber numberWithInt:kbLaptop],
                 [NSNumber numberWithInt:asSeasonal], @"100", @"50", falseObj, falseObj, trueObj, trueObj, trueObj,
-                falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop], [NSNumber numberWithInt:tsIronhand],
+                falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop], [NSNumber numberWithInt:tsPhoebus],
                 falseObj, trueObj, falseObj, trueObj, trueObj, trueObj, trueObj, trueObj,
-                [NSNumber numberWithInt:fIronhand], falseObj, trueObj, trueObj, trueObj, @"100", @"15", @"20", @"3",
-                @"3", [NSNumber numberWithInt:cIronhand], trueObj, nil
+                [NSNumber numberWithInt:fPhoebus], falseObj, trueObj, trueObj, trueObj, @"100", @"15", @"20", @"3",
+                @"3", [NSNumber numberWithInt:cPhoebus], trueObj, nil
             ]
             forKeys:propertyNames
         ]
