@@ -101,9 +101,7 @@
     NSString *pathToResources = [NSString stringWithFormat:@"%@/Contents/Resources", pathToApp];
     
     NSString *configurationFile = [NSString stringWithFormat:@"%@/configuration.xml", pathToResources];
-    NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
-        [NSString stringWithFormat:@"<gamelog path=\"%@/DwarfFortress.app/Contents/Resources/gamelog.txt\" />",
-            [settings installDir]], @"<gamelog path=\".*\" />", nil];
+    NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:@"<gamelog path=\"../../../DwarfFortress.app/Contents/Resources/gamelog.txt\" />", @"<gamelog path=\".*\" />", nil];
     
     @try {
         if ([fileManager fileExistsAtPath:pathToApp]) {
@@ -725,7 +723,8 @@
     NSString *pathFromSaves = [NSString stringWithFormat:@"%@/data/save", pathToResources];
     NSString *pathToSaves = [NSString stringWithFormat:@"%@/cons_backup", dbResources];
     NSString *pathToAppVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToResources];
-    NSString *pathToSavedVersionFile = [NSString stringWithFormat:@"%@/cons_backup/df_version", dbResources];
+    NSString *pathToSavedVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToSaves];
+    NSString *pathToGameLog = [NSString stringWithFormat:@"%@/gamelog.txt", pathToResources];
     bool savesTransferred = false;
     
     if ([fileManager fileExistsAtPath:pathFromSaves]) {
@@ -763,6 +762,8 @@
         [fileManager removeItemAtPath:pathToSaves error:nil];
         [self updateSaveRaws];
     }
+    
+    [@"" writeToFile:pathToGameLog atomically:true encoding:NSUTF8StringEncoding error:nil];
     
     [[NSWorkspace sharedWorkspace] setIcon:[[NSImage alloc]
         initByReferencingFile:[NSString stringWithFormat:@"%@/%@", dbResources, @"DwarfFortress.png"]]
