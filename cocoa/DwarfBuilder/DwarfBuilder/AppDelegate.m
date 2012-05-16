@@ -1,6 +1,10 @@
-//if an app is already compiled, give the user the option to start the app or recompile
-//maybe use linux cp for raw updates
-//update manual.pdf
+// if an app is already compiled, give the user the option to start the app or recompile
+// test raw transfer from 7 to 8
+// test raw update with mac-copy from 7 to 8
+// test raw update with linux-cp from 7 to 8
+// external df dir
+// external save dir
+// external backup dir
 
 #import "AppDelegate.h"
 #import "DwarfBuilderSettings.h"
@@ -728,23 +732,19 @@
     NSString *pathToAppVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToResources];
     NSString *pathToSavedVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToSaves];
     NSString *pathToGameLog = [NSString stringWithFormat:@"%@/gamelog.txt", pathToResources];
-    bool savesTransferred = false;
     
     if ([fileManager fileExistsAtPath:pathFromSaves]) {
         [fileManager removeItemAtPath:pathToSaves error:nil];
         if ([self confirmDialog:@"Found a save in the exiting DF.app."
                 message:@"Would you like me to transfer it to the new app for you?"]) {
             [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
-            savesTransferred = true;
-        }
-    }
-    
-    if (savesTransferred) {
-        if ([fileManager fileExistsAtPath:pathToAppVersionFile]) {
-            [fileManager copyItemAtPath:pathToAppVersionFile toPath:pathToSavedVersionFile error:nil];
-        } else {
-            [@"0.34.07" writeToFile:pathToSavedVersionFile atomically:true
-                encoding:NSUTF8StringEncoding error:nil];
+
+            if ([fileManager fileExistsAtPath:pathToAppVersionFile]) {
+                [fileManager copyItemAtPath:pathToAppVersionFile toPath:pathToSavedVersionFile error:nil];
+            } else {
+                [@"0.34.07" writeToFile:pathToSavedVersionFile atomically:true
+                    encoding:NSUTF8StringEncoding error:nil];
+            }
         }
     }
     
@@ -780,16 +780,6 @@
 /* * * * * * * * * * * * * * * * * * * 
  *  -- BEHIND THE SCENES FUNCTIONS --
  * * * * * * * * * * * * * * * * * * */
-
--(void)updateInstallDir:(NSString*)directory {
-    [settings setInstallDir:directory];
-    [self setInstallDirString:directory];
-    
-    if ([directory length] > 50) {
-        [self setInstallDirString:[NSString stringWithFormat:@"...%@",
-            [directory substringWithRange:NSMakeRange([directory length]-47, 47)]]];
-    }
-}
 
 -(void)updateSaveRaws {
     NSString *appDir = [NSString stringWithFormat:@"%@/%@", [settings installDir],
@@ -829,6 +819,16 @@
             [fileManager removeItemAtPath:fullItemPath error:nil];
             [fileManager copyItemAtPath:rawDir toPath:fullItemPath error:nil];
         }
+    }
+}
+
+-(void)updateInstallDir:(NSString*)directory {
+    [settings setInstallDir:directory];
+    [self setInstallDirString:directory];
+    
+    if ([directory length] > 50) {
+        NSString *trunc = [directory substringWithRange:NSMakeRange([directory length]-47, 47)];
+        [self setInstallDirString:[NSString stringWithFormat:@"...%@", trunc]];
     }
 }
 

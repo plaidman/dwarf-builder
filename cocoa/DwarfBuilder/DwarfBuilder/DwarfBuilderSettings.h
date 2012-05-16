@@ -21,6 +21,7 @@
     NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
     
     /* FILE SETTINGS */
+    bool backupExternally, externalSaveDir, externalDFDir;
     NSString *installDir;
 }
 
@@ -43,6 +44,7 @@
 @property NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
 
 /* FILE SETTINGS */
+@property bool backupExternally, externalSaveDir, externalDFDir;
 @property NSString *installDir;
 
 enum {kbDefault = 0, kbLaptop};

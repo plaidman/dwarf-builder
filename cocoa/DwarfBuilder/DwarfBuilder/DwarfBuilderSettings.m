@@ -22,13 +22,14 @@
 @synthesize dwarfCap, childHardCap, childPercentageCap, embarkWidth, embarkHeight;
 
 /* FILE SETTINGS */
+@synthesize backupExternally, externalSaveDir, externalDFDir;
 @synthesize installDir;
 
 -(id)init {
     self = [super init];
     
     if (self) {
-        dbCurrentVersion = @"10";
+        dbCurrentVersion = @"12";
         dfCurrentVersion = @"0.34.08";
         propertyNames = [[NSArray alloc] initWithObjects:@"dbSettingsVersion", @"enableSound", @"extendSoundtk",
             @"compressSaves", @"pauseOnLoad", @"pauseOnSave", @"autoBackupSaves", @"volume", @"keybindings",
@@ -37,7 +38,7 @@
             @"skillRusting", @"embarkConfirmation", @"grazingAnimals", @"pauseOnCaveIns", @"extraShellItems",
             @"pauseOnWarmDampStone", @"invaders", @"temperature", @"font", @"aquifers", @"caveIns", @"weather",
             @"resizable", @"dwarfCap", @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight",
-            @"colors", @"useTilesetColors", nil];
+            @"colors", @"useTilesetColors", @"backupExternally", @"externalSaveDir", @"externalDFDir", nil];
         [self setDFDefaults];
     }
     
@@ -52,13 +53,12 @@
 -(void)readSettingsFromFile:(NSString*)filename {
     NSMutableDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:filename];
     
-    if ([[dict valueForKey:@"dbSettingsVersion"] isEqualToString:dbCurrentVersion]) {
-        [self setValuesForKeysWithDictionary:dict];
-    } else if ([[dict valueForKey:@"dbVersionNumber"] isEqualToString:@"7"]) {
+    if ([[dict valueForKey:@"dbVersionNumber"] isEqualToString:@"7"]) {
         [dict removeObjectForKey:@"dbVersionNumber"];
-        [self setValuesForKeysWithDictionary:dict];
-        [self setDbSettingsVersion:@"10"];
     }
+    
+    [self setValuesForKeysWithDictionary:dict];
+    [self setDbSettingsVersion:@"12"];
 }
 
 -(void)setPlaidmanDefaults {
@@ -73,7 +73,7 @@
                 falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop], [NSNumber numberWithInt:tsPhoebus],
                 falseObj, trueObj, falseObj, trueObj, trueObj, trueObj, trueObj, trueObj,
                 [NSNumber numberWithInt:fPhoebus], falseObj, trueObj, trueObj, trueObj, @"100", @"15", @"20", @"3",
-                @"3", [NSNumber numberWithInt:cPhoebus], trueObj, nil
+                @"3", [NSNumber numberWithInt:cPhoebus], trueObj, falseObj, falseObj, falseObj, nil
             ]
             forKeys:propertyNames
         ]
@@ -92,7 +92,7 @@
                 falseObj, @"80", @"25", [NSNumber numberWithInt:siTop], [NSNumber numberWithInt:tsDefaultTall],
                 trueObj, falseObj, trueObj, trueObj, falseObj, trueObj, trueObj, trueObj,
                 [NSNumber numberWithInt:fDefault], trueObj, trueObj, trueObj, trueObj, @"200", @"100", @"1000", @"4",
-                @"4", [NSNumber numberWithInt:cDefault], trueObj, nil
+                @"4", [NSNumber numberWithInt:cDefault], trueObj, falseObj, falseObj, falseObj, nil
             ]
             forKeys:propertyNames
         ]
