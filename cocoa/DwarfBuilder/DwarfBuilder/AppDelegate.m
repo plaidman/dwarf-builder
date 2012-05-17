@@ -34,8 +34,8 @@
         fileManager = [NSFileManager defaultManager];
         
 #ifdef DEBUG
-        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
-//        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
+//        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
+        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
         [self updateInstallDir:dbResources];
 #else
         dbResources = [NSString stringWithFormat:@"%@/Contents/Resources", [[NSBundle mainBundle] bundlePath]];
@@ -775,7 +775,6 @@
     if ([fileManager fileExistsAtPath:pathToAppSaves]) {
         if ([self confirmDialog:@"Found a save in the exiting DF.app."
                 message:@"Would you like me to transfer it to the new app for you?"]) {
-            
             if ([NSFileTypeSymbolicLink isEqualToString:resourcesFileType]) {
                 [fileManager removeItemAtPath:pathToAppResources error:nil];
                 [fileManager moveItemAtPath:pathToExternalResources toPath:pathToAppResources error:nil];
@@ -803,7 +802,7 @@
         [fileManager removeItemAtPath:pathToExternalResources error:nil];
         [fileManager moveItemAtPath:pathToStagedResources toPath:pathToExternalResources error:nil];
         [fileManager createSymbolicLinkAtPath:pathToAppResources
-            withDestinationPath:pathToExternalResources error:nil];
+            withDestinationPath:@"../../df_files" error:nil];
     } else {
         [fileManager moveItemAtPath:pathToStagedResources toPath:pathToAppResources error:nil];
     }
@@ -829,8 +828,13 @@
         
         [fileManager removeItemAtPath:pathToExternalSaves error:nil];
         [fileManager moveItemAtPath:pathToAppSaves toPath:pathToExternalSaves error:nil];
-        [fileManager createSymbolicLinkAtPath:pathToAppSaves
-            withDestinationPath:pathToExternalSaves error:nil];
+        if ([settings externalDFDir]) {
+            [fileManager createSymbolicLinkAtPath:pathToAppSaves
+                withDestinationPath:@"../../df_saves" error:nil];
+        } else {
+            [fileManager createSymbolicLinkAtPath:pathToAppSaves
+                withDestinationPath:@"../../../../df_saves" error:nil];
+        }
     }
     
     [@"" writeToFile:pathToGameLog atomically:true encoding:NSUTF8StringEncoding error:nil];
