@@ -17,7 +17,7 @@
     
     /* GAMEPLAY SETTINGS */
     bool skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems,
-        pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather;
+        pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather, petCoffins;
     NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
     
     /* FILE SETTINGS */
@@ -40,7 +40,7 @@
 
 /* GAMEPLAY SETTINGS */
 @property bool skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems,
-    pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather;
+    pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather, petCoffins;
 @property NSString *dwarfCap, *childHardCap, *childPercentageCap, *embarkWidth, *embarkHeight;
 
 /* FILE SETTINGS */

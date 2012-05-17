@@ -18,7 +18,7 @@
 
 /* GAMEPLAY SETTINGS */
 @synthesize skillRusting, embarkConfirmation, grazingAnimals, pauseOnCaveIns, extraShellItems,
-    pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather;
+    pauseOnWarmDampStone, temperature, aquifers, caveIns, invaders, weather, petCoffins;
 @synthesize dwarfCap, childHardCap, childPercentageCap, embarkWidth, embarkHeight;
 
 /* FILE SETTINGS */
@@ -38,7 +38,8 @@
             @"skillRusting", @"embarkConfirmation", @"grazingAnimals", @"pauseOnCaveIns", @"extraShellItems",
             @"pauseOnWarmDampStone", @"invaders", @"temperature", @"font", @"aquifers", @"caveIns", @"weather",
             @"resizable", @"dwarfCap", @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight",
-            @"colors", @"useTilesetColors", @"backupExternally", @"externalSaveDir", @"externalDFDir", nil];
+            @"colors", @"useTilesetColors", @"backupExternally", @"externalSaveDir", @"externalDFDir",
+            @"petCoffins", nil];
         [self setDFDefaults];
     }
     
@@ -73,7 +74,7 @@
                 falseObj, @"1280", @"600", [NSNumber numberWithInt:siTop], [NSNumber numberWithInt:tsPhoebus],
                 falseObj, trueObj, falseObj, trueObj, trueObj, trueObj, trueObj, trueObj,
                 [NSNumber numberWithInt:fPhoebus], falseObj, trueObj, trueObj, trueObj, @"100", @"15", @"20", @"3",
-                @"3", [NSNumber numberWithInt:cPhoebus], trueObj, falseObj, falseObj, falseObj, nil
+                @"3", [NSNumber numberWithInt:cPhoebus], trueObj, falseObj, falseObj, falseObj, falseObj, nil
             ]
             forKeys:propertyNames
         ]
@@ -92,7 +93,7 @@
                 falseObj, @"80", @"25", [NSNumber numberWithInt:siTop], [NSNumber numberWithInt:tsDefaultTall],
                 trueObj, falseObj, trueObj, trueObj, falseObj, trueObj, trueObj, trueObj,
                 [NSNumber numberWithInt:fDefault], trueObj, trueObj, trueObj, trueObj, @"200", @"100", @"1000", @"4",
-                @"4", [NSNumber numberWithInt:cDefault], trueObj, falseObj, falseObj, falseObj, nil
+                @"4", [NSNumber numberWithInt:cDefault], trueObj, falseObj, falseObj, falseObj, trueObj, nil
             ]
             forKeys:propertyNames
         ]

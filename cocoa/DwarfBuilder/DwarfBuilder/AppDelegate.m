@@ -483,6 +483,8 @@
     NSString *dInitTxtFile = [NSString stringWithFormat:@"%@/build/data/init/d_init.txt", dbResources];
     NSDictionary *changes = [NSDictionary dictionaryWithObjectsAndKeys:
         [self autosaveToInit:[settings autosave]], @"\\[AUTOSAVE:.*\\]",
+        [self boolToInit:![settings petCoffins] optionName:@"COFFIN_NO_PETS_DEFAULT"],
+            @"\\[COFFIN_NO_PETS_DEFAULT:.*\\]",
         [self boolToInit:[settings autoBackupSaves] optionName:@"AUTOBACKUP"], @"\\[AUTOBACKUP:.*\\]",
         [self boolToInit:[settings pauseOnSave] optionName:@"AUTOSAVE_PAUSE"], @"\\[AUTOSAVE_PAUSE:.*\\]",
         [self boolToInit:[settings pauseOnLoad] optionName:@"PAUSE_ON_LOAD"], @"\\[PAUSE_ON_LOAD:.*\\]",
@@ -496,7 +498,7 @@
         [self childToInit:[settings childHardCap] percentage:[settings childPercentageCap]], @"\\[BABY_CHILD_CAP:.*\\]",
         [self boolToInit:[settings liquidDepth] optionName:@"SHOW_FLOW_AMOUNTS"], @"\\[SHOW_FLOW_AMOUNTS:.*\\]",
         [self boolToInit:[settings embarkConfirmation] optionName:@"EMBARK_WARNING_ALWAYS"],
-        @"\\[EMBARK_WARNING_ALWAYS:.*\\]", nil];
+            @"\\[EMBARK_WARNING_ALWAYS:.*\\]", nil];
     
     [self translateTextFile:dInitTxtFile changes:changes];
 }
