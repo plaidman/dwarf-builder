@@ -187,6 +187,10 @@
         valueForKey:NSFileType];
     NSString *pathToSavedSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
     
+    if ([settings backupExternally]) {
+        pathToSavedSaves = [NSString stringWithFormat:@"%@/df_backup", [settings installDir]];
+    }
+    
     if ([fileManager fileExistsAtPath:pathToAppSaves]) {
         if ([NSFileTypeSymbolicLink isEqualToString:saveFileType]) {
             pathToAppSaves = [fileManager destinationOfSymbolicLinkAtPath:pathToAppSaves error:nil];
@@ -212,6 +216,10 @@
     NSString *saveFileType = [[fileManager attributesOfItemAtPath:pathToAppSaves error:nil]
         valueForKey:NSFileType];
     NSString *pathToSavedSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
+    
+    if ([settings backupExternally]) {
+        pathToSavedSaves = [NSString stringWithFormat:@"%@/df_backup", [settings installDir]];
+    }
     
     if ([fileManager fileExistsAtPath:pathToSavedSaves]) {
         if ([NSFileTypeSymbolicLink isEqualToString:saveFileType]) {
