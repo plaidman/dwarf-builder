@@ -1,10 +1,9 @@
 // if an app is already compiled, give the user the option to start the app or recompile
-// test raw transfer from 7 to 8
+// test manual raw transfer from 7 to 8
 // test raw update with mac-copy from 7 to 8
 // test raw update with linux-cp from 7 to 8
-// external df dir
-// external save dir
 // external backup dir
+// account for symlinks in update raws, backup df dir, restore df dir
 
 #import "AppDelegate.h"
 #import "DwarfBuilderSettings.h"
@@ -182,40 +181,43 @@
 }
 
 -(IBAction)backupDFFilesAction:(id)sender {
-    NSString *pathFromSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
+    NSString *pathToAppSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
         @"DwarfFortress.app/Contents/Resources/data/save"];
-    NSString *pathToSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
+    NSString *pathToSavedSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
     
-    if ([fileManager fileExistsAtPath:pathFromSaves]) {
-        if ([fileManager fileExistsAtPath:pathToSaves]) {
-            if (![self confirmDialog:@"There is currently a backup saved."
+    if ([fileManager fileExistsAtPath:pathToAppSaves]) {
+        NSLog(@"%@", [fileManager attributesOfItemAtPath:pathToAppSaves error:nil]);
+        return;
+        
+        if ([fileManager fileExistsAtPath:pathToSavedSaves]) {
+            if (![self confirmDialog:@"I am currently storing an older backup for you."
                     message:@"Would you like me to overwrite it?"]) {
                 return;
             }
         }
 
-        [fileManager removeItemAtPath:pathToSaves error:nil];
-        [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
+        [fileManager removeItemAtPath:pathToSavedSaves error:nil];
+        [fileManager copyItemAtPath:pathToAppSaves toPath:pathToSavedSaves error:nil];
     } else {
         [self errorDialog:@"I couldn't find any files to back up." message:@""];
     }
 }
 
 -(IBAction)restoreDFFilesAction:(id)sender {
-    NSString *pathFromSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
-    NSString *pathToSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
+    NSString *pathToSavedSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
+    NSString *pathToAppSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
         @"DwarfFortress.app/Contents/Resources/data/save"];
     
-    if ([fileManager fileExistsAtPath:pathFromSaves]) {
-        if ([fileManager fileExistsAtPath:pathToSaves]) {
+    if ([fileManager fileExistsAtPath:pathToSavedSaves]) {
+        if ([fileManager fileExistsAtPath:pathToAppSaves]) {
             if (![self confirmDialog:@"There is already a save game here."
                     message:@"Would you like me to overwrite it?"]) {
                 return;
             }
         }
         
-        [fileManager removeItemAtPath:pathToSaves error:nil];
-        [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
+        [fileManager removeItemAtPath:pathToAppSaves error:nil];
+        [fileManager copyItemAtPath:pathToSavedSaves toPath:pathToAppSaves error:nil];
     } else {
         [self errorDialog:@"You have not backed up any files to restore." message:@""];
     }
