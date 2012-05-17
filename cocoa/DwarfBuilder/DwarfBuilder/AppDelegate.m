@@ -600,7 +600,7 @@
         fromKey:@"KEY:.*?" toKey:@"SYM:2:Backspace"];
     
     if ([settings altZLevelNav]) {
-        [self translateKeybind:fileContents bindLabel:@"D_ONESTEP:REPEAT_NOT" fromKey:@"KEY:\\." toKey:@"KEY:>"];
+        [self translateKeybind:fileContents bindLabel:@"D_ONESTEP:REPEAT_NOT" fromKey:@"KEY:\\." toKey:@"KEY:/"];
         [self translateKeybind:fileContents bindLabel:@"CURSOR_UP_Z:REPEAT_SLOW" fromKey:@"KEY:<" toKey:@"KEY:,"];
         [self translateKeybind:fileContents bindLabel:@"CURSOR_DOWN_Z:REPEAT_SLOW" fromKey:@"KEY:>" toKey:@"KEY:."];
     }
