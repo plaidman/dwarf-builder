@@ -30,7 +30,7 @@
     
     if (self) {
         dbCurrentVersion = @"12";
-        dfCurrentVersion = @"0.34.08";
+        dfCurrentVersion = @"0.34.09";
         propertyNames = [[NSArray alloc] initWithObjects:@"dbSettingsVersion", @"enableSound", @"extendSoundtk",
             @"compressSaves", @"pauseOnLoad", @"pauseOnSave", @"autoBackupSaves", @"volume", @"keybindings",
             @"autosave", @"pFPSCap", @"gFPSCap", @"fullscreen", @"showIntro", @"showFPS", @"liquidDepth",
