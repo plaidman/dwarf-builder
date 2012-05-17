@@ -177,23 +177,17 @@
 										<object class="NSTextField" id="949644915">
 											<reference key="NSNextResponder" ref="581834156"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{15, 14}, {414, 90}}</string>
+											<string key="NSFrame">{{15, 35}, {414, 77}}</string>
 											<reference key="NSSuperview" ref="581834156"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView" ref="375558207"/>
+											<reference key="NSNextKeyView" ref="170012889"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSAntiCompressionPriority">{250, 750}</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="763035734">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4456448</int>
-												<object class="NSMutableString" key="NSContents">
-													<bytes key="NS.bytes">SXJvbmhhbmQgLi4uLi4uLi4uLi4uICowLjY4IC4uLi4uLi4uLi4uLi4uIElyb25oYW5k4oCoUGhvZWJ1
-cyAuLi4uLi4uLi4uLi4uIHYwMCAuLi4uLi4uLi4uLi4uLi4uLiBQaG9lYnVz4oCoSm9sbHkgQmFzdGlv
-biAuLi4uLi4uICp2MyAuLi4uLi4uLi4uIEFsZXhhbmRlck9jaWFz4oCoTWF5ZGF5IC4uLi4uLi4uLi4u
-Li4uICowN2EgLi4uLi4uLi4uLi4uIE1pa2UgTWF5ZGF54oCoVmhlcmlkIC4uLi4uLi4uLi4uLi4uICp2
-MiAuLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
-												</object>
+												<string key="NSContents">Phoebus ............. v00 ................. Phoebus Jolly Bastion ....... v4 ........... AlexanderOcias Mayday .............. *07a ............ Mike Mayday Vherid .............. *v2 .................. Vherid</string>
 												<reference key="NSSupport" ref="1000906468"/>
 												<string key="NSCellIdentifier">_NS:9</string>
 												<reference key="NSControlView" ref="949644915"/>
@@ -201,15 +195,39 @@ MiAuLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
 												<reference key="NSTextColor" ref="301756894"/>
 											</object>
 										</object>
+										<object class="NSTextField" id="170012889">
+											<reference key="NSNextResponder" ref="581834156"/>
+											<int key="NSvFlags">268</int>
+											<string key="NSFrame">{{15, 14}, {329, 13}}</string>
+											<reference key="NSSuperview" ref="581834156"/>
+											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="375558207"/>
+											<string key="NSReuseIdentifierKey">_NS:1505</string>
+											<bool key="NSEnabled">YES</bool>
+											<object class="NSTextFieldCell" key="NSCell" id="315552578">
+												<int key="NSCellFlags">68288064</int>
+												<int key="NSCellFlags2">272892928</int>
+												<string key="NSContents">* This tileset may appear glitchy with the current version of DF.</string>
+												<object class="NSFont" key="NSSupport">
+													<string key="NSName">AnonymousPro</string>
+													<double key="NSSize">10</double>
+													<int key="NSfFlags">16</int>
+												</object>
+												<string key="NSCellIdentifier">_NS:1505</string>
+												<reference key="NSControlView" ref="170012889"/>
+												<reference key="NSBackgroundColor" ref="23246729"/>
+												<reference key="NSTextColor" ref="301756894"/>
+											</object>
+										</object>
 									</array>
-									<string key="NSFrame">{{1, 1}, {444, 114}}</string>
+									<string key="NSFrame">{{1, 1}, {444, 122}}</string>
 									<reference key="NSSuperview" ref="196264297"/>
 									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="949644915"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 								</object>
 							</array>
-							<string key="NSFrame">{{17, 249}, {446, 131}}</string>
+							<string key="NSFrame">{{17, 247}, {446, 139}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="581834156"/>
@@ -418,6 +436,7 @@ MiAuLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
 						<reference key="object" ref="196264297"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="949644915"/>
+							<reference ref="170012889"/>
 						</array>
 						<reference key="parent" ref="1006"/>
 					</object>
@@ -481,6 +500,19 @@ MiAuLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
 						<reference key="object" ref="857001893"/>
 						<reference key="parent" ref="464939864"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">30</int>
+						<reference key="object" ref="170012889"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="315552578"/>
+						</array>
+						<reference key="parent" ref="196264297"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">31</int>
+						<reference key="object" ref="315552578"/>
+						<reference key="parent" ref="170012889"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -504,12 +536,14 @@ MiAuLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="25.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="30.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="31.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">27</int>
+			<int key="maxID">31</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
