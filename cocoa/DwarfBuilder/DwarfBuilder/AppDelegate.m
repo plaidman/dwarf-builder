@@ -407,6 +407,12 @@
         
         [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
         [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
+    } else if ([settings tileset] == tsIronhand) {
+        NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/ironhand/data", dbResources];
+        NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/ironhand/raw", dbResources];
+        
+        [self linuxCPFromPath:tilesetDataFolder toPath:buildDataFolder];
+        [self linuxCPFromPath:tilesetRawFolder toPath:buildRawFolder];
     } else if ([settings tileset] == tsJollyTall) {
         NSString *tilesetDataFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_tall/data", dbResources];
         NSString *tilesetRawFolder = [NSString stringWithFormat:@"%@/extras/tilesets/jolly_tall/raw", dbResources];
@@ -672,6 +678,8 @@
     
     if ([settings font] == fPhoebus) {
         pathFromItem = [NSString stringWithFormat:@"%@/extras/fonts/phoebus.ttf", dbResources];
+    } else if ([settings font] == fIronhand) {
+        pathFromItem = [NSString stringWithFormat:@"%@/extras/fonts/ironhand.ttf", dbResources];
     } else if ([settings font] == fTuffy) {
         pathFromItem = [NSString stringWithFormat:@"%@/extras/fonts/tuffy.ttf", dbResources];
     } else if ([settings font] == fMasterwork) {
@@ -689,6 +697,8 @@
         
         if ([settings colors] == cPhoebus) {
             pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/phoebus.txt", dbResources];
+        } else if ([settings colors] == cIronhand) {
+            pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/ironhand.txt", dbResources];
         } else if ([settings colors] == cMayday) {
             pathFromItem = [NSString stringWithFormat:@"%@/extras/colors/mayday.txt", dbResources];
         } else if ([settings colors] == cJolly) {

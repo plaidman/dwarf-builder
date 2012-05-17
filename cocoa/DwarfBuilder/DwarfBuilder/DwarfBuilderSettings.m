@@ -60,21 +60,7 @@
         [dict setValue:@"10" forKey:@"dbSettingsVersion"];
     }
     
-    if ([[dict valueForKey:@"dbSettingsVersion"] isEqualToString:@"10"]) {
-        if ([[dict valueForKey:@"tileset"] isEqualToNumber:[NSNumber numberWithInt:tsIronhand]]) {
-            [dict setValue:[NSNumber numberWithInt:tsDefaultSquare] forKey:@"tileset"];
-        }
-        
-        if ([[dict valueForKey:@"font"] isEqualToNumber:[NSNumber numberWithInt:fIronhand]]) {
-            [dict setValue:[NSNumber numberWithInt:fDefault] forKey:@"font"];
-        }
-        
-        if ([[dict valueForKey:@"colors"] isEqualToNumber:[NSNumber numberWithInt:cIronhand]]) {
-            [dict setValue:[NSNumber numberWithInt:cDefault] forKey:@"colors"];
-        }
-        
-        [dict setValue:@"12" forKey:@"dbSettingsVersion"];
-    }
+    // no change needed from 10 to 12
     
     [self setValuesForKeysWithDictionary:dict];
     [self setDbSettingsVersion:@"12"];
