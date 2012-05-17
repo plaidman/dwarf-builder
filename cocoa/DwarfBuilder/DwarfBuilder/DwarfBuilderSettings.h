@@ -11,7 +11,8 @@
     int volume, keybindings, autosave;
     
     /* VISUAL SETTINGS */
-    bool fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable, useTilesetColors;
+    bool fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable,
+        useTilesetColors, variedGroundTiles;
     NSString *windowWidth, *windowHeight;
     int showIdlers, tileset, font, colors;
     
@@ -34,7 +35,8 @@
 @property int volume, keybindings, autosave;
 
 /* VISUAL SETTINGS */
-@property bool fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable, useTilesetColors;
+@property bool fullscreen, showIntro, showFPS, liquidDepth, creatureGraphics, useFont, resizable,
+    useTilesetColors, variedGroundTiles;
 @property NSString *windowWidth, *windowHeight;
 @property int showIdlers, tileset, font, colors;
 
