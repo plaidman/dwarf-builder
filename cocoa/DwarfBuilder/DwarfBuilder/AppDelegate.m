@@ -353,7 +353,7 @@
     [fileContents writeToFile:textFile atomically:true encoding:encoding error:nil];
 }
 
--(void)translateKeybinds:(NSMutableString*)fileContents bindLabel:(NSString*)bindLabel
+-(void)translateKeybind:(NSMutableString*)fileContents bindLabel:(NSString*)bindLabel
         fromKey:(NSString*)fromKey toKey:(NSString*)toKey {
     NSString *bindLabelRegex = [NSString stringWithFormat:@"\\[BIND:%@\\](.|\\r|\\n)*?\\[BIND", bindLabel];
     NSString *fromKeyRegex = [NSString stringWithFormat:@"\\[%@\\]", fromKey];
@@ -576,28 +576,34 @@
         reason:[NSString stringWithFormat:@"Failed opening %@", keybindFile] userInfo:nil];
     
     if ([settings keybindings] == kbLaptop) {
-        [self translateKeybinds:fileContents bindLabel:@"SECONDSCROLL_DOWN:REPEAT_SLOW"
+        [self translateKeybind:fileContents bindLabel:@"SECONDSCROLL_DOWN:REPEAT_SLOW"
             fromKey:@"KEY:\\+" toKey:@"KEY:="];
-        [self translateKeybinds:fileContents bindLabel:@"SECONDSCROLL_PAGEUP:REPEAT_SLOW"
+        [self translateKeybind:fileContents bindLabel:@"SECONDSCROLL_PAGEUP:REPEAT_SLOW"
             fromKey:@"KEY:/" toKey:@"KEY:_"];
-        [self translateKeybinds:fileContents bindLabel:@"SECONDSCROLL_PAGEDOWN:REPEAT_SLOW"
+        [self translateKeybind:fileContents bindLabel:@"SECONDSCROLL_PAGEDOWN:REPEAT_SLOW"
             fromKey:@"KEY:\\*" toKey:@"KEY:+"];
-        [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_SUPPLIES_WATER_UP:REPEAT_NOT"
+        [self translateKeybind:fileContents bindLabel:@"D_MILITARY_SUPPLIES_WATER_UP:REPEAT_NOT"
             fromKey:@"KEY:\\+" toKey:@"KEY:="];
-        [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_SUPPLIES_FOOD_DOWN:REPEAT_NOT"
+        [self translateKeybind:fileContents bindLabel:@"D_MILITARY_SUPPLIES_FOOD_DOWN:REPEAT_NOT"
             fromKey:@"KEY:/" toKey:@"KEY:_"];
-        [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_SUPPLIES_FOOD_UP:REPEAT_NOT"
+        [self translateKeybind:fileContents bindLabel:@"D_MILITARY_SUPPLIES_FOOD_UP:REPEAT_NOT"
             fromKey:@"KEY:\\*" toKey:@"KEY:+"];
-        [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_AMMUNITION_RAISE_AMOUNT:REPEAT_NOT"
+        [self translateKeybind:fileContents bindLabel:@"D_MILITARY_AMMUNITION_RAISE_AMOUNT:REPEAT_NOT"
             fromKey:@"KEY:\\+" toKey:@"KEY:="];
-        [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_AMMUNITION_LOWER_AMOUNT_LOTS:REPEAT_NOT"
+        [self translateKeybind:fileContents bindLabel:@"D_MILITARY_AMMUNITION_LOWER_AMOUNT_LOTS:REPEAT_NOT"
             fromKey:@"KEY:/" toKey:@"KEY:_"];
-        [self translateKeybinds:fileContents bindLabel:@"D_MILITARY_AMMUNITION_RAISE_AMOUNT_LOTS:REPEAT_NOT"
+        [self translateKeybind:fileContents bindLabel:@"D_MILITARY_AMMUNITION_RAISE_AMOUNT_LOTS:REPEAT_NOT"
             fromKey:@"KEY:\\*" toKey:@"KEY:+"];
     }
     
-    [self translateKeybinds:fileContents bindLabel:@"STRING_A127:REPEAT_SLOW"
+    [self translateKeybind:fileContents bindLabel:@"STRING_A127:REPEAT_SLOW"
         fromKey:@"KEY:.*?" toKey:@"SYM:2:Backspace"];
+    
+    if ([settings altZLevelNav]) {
+        [self translateKeybind:fileContents bindLabel:@"D_ONESTEP:REPEAT_NOT" fromKey:@"KEY:\\." toKey:@"KEY:>"];
+        [self translateKeybind:fileContents bindLabel:@"CURSOR_UP_Z:REPEAT_SLOW" fromKey:@"KEY:<" toKey:@"KEY:,"];
+        [self translateKeybind:fileContents bindLabel:@"CURSOR_DOWN_Z:REPEAT_SLOW" fromKey:@"KEY:>" toKey:@"KEY:."];
+    }
     
     [fileContents writeToFile:keybindFile atomically:true encoding:NSUTF8StringEncoding error:nil];
 }

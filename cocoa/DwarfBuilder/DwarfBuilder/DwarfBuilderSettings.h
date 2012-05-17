@@ -6,7 +6,7 @@
     NSString *dbSettingsVersion, *dbCurrentVersion, *dfCurrentVersion;
     
     /* APPLICATION SETTINGS */
-    bool enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
+    bool enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves, altZLevelNav;
     NSString *pFPSCap, *gFPSCap;
     int volume, keybindings, autosave;
     
@@ -30,7 +30,7 @@
 @property NSString *dbSettingsVersion, *dbCurrentVersion, *dfCurrentVersion;
 
 /* APPLICATION SETTINGS */
-@property bool enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
+@property bool enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves, altZLevelNav;
 @property NSString *pFPSCap, *gFPSCap;
 @property int volume, keybindings, autosave;
 

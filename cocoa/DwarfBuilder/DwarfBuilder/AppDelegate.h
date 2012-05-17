@@ -35,7 +35,7 @@
 
 -(void)linuxCPFromPath:(NSString*)fromPath toPath:(NSString*)toPath;
 -(void)translateTextFile:(NSString*)textFile changes:(NSDictionary*)changes;
--(void)translateKeybinds:(NSMutableString*)fileContents bindLabel:(NSString*)bindLabel
+-(void)translateKeybind:(NSMutableString*)fileContents bindLabel:(NSString*)bindLabel
     fromKey:(NSString*)fromKey toKey:(NSString*)toKey;
 -(void)addExtraShellItem:(NSMutableString*)fileContents shellItem:(NSString*)shellItem;
 

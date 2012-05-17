@@ -7,7 +7,7 @@
 @synthesize dbSettingsVersion, dbCurrentVersion, dfCurrentVersion;
 
 /* APPLICATION SETTINGS */
-@synthesize enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves;
+@synthesize enableSound, extendSoundtk, compressSaves, pauseOnLoad, pauseOnSave, autoBackupSaves, altZLevelNav;
 @synthesize volume, keybindings, autosave;
 @synthesize pFPSCap, gFPSCap;
 
@@ -40,7 +40,7 @@
             @"pauseOnWarmDampStone", @"invaders", @"temperature", @"font", @"aquifers", @"caveIns", @"weather",
             @"resizable", @"dwarfCap", @"childHardCap", @"childPercentageCap", @"embarkWidth", @"embarkHeight",
             @"colors", @"useTilesetColors", @"backupExternally", @"externalSaveDir", @"externalDFDir",
-            @"petCoffins", @"variedGroundTiles", nil];
+            @"petCoffins", @"variedGroundTiles", @"altZLevelNav", nil];
         [self setDFDefaults];
     }
     
@@ -76,7 +76,7 @@
                 falseObj, trueObj, falseObj, trueObj, trueObj, trueObj, trueObj, trueObj,
                 [NSNumber numberWithInt:fPhoebus], falseObj, trueObj, trueObj, trueObj, @"100", @"15", @"20", @"3",
                 @"3", [NSNumber numberWithInt:cPhoebus], trueObj, falseObj, falseObj, falseObj, falseObj, falseObj,
-                nil
+                falseObj, nil
             ]
             forKeys:propertyNames
         ]
@@ -96,7 +96,7 @@
                 trueObj, falseObj, trueObj, trueObj, falseObj, trueObj, trueObj, trueObj,
                 [NSNumber numberWithInt:fDefault], trueObj, trueObj, trueObj, trueObj, @"200", @"100", @"1000", @"4",
                 @"4", [NSNumber numberWithInt:cDefault], trueObj, falseObj, falseObj, falseObj, trueObj, trueObj,
-                nil
+                falseObj, nil
             ]
             forKeys:propertyNames
         ]
