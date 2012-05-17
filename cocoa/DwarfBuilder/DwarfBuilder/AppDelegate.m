@@ -723,22 +723,38 @@
 }
 
 -(void)setupDwarfFortressApp {
-    NSString *pathFromApp = [NSString stringWithFormat:@"%@/extras/shells/DwarfFortress.app", dbResources];
-    NSString *pathToApp = [NSString stringWithFormat:@"%@/DwarfFortress.app", [settings installDir]];
-    NSString *pathFromResources = [NSString stringWithFormat:@"%@/build", dbResources];
-    NSString *pathToResources = [NSString stringWithFormat:@"%@/Contents/Resources", pathToApp];
-    NSString *pathFromSaves = [NSString stringWithFormat:@"%@/data/save", pathToResources];
-    NSString *pathToSaves = [NSString stringWithFormat:@"%@/cons_backup", dbResources];
-    NSString *pathToAppVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToResources];
-    NSString *pathToSavedVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToSaves];
-    NSString *pathToGameLog = [NSString stringWithFormat:@"%@/gamelog.txt", pathToResources];
+    NSString *pathToAppShell = [NSString stringWithFormat:@"%@/extras/shells/DwarfFortress.app", dbResources];
+    NSString *pathToConstructedApp = [NSString stringWithFormat:@"%@/DwarfFortress.app", [settings installDir]];
+    NSString *pathToStagedResources = [NSString stringWithFormat:@"%@/build", dbResources];
+    NSString *pathToAppResources = [NSString stringWithFormat:@"%@/Contents/Resources", pathToConstructedApp];
+    NSString *pathToExternalResources = [NSString stringWithFormat:@"%@/df_files", [settings installDir]];
+    NSString *resourcesFileType = [[fileManager attributesOfItemAtPath:pathToAppResources error:nil]
+        valueForKey:NSFileType];
+    NSString *pathToAppSaves = [NSString stringWithFormat:@"%@/data/save", pathToAppResources];
+    NSString *pathToSavedSaves = [NSString stringWithFormat:@"%@/cons_backup", dbResources];
+    NSString *pathToExternalSaves = [NSString stringWithFormat:@"%@/df_saves", [settings installDir]];
+    NSString *saveFileType = [[fileManager attributesOfItemAtPath:pathToAppSaves error:nil]
+        valueForKey:NSFileType];
+    NSString *pathToAppVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToAppResources];
+    NSString *pathToSavedVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToSavedSaves];
+    NSString *pathToGameLog = [NSString stringWithFormat:@"%@/gamelog.txt", pathToAppResources];
     
-    if ([fileManager fileExistsAtPath:pathFromSaves]) {
-        [fileManager removeItemAtPath:pathToSaves error:nil];
+    [fileManager removeItemAtPath:pathToSavedSaves error:nil];
+    if ([fileManager fileExistsAtPath:pathToAppSaves]) {
         if ([self confirmDialog:@"Found a save in the exiting DF.app."
                 message:@"Would you like me to transfer it to the new app for you?"]) {
-            [fileManager copyItemAtPath:pathFromSaves toPath:pathToSaves error:nil];
+            
+            if ([NSFileTypeSymbolicLink isEqualToString:resourcesFileType]) {
+                [fileManager removeItemAtPath:pathToAppResources error:nil];
+                [fileManager moveItemAtPath:pathToExternalResources toPath:pathToAppResources error:nil];
+            }
+            
+            if ([NSFileTypeSymbolicLink isEqualToString:saveFileType]) {
+                [fileManager removeItemAtPath:pathToAppSaves error:nil];
+                [fileManager moveItemAtPath:pathToExternalSaves toPath:pathToAppSaves error:nil];
+            }
 
+            [fileManager copyItemAtPath:pathToAppSaves toPath:pathToSavedSaves error:nil];
             if ([fileManager fileExistsAtPath:pathToAppVersionFile]) {
                 [fileManager copyItemAtPath:pathToAppVersionFile toPath:pathToSavedVersionFile error:nil];
             } else {
@@ -748,32 +764,51 @@
         }
     }
     
-    [fileManager removeItemAtPath:pathToApp error:nil];
-    [fileManager copyItemAtPath:pathFromApp toPath:pathToApp error:nil];
-    [fileManager removeItemAtPath:pathToResources error:nil];
-    [fileManager moveItemAtPath:pathFromResources toPath:pathToResources error:nil];
+    [fileManager removeItemAtPath:pathToConstructedApp error:nil];
+    [fileManager copyItemAtPath:pathToAppShell toPath:pathToConstructedApp error:nil];
+    [fileManager removeItemAtPath:pathToAppResources error:nil];
+    if ([settings externalDFDir]) {
+        [fileManager removeItemAtPath:pathToExternalResources error:nil];
+        [fileManager moveItemAtPath:pathToStagedResources toPath:pathToExternalResources error:nil];
+        [fileManager createSymbolicLinkAtPath:pathToAppResources
+            withDestinationPath:pathToExternalResources error:nil];
+    } else {
+        [fileManager moveItemAtPath:pathToStagedResources toPath:pathToAppResources error:nil];
+    }
     
     if ([fileManager fileExistsAtPath:pathToSavedVersionFile]) {
-        [fileManager copyItemAtPath:pathToSavedVersionFile toPath:pathToAppVersionFile error:nil];
+        [fileManager moveItemAtPath:pathToSavedVersionFile toPath:pathToAppVersionFile error:nil];
     } else {
         [[settings dfCurrentVersion] writeToFile:pathToAppVersionFile atomically:true
             encoding:NSUTF8StringEncoding error:nil];
     }
     
-    if ([fileManager fileExistsAtPath:pathToSaves]) {
-        [fileManager copyItemAtPath:pathToSaves toPath:pathFromSaves error:nil];
-        [fileManager removeItemAtPath:pathToSaves error:nil];
+    if ([fileManager fileExistsAtPath:pathToSavedSaves]) {
+        [fileManager copyItemAtPath:pathToSavedSaves toPath:pathToAppSaves error:nil];
+        [fileManager removeItemAtPath:pathToSavedSaves error:nil];
         [self updateSaveRaws];
+    }
+    
+    if ([settings externalSaveDir]) {
+        if (![fileManager fileExistsAtPath:pathToAppSaves]) {
+            [fileManager createDirectoryAtPath:pathToAppSaves withIntermediateDirectories:true
+                attributes:nil error:nil];
+        }
+        
+        [fileManager removeItemAtPath:pathToExternalSaves error:nil];
+        [fileManager moveItemAtPath:pathToAppSaves toPath:pathToExternalSaves error:nil];
+        [fileManager createSymbolicLinkAtPath:pathToAppSaves
+            withDestinationPath:pathToExternalSaves error:nil];
     }
     
     [@"" writeToFile:pathToGameLog atomically:true encoding:NSUTF8StringEncoding error:nil];
     
     [[NSWorkspace sharedWorkspace] setIcon:[[NSImage alloc]
         initByReferencingFile:[NSString stringWithFormat:@"%@/%@", dbResources, @"DwarfFortress.png"]]
-        forFile:pathToApp options:0];
+        forFile:pathToConstructedApp options:0];
     [[NSWorkspace sharedWorkspace] setIcon:[[NSImage alloc]
         initByReferencingFile:[NSString stringWithFormat:@"%@/%@", dbResources, @"DwarfFortress.png"]]
-        forFile:[NSString stringWithFormat:@"%@/%@", pathToResources, @"dwarfort.exe"] options:0];
+        forFile:[NSString stringWithFormat:@"%@/%@", pathToAppResources, @"dwarfort.exe"] options:0];
 }
 
 
@@ -800,8 +835,6 @@
     } else {
         dfSaveVersion = @"0.34.07";
     }
-    
-    NSLog(@"%@", dfSaveVersion);
     
     if (![dfSaveVersion isEqualToString:[settings dfCurrentVersion]]) {
         [self errorDialog:@"Sorry, I can't translate raws between versions." message:@""];
