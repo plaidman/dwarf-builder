@@ -34,8 +34,8 @@
         fileManager = [NSFileManager defaultManager];
         
 #ifdef DEBUG
-//        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
-        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
+        dbResources = @"/Users/jtomsic/Downloads/dwarf-builder";
+//        dbResources = @"/Users/jrtomsic/devel/dwarf-builder";
         [self updateInstallDir:dbResources];
 #else
         dbResources = [NSString stringWithFormat:@"%@/Contents/Resources", [[NSBundle mainBundle] bundlePath]];
@@ -183,11 +183,14 @@
 -(IBAction)backupDFFilesAction:(id)sender {
     NSString *pathToAppSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
         @"DwarfFortress.app/Contents/Resources/data/save"];
+    NSString *saveFileType = [[fileManager attributesOfItemAtPath:pathToAppSaves error:nil]
+        valueForKey:NSFileType];
     NSString *pathToSavedSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
     
     if ([fileManager fileExistsAtPath:pathToAppSaves]) {
-        NSLog(@"%@", [fileManager attributesOfItemAtPath:pathToAppSaves error:nil]);
-        return;
+        if ([NSFileTypeSymbolicLink isEqualToString:saveFileType]) {
+            pathToAppSaves = [fileManager destinationOfSymbolicLinkAtPath:pathToAppSaves error:nil];
+        }
         
         if ([fileManager fileExistsAtPath:pathToSavedSaves]) {
             if (![self confirmDialog:@"I am currently storing an older backup for you."
@@ -204,11 +207,17 @@
 }
 
 -(IBAction)restoreDFFilesAction:(id)sender {
-    NSString *pathToSavedSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
     NSString *pathToAppSaves = [NSString stringWithFormat:@"%@/%@", [settings installDir],
         @"DwarfFortress.app/Contents/Resources/data/save"];
+    NSString *saveFileType = [[fileManager attributesOfItemAtPath:pathToAppSaves error:nil]
+        valueForKey:NSFileType];
+    NSString *pathToSavedSaves = [NSString stringWithFormat:@"%@/df_backup", dbResources];
     
     if ([fileManager fileExistsAtPath:pathToSavedSaves]) {
+        if ([NSFileTypeSymbolicLink isEqualToString:saveFileType]) {
+            pathToAppSaves = [fileManager destinationOfSymbolicLinkAtPath:pathToAppSaves error:nil];
+        }
+        
         if ([fileManager fileExistsAtPath:pathToAppSaves]) {
             if (![self confirmDialog:@"There is already a save game here."
                     message:@"Would you like me to overwrite it?"]) {
@@ -819,20 +828,26 @@
  * * * * * * * * * * * * * * * * * * */
 
 -(void)updateSaveRaws {
-    NSString *appDir = [NSString stringWithFormat:@"%@/%@", [settings installDir],
+    NSString *pathToApp = [NSString stringWithFormat:@"%@/%@", [settings installDir],
         @"DwarfFortress.app/Contents/Resources"];
-    NSString *rawDir = [NSString stringWithFormat:@"%@/raw", appDir];
-    NSString *saveDir = [NSString stringWithFormat:@"%@/data/save", appDir];
-    NSString *versionFile = [NSString stringWithFormat:@"%@/df_version", appDir];
+    NSString *pathToRaws = [NSString stringWithFormat:@"%@/raw", pathToApp];
+    NSString *pathToSaves = [NSString stringWithFormat:@"%@/data/save", pathToApp];
+    NSString *saveFileType = [[fileManager attributesOfItemAtPath:pathToSaves error:nil]
+        valueForKey:NSFileType];
+    NSString *pathToVersionFile = [NSString stringWithFormat:@"%@/df_version", pathToApp];
     NSString *dfSaveVersion;
     
-    if (![fileManager fileExistsAtPath:saveDir]) {
+    if ([NSFileTypeSymbolicLink isEqualToString:saveFileType]) {
+        pathToSaves = [fileManager destinationOfSymbolicLinkAtPath:pathToSaves error:nil];
+    }
+    
+    if (![fileManager fileExistsAtPath:pathToSaves]) {
         [self errorDialog:@"I couldn't find any saved regions." message:@""];
         return;
     }
     
-    if ([fileManager fileExistsAtPath:versionFile]) {
-        dfSaveVersion = [NSString stringWithContentsOfFile:versionFile
+    if ([fileManager fileExistsAtPath:pathToVersionFile]) {
+        dfSaveVersion = [NSString stringWithContentsOfFile:pathToVersionFile
             encoding:NSUTF8StringEncoding error:nil];
     } else {
         dfSaveVersion = @"0.34.07";
@@ -843,16 +858,16 @@
         return;
     }
     
-    NSEnumerator *itemReader = [fileManager enumeratorAtPath:saveDir];
+    NSEnumerator *itemReader = [fileManager enumeratorAtPath:pathToSaves];
     NSString *item, *fullItemPath, *itemType;
     
     while (item = [itemReader nextObject]) {
-        fullItemPath = [NSString stringWithFormat:@"%@/%@/raw", saveDir, item];
+        fullItemPath = [NSString stringWithFormat:@"%@/%@/raw", pathToSaves, item];
         itemType = [[fileManager attributesOfItemAtPath:fullItemPath error:nil] valueForKey:NSFileType];
         
         if ([itemType isEqualToString:NSFileTypeDirectory]) {
             [fileManager removeItemAtPath:fullItemPath error:nil];
-            [fileManager copyItemAtPath:rawDir toPath:fullItemPath error:nil];
+            [fileManager copyItemAtPath:pathToRaws toPath:fullItemPath error:nil];
         }
     }
 }
