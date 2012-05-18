@@ -250,9 +250,16 @@
 -(IBAction)openDFAppAction:(id)sender {
     NSString *dfDir = [NSString stringWithFormat:@"%@/%@", [settings installDir],
         @"DwarfFortress.app/Contents/Resources"];
+    NSString *dfDirType = [[fileManager attributesOfItemAtPath:dfDir error:nil]
+        valueForKey:NSFileType];
+
+    if ([NSFileTypeSymbolicLink isEqualToString:dfDirType]) {
+        dfDir = [NSString stringWithFormat:@"%@/df_files", [settings installDir]];
+    }
     
     if (![fileManager fileExistsAtPath:dfDir]) {
-        [self errorDialog:@"Sorry, I couldn't find your Dwarf Fortress app." message:@""];
+        [self errorDialog:@"Sorry, I couldn't find your Dwarf Fortress app."
+            message:@"Try updating your installation folder."];
         return;
     }
     
