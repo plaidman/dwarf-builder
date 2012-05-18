@@ -79,13 +79,46 @@ Pillar tile, <character> as above.
 
 [PILLAR_TILE:255]
 
+Track tiles.  I at the end inverts the material colors.
+
+[TRACK_N:171]
+[TRACK_S:170]
+[TRACK_E:28]
+[TRACK_W:29]
+[TRACK_NS:179]
+[TRACK_NE:192]
+[TRACK_NW:217]
+[TRACK_SE:218]
+[TRACK_SW:191]
+[TRACK_EW:196]
+[TRACK_NSE:195]
+[TRACK_NSW:180]
+[TRACK_NEW:193]
+[TRACK_SEW:194]
+[TRACK_NSEW:182]
+[TRACK_RAMP_N:30]
+[TRACK_RAMP_S:30]
+[TRACK_RAMP_E:30]
+[TRACK_RAMP_W:30]
+[TRACK_RAMP_NS:30]
+[TRACK_RAMP_NE:30]
+[TRACK_RAMP_NW:30]
+[TRACK_RAMP_SE:30]
+[TRACK_RAMP_SW:30]
+[TRACK_RAMP_EW:30]
+[TRACK_RAMP_NSE:30]
+[TRACK_RAMP_NSW:30]
+[TRACK_RAMP_NEW:30]
+[TRACK_RAMP_SEW:30]
+[TRACK_RAMP_NSEW:30]
+
 This controls the "IDLERS: <number>" that is displayed in dwarf mode.  You can set it to TOP, BOTTOM or OFF.
 
-[IDLERS:ON]
+[IDLERS:TOP]
 
-You can have your dwarves start/arrive without any labor types enabled here by setting this to NO.
+You can have your dwarves start/arrive without any labor types enabled here by setting this to NO.  You can also set it to SKILLS to make the labor list set by skill, or BY_UNIT_TYPE to have it done by overall unit type.
 
-[SET_LABOR_LISTS:YES]
+[SET_LABOR_LISTS:SKILLS]
 
 You can set the maximum population of your fortress here.  Keep in mind that your population must be at least 80 to get a king and 100 to obtain the current game features.
 

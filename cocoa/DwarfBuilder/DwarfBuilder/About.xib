@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11E53</string>
+		<string key="IBDocument.SystemVersion">11D50</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
-		<string key="IBDocument.AppKitVersion">1138.47</string>
-		<string key="IBDocument.HIToolboxVersion">569.00</string>
+		<string key="IBDocument.AppKitVersion">1138.32</string>
+		<string key="IBDocument.HIToolboxVersion">568.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">2182</string>
@@ -190,7 +190,7 @@
 												<object class="NSMutableString" key="NSContents">
 													<bytes key="NS.bytes">UGhvZWJ1cyAuLi4uLi4uLi4uLi4uIDA5djAwIC4uLi4uLi4uLi4uLi4uLiBQaG9lYnVz4oCoSXJvbmhh
 bmQgLi4uLi4uLi4uLi4uIHY3MSAuLi4uLi4uLi4uLi4gR29sZGVuU2hhZG934oCoSm9sbHkgQmFzdGlv
-biAuLi4uLi4uIHY0IC4uLi4uLi4uLi4uIEFsZXhhbmRlck9jaWFz4oCoTWF5ZGF5IC4uLi4uLi4uLi4u
+biAuLi4uLi4uIHY1IC4uLi4uLi4uLi4uIEFsZXhhbmRlck9jaWFz4oCoTWF5ZGF5IC4uLi4uLi4uLi4u
 Li4uICowN2EgLi4uLi4uLi4uLi4uIE1pa2UgTWF5ZGF54oCoVmhlcmlkIC4uLi4uLi4uLi4uLi4uICp2
 MiAuLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
 												</object>
@@ -322,6 +322,7 @@ MiAuLi4uLi4uLi4uLi4uLi4uLi4gVmhlcmlkA</bytes>
 							<string key="NSFrame">{{407, 5}, {59, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="857001893">
