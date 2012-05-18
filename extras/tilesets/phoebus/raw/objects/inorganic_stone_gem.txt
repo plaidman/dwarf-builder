@@ -90,7 +90,7 @@ I'm leaving this data here in case it can someday be used to organize things in 
 
 [INORGANIC:BLOODSTONE]
 [USE_MATERIAL_TEMPLATE:STONE_TEMPLATE]
-[MATERIAL_VALUE:2][DISPLAY_COLOR:4:7:0][TILE:169][IS_GEM:bloodstone:STP:OVERWRITE_SOLID]
+[MATERIAL_VALUE:2][DISPLAY_COLOR:2:7:0][TILE:169][IS_GEM:bloodstone:STP:OVERWRITE_SOLID]
 [ENVIRONMENT:SEDIMENTARY:CLUSTER_SMALL:100]
 [SOLID_DENSITY:2650]  Common to quartz gems
 [STATE_COLOR:ALL_SOLID:SEA_GREEN]  Bloodstones are actually dark green with red bands.
