@@ -12,7 +12,7 @@ Change this to turn sound off.
 
 The sound volume runs from 0 (off) to 255 (full).  You can set the volume from the ESC options menu as well.
 
-[VOLUME:255]
+[VOLUME:0]
 
 Change this to skip the wonderful intro movies.
 
@@ -82,7 +82,7 @@ Change this to YES to keep the DF window on top of your other windows.
 
 Change this to YES if you want to see an FPS counter at the top left.
 
-[FPS:NO]
+[FPS:YES]
 
 Use this to set the maximum frame rate during play.  The movies are always capped at 100.  A frame in this case is not graphical but related to the movement speed of a creature.  A healthy, unencumbered dwarven peasant takes one step every 10 frames.
 
